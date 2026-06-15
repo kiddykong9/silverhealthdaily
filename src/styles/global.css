@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-200: #99f6e4;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0d9488;
+  --color-brand-700: #0f766e;
+  --color-brand-800: #115e59;
+  --color-surface: #fafaf9;
+  --color-ink: #1c1917;
+  --color-muted: #57534e;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-surface text-ink antialiased;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.prose h2 {
+  @apply mt-10 mb-4 text-2xl font-bold text-brand-800;
+}
+
+.prose h3 {
+  @apply mt-8 mb-3 text-xl font-semibold text-brand-700;
+}
+
+.prose p {
+  @apply mb-5 text-stone-700;
+}
+
+.prose ul,
+.prose ol {
+  @apply mb-5 ml-6 space-y-2 text-stone-700;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose a {
+  @apply text-brand-700 underline decoration-brand-200 underline-offset-2 hover:text-brand-800;
+}
+
+.prose strong {
+  @apply font-semibold text-stone-900;
+}
+
+.ad-placeholder {
+  @apply flex min-h-[90px] items-center justify-center rounded-lg border border-dashed border-stone-300 bg-stone-50 text-sm text-stone-400;
+}

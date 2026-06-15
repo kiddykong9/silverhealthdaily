@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+
+<BaseLayout title="Medical Disclaimer" description={`Medical disclaimer for ${SITE.name}.`}>
+  <div class="prose mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <h1>Medical Disclaimer</h1>
+    <p>
+      The information on {SITE.name} is for general educational purposes only. It is not
+      intended to diagnose, treat, cure, or prevent any disease or health condition.
+    </p>
+    <p>
+      Always seek the advice of your physician or another qualified health provider with any
+      questions about a medical condition, medications, or before starting a new diet or exercise
+      program. Never disregard professional medical advice because of something you read on this
+      site.
+    </p>
+    <p>
+      If you think you may have a medical emergency, call your doctor or emergency services
+      immediately.
+    </p>
+    <p>
+      Calculators and tools on this site provide estimates only. Individual results vary based on
+      health status, medications, and other factors.
+    </p>
+  </div>
+</BaseLayout>

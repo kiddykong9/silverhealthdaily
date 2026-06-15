@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+const updated = 'June 15, 2026';
+---
+
+<BaseLayout title="Terms of Use" description={`Terms of Use for ${SITE.name}.`}>
+  <div class="prose mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <h1>Terms of Use</h1>
+    <p><em>Last updated: {updated}</em></p>
+    <p>By using {SITE.url}, you agree to these terms.</p>
+    <h2>Use of content</h2>
+    <p>
+      Content is for personal, non-commercial use unless we grant written permission. You may not
+      scrape, republish, or sell our content without authorization.
+    </p>
+    <h2>No medical advice</h2>
+    <p>
+      Information on this site is educational only. See our{' '}
+      <a href="/disclaimer">Medical Disclaimer</a> for details.
+    </p>
+    <h2>Advertising</h2>
+    <p>
+      We display third-party ads. We are not responsible for products or services advertised.
+      Ad content does not constitute our endorsement.
+    </p>
+    <h2>Limitation of liability</h2>
+    <p>
+      We provide the site "as is." To the fullest extent permitted by law, we are not liable
+      for damages arising from your use of the site or reliance on its content.
+    </p>
+    <h2>Changes</h2>
+    <p>We may update these terms. Continued use after changes means you accept the updated terms.</p>
+    <h2>Contact</h2>
+    <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+  </div>
+</BaseLayout>

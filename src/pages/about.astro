@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+---
+
+<BaseLayout
+  title="About"
+  description="Learn about Silver Health Daily — health guides and tools for adults 50+."
+>
+  <div class="prose mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <h1>About {SITE.name}</h1>
+    <p>
+      {SITE.name} publishes practical health information for adults 50 and older. Our goal is
+      clear, readable content on nutrition, movement, sleep, and everyday wellness — without
+      hype or fear-mongering.
+    </p>
+    <p>
+      We are not a medical practice. Articles are researched and written for general education.
+      Always work with your doctor before changing diet, exercise, or medications.
+    </p>
+    <h2>What we publish</h2>
+    <ul>
+      <li>Short, actionable health guides optimized for busy readers</li>
+      <li>Free calculators (BMI, hydration, walking calories)</li>
+      <li>Topic hubs on heart health, brain health, fitness, and more</li>
+    </ul>
+    <h2>Contact</h2>
+    <p>
+      Questions or corrections? Email us at{' '}
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+    </p>
+  </div>
+</BaseLayout>

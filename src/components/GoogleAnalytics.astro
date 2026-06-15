@@ -1,0 +1,33 @@
+---
+import { GA_MEASUREMENT_ID } from '../lib/analytics';
+---
+
+{
+  GA_MEASUREMENT_ID && (
+    <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+      const CONSENT_KEY = 'shd_cookie_consent';
+
+      function loadGoogleAnalytics() {
+        if (localStorage.getItem(CONSENT_KEY) !== 'accepted') return;
+        if (window.__shdGaLoaded) return;
+        window.__shdGaLoaded = true;
+
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          window.dataLayer.push(arguments);
+        }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+      }
+
+      loadGoogleAnalytics();
+      window.addEventListener('shd:consent-accepted', loadGoogleAnalytics);
+    </script>
+  )
+}

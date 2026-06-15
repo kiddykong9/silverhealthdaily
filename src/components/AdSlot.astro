@@ -1,0 +1,43 @@
+---
+import { ADSENSE_CLIENT } from '../lib/site';
+
+interface Props {
+  slot: string;
+  format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical';
+  class?: string;
+  label?: string;
+}
+
+const { slot, format = 'auto', class: className = '', label = 'Advertisement' } = Astro.props;
+const showLiveAd = Boolean(ADSENSE_CLIENT);
+---
+
+<div class={`ad-container my-6 ${className}`} aria-label={label}>
+  {showLiveAd ? (
+    <ins
+      class="adsbygoogle block"
+      style="display:block"
+      data-ad-client={ADSENSE_CLIENT}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-full-width-responsive="true"
+    />
+  ) : (
+    <div class="ad-placeholder" role="complementary">
+      <span>{label} — add PUBLIC_ADSENSE_CLIENT_ID to enable</span>
+    </div>
+  )}
+</div>
+
+<script>
+  declare global {
+    interface Window {
+      adsbygoogle?: unknown[];
+    }
+  }
+
+  const client = document.querySelector('.adsbygoogle')?.getAttribute('data-ad-client');
+  if (client && typeof window !== 'undefined') {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }
+</script>

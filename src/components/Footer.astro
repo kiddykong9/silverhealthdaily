@@ -1,0 +1,42 @@
+---
+import { SITE, CATEGORIES } from '../lib/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-stone-200 bg-white">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
+    <div>
+      <p class="text-lg font-bold text-brand-800">{SITE.name}</p>
+      <p class="mt-2 text-sm text-muted">{SITE.description}</p>
+    </div>
+
+    <div>
+      <p class="mb-3 font-semibold text-stone-900">Topics</p>
+      <ul class="space-y-2 text-sm">
+        {
+          CATEGORIES.slice(0, 4).map((cat) => (
+            <li>
+              <a href={`/category/${cat.slug}`} class="text-muted hover:text-brand-700">
+                {cat.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <p class="mb-3 font-semibold text-stone-900">Legal</p>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/privacy" class="text-muted hover:text-brand-700">Privacy Policy</a></li>
+        <li><a href="/terms" class="text-muted hover:text-brand-700">Terms of Use</a></li>
+        <li><a href="/disclaimer" class="text-muted hover:text-brand-700">Medical Disclaimer</a></li>
+        <li><a href="/contact" class="text-muted hover:text-brand-700">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-stone-100 px-4 py-4 text-center text-sm text-muted">
+    © {year} {SITE.name}. For informational purposes only — not medical advice.
+  </div>
+</footer>

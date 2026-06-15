@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+const updated = 'June 15, 2026';
+---
+
+<BaseLayout title="Privacy Policy" description={`Privacy Policy for ${SITE.name}.`}>
+  <div class="prose mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <h1>Privacy Policy</h1>
+    <p><em>Last updated: {updated}</em></p>
+    <p>
+      {SITE.name} ("we", "us") operates {SITE.url}. This policy explains how we collect, use,
+      and share information when you visit our site.
+    </p>
+    <h2>Information we collect</h2>
+    <ul>
+      <li><strong>Usage data:</strong> pages viewed, browser type, device, approximate location (via analytics).</li>
+      <li><strong>Cookies:</strong> small files stored on your device for analytics and advertising.</li>
+      <li><strong>Contact email:</strong> if you email us, we receive your address and message content.</li>
+    </ul>
+    <h2>How we use information</h2>
+    <ul>
+      <li>Improve content and site performance</li>
+      <li>Measure traffic and audience interests</li>
+      <li>Display relevant advertisements (e.g., Google AdSense)</li>
+      <li>Respond to contact requests</li>
+    </ul>
+    <h2>Third-party services</h2>
+    <p>We may use:</p>
+    <ul>
+      <li>Google Analytics (traffic measurement)</li>
+      <li>Google AdSense (advertising)</li>
+      <li>Hosting providers (site delivery)</li>
+    </ul>
+    <p>These services have their own privacy policies and may use cookies.</p>
+    <h2>Your choices</h2>
+    <p>
+      You can decline non-essential cookies via our banner. You may also adjust browser settings
+      to block cookies. EU/UK users may have additional rights under GDPR — contact us to
+      exercise them.
+    </p>
+    <h2>Children</h2>
+    <p>This site is intended for adults and is not directed at children under 16.</p>
+    <h2>Contact</h2>
+    <p>Privacy questions: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+  </div>
+</BaseLayout>
