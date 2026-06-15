@@ -13,7 +13,8 @@ const PHOTOS = {
   mindfulMoment: 'photo-1507003211169-0a1dd7228f2d',
   doctorVisit: 'photo-1576091160399-112ba8d25d1d',
   calmBedroom: 'photo-1522771739844-6a9f6d5f14af',
-  waterGlass: 'photo-1558618666-fcd25c85cd64',
+  waterGlass: 'photo-1767785820883-8bfb03040fb0',
+  waterPour: 'photo-1587800387687-60c1e4d08c9d',
   healthySpread: 'photo-1490645935967-10de6ba17061',
   freshProduce: 'photo-1512621776951-a57141f2eefd',
   groupFitness: 'photo-1518611012118-696072aa579a',
@@ -93,12 +94,12 @@ export const ARTICLE_IMAGES: Record<string, ImageAsset> = {
     alt: 'Bright kitchen with wholesome breakfast ingredients',
   },
   'staying-hydrated-as-you-age': {
-    src: u(PHOTOS.waterGlass),
-    alt: 'Glass of water for daily hydration',
+    src: u(PHOTOS.waterPour),
+    alt: 'Water being poured into a clear glass',
   },
   'signs-of-dehydration-older-adults': {
     src: u(PHOTOS.waterGlass),
-    alt: 'Staying hydrated throughout the day',
+    alt: 'Close-up of a glass of water for daily hydration',
   },
   'how-much-sleep-adults-over-50-need': {
     src: u(PHOTOS.calmBedroom),
@@ -139,7 +140,7 @@ export const LIFESTYLE_GALLERY = [
 
 export const TOOL_IMAGES = {
   bmi: CATEGORY_IMAGES['heart-health'],
-  water: { src: u(PHOTOS.waterGlass), alt: 'Glass of water for healthy hydration' },
+  water: { src: u(PHOTOS.waterGlass), alt: 'Close-up of a glass of water for healthy hydration' },
   walking: CATEGORY_IMAGES.fitness,
 } as const;
 
