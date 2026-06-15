@@ -142,3 +142,136 @@ body::before {
 .gradient-text {
   @apply bg-gradient-to-r from-sage-700 via-sage-600 to-gold bg-clip-text text-transparent;
 }
+
+/* ── Animations ── */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes trustFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out both;
+}
+
+.hero-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero-float-delay {
+  animation: float 8s ease-in-out infinite 2s;
+}
+
+.hero-btn {
+  animation: fadeInUp 0.7s ease-out 0.3s both;
+}
+
+.hero-photo-main {
+  animation: scaleIn 1s ease-out both;
+}
+
+.trust-item {
+  animation: trustFadeIn 0.5s ease-out both;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-left {
+  transform: translateX(40px);
+}
+
+.reveal-right {
+  transform: translateX(-40px);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate(0);
+}
+
+/* Image hover zoom */
+.article-card-img,
+.category-img,
+.gallery-img,
+.tool-card-img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .article-card-img,
+.group:hover .category-img,
+.group:hover .gallery-img,
+.group:hover .tool-card-img {
+  transform: scale(1.06);
+}
+
+.video-play-overlay.hidden {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero-float,
+  .hero-float-delay,
+  .hero-btn,
+  .hero-photo-main,
+  .trust-item,
+  .animate-fade-in {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .article-card-img,
+  .category-img,
+  .gallery-img,
+  .tool-card-img {
+    transition: none;
+  }
+}

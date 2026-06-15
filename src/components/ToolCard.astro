@@ -5,6 +5,7 @@ interface Props {
   href: string;
   icon?: string;
   accent?: string;
+  image?: string;
 }
 
 const {
@@ -13,15 +14,35 @@ const {
   href,
   icon = '🧮',
   accent = 'from-sage-600 to-sage-800',
+  image,
 } = Astro.props;
 ---
 
 <a
   href={href}
-  class="group card-lift flex flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-sage-100"
+  class="group card-lift flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-sage-100"
 >
-  <div class:list={['flex h-24 items-center justify-center bg-gradient-to-br', accent]}>
-    <span class="text-4xl drop-shadow-md transition group-hover:scale-110" aria-hidden="true">{icon}</span>
+  <div class="relative aspect-[16/10] overflow-hidden">
+    {
+      image ? (
+        <>
+          <img
+            src={image}
+            alt=""
+            width="400"
+            height="250"
+            class="tool-card-img h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div class:list={['absolute inset-0 opacity-60 mix-blend-multiply bg-gradient-to-t bg-gradient-to-br', accent]} />
+        </>
+      ) : (
+        <div class:list={['flex h-full items-center justify-center bg-gradient-to-br', accent]}>
+          <span class="text-4xl drop-shadow-md" aria-hidden="true">{icon}</span>
+        </div>
+      )
+    }
+    <span class="absolute bottom-3 left-3 text-3xl drop-shadow-lg" aria-hidden="true">{icon}</span>
   </div>
   <div class="flex flex-1 flex-col p-6">
     <h2 class="font-display text-lg font-bold text-ink group-hover:text-sage-700">{title}</h2>

@@ -3,8 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import AdSlot from '../components/AdSlot.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import ToolCard from '../components/ToolCard.astro';
-import HeroIllustration from '../components/HeroIllustration.astro';
+import HeroMedia from '../components/HeroMedia.astro';
+import PhotoGallery from '../components/PhotoGallery.astro';
+import VideoShowcase from '../components/VideoShowcase.astro';
+import CategoryCard from '../components/CategoryCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import { getCollection } from 'astro:content';
 import { SITE, CATEGORIES, TRUST_POINTS } from '../lib/site';
 
@@ -16,63 +20,17 @@ const articleCount = articles.length;
 ---
 
 <BaseLayout>
-  <!-- Hero -->
-  <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-sage-50 via-cream to-cream-dark"></div>
-    <div
-      class="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gold/10 blur-3xl"
-      aria-hidden="true"
-    ></div>
-    <div
-      class="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-sage-200/40 blur-3xl"
-      aria-hidden="true"
-    ></div>
-
-    <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-24">
-      <div>
-        <p class="section-label">
-          <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
-          Health for adults 50+
-        </p>
-        <h1 class="font-display text-4xl font-bold leading-[1.15] tracking-tight text-ink sm:text-5xl lg:text-[3.25rem]">
-          Your best years deserve
-          <span class="gradient-text"> better health advice</span>
-        </h1>
-        <p class="mt-6 max-w-lg text-lg leading-relaxed text-muted">
-          Clear guides on nutrition, movement, sleep, and heart health — plus free tools. No jargon,
-          no fear-mongering. Just practical wisdom for living well.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-4">
-          <a href="/articles" class="btn-primary">
-            Browse {articleCount} guides
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-          <a href="/tools" class="btn-secondary">Free calculators</a>
-        </div>
-      </div>
-
-      <div class="relative mx-auto w-full max-w-md lg:max-w-none">
-        <div class="overflow-hidden rounded-3xl shadow-2xl shadow-sage-900/10 ring-1 ring-sage-200/60">
-          <HeroIllustration />
-        </div>
-        <div
-          class="absolute -bottom-4 -left-4 rounded-2xl bg-white px-5 py-4 shadow-xl ring-1 ring-sage-100"
-        >
-          <p class="font-display text-2xl font-bold text-sage-800">50+</p>
-          <p class="text-xs font-medium text-muted">Written for you</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <HeroMedia />
 
   <!-- Trust bar -->
-  <section class="border-y border-sage-100 bg-white/60 backdrop-blur-sm">
+  <section class="border-y border-sage-100 bg-white/80 backdrop-blur-sm">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-4 py-5 sm:px-6">
       {
-        TRUST_POINTS.map((point) => (
-          <span class="flex items-center gap-2 text-sm font-medium text-ink-soft">
+        TRUST_POINTS.map((point, i) => (
+          <span
+            class="trust-item flex items-center gap-2 text-sm font-medium text-ink-soft"
+            style={`animation-delay: ${i * 100}ms`}
+          >
             <svg class="h-4 w-4 text-sage-600" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fill-rule="evenodd"
@@ -89,57 +47,46 @@ const articleCount = articles.length;
 
   <AdSlot slot="3333333333" format="horizontal" class="mx-auto max-w-6xl px-4 pt-10" />
 
-  <!-- Categories -->
+  <!-- Categories with photos -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
-    <SectionHeading
-      label="Explore topics"
-      title="What would you like to feel better about?"
-      description="Pick a topic and find guides written in plain English, with steps you can take today."
-    />
+    <ScrollReveal>
+      <SectionHeading
+        label="Explore topics"
+        title="What would you like to feel better about?"
+        description="Real photo guides on nutrition, movement, sleep, and more — steps you can take today."
+      />
+    </ScrollReveal>
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        CATEGORIES.map((cat) => (
-          <a
-            href={`/category/${cat.slug}`}
-            class="group card-lift flex gap-4 rounded-2xl bg-white p-6 shadow-md ring-1 ring-sage-100"
-          >
-            <span
-              class:list={[
-                'flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-2xl shadow-sm',
-                cat.gradient,
-              ]}
-            >
-              {cat.icon}
-            </span>
-            <div>
-              <h3 class="font-display text-lg font-bold text-ink group-hover:text-sage-700">
-                {cat.name}
-              </h3>
-              <p class="mt-1 text-sm leading-relaxed text-muted">{cat.description}</p>
-            </div>
-          </a>
-        ))
-      }
+      {CATEGORIES.map((cat, i) => (
+        <ScrollReveal delay={i * 80}>
+          <CategoryCard slug={cat.slug} />
+        </ScrollReveal>
+      ))}
     </div>
   </section>
+
+  <PhotoGallery />
+
+  <VideoShowcase />
 
   <!-- Featured -->
   {
     featured.length > 0 && (
       <section class="bg-sage-900 py-16 lg:py-20">
         <div class="mx-auto max-w-6xl px-4 sm:px-6">
-          <div class="mb-10 max-w-2xl">
-            <p class="section-label !text-gold-light">Editor's picks</p>
-            <h2 class="font-display text-3xl font-bold text-white sm:text-4xl">
-              Start with these guides
-            </h2>
-            <p class="mt-3 text-lg text-sage-200">
-              Our most helpful reads for staying active, eating well, and protecting your heart.
-            </p>
-          </div>
+          <ScrollReveal>
+            <SectionHeading
+              label="Editor's picks"
+              title="Start with these guides"
+              description="Our most helpful reads for staying active, eating well, and protecting your heart."
+              dark
+            />
+          </ScrollReveal>
           <div class="grid gap-6 md:grid-cols-3">
-            {featured.map((article) => (
-              <ArticleCard article={article} featured />
+            {featured.map((article, i) => (
+              <ScrollReveal delay={i * 100}>
+                <ArticleCard article={article} featured />
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -149,78 +96,100 @@ const articleCount = articles.length;
 
   <!-- Latest -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
-    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-      <SectionHeading label="Fresh reads" title="Latest articles" />
-      <a
-        href="/articles"
-        class="inline-flex items-center gap-1 text-sm font-semibold text-sage-700 hover:text-sage-900"
-      >
-        View all {articleCount} articles
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-      </a>
-    </div>
+    <ScrollReveal>
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <SectionHeading label="Fresh reads" title="Latest articles" />
+        <a
+          href="/articles"
+          class="inline-flex items-center gap-1 text-sm font-semibold text-sage-700 hover:text-sage-900"
+        >
+          View all {articleCount} articles
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </ScrollReveal>
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {latest.map((article) => <ArticleCard article={article} />)}
+      {latest.map((article, i) => (
+        <ScrollReveal delay={i * 60}>
+          <ArticleCard article={article} />
+        </ScrollReveal>
+      ))}
     </div>
   </section>
 
   <!-- Tools -->
   <section class="border-t border-sage-100 bg-gradient-to-b from-cream-dark to-cream py-16 lg:py-20">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <SectionHeading
-        label="Free tools"
-        title="Quick answers, no signup"
-        description="Handy calculators for the questions you Google at 2am — BMI, hydration, and walking calories."
-        centered
-      />
+      <ScrollReveal>
+        <SectionHeading
+          label="Free tools"
+          title="Quick answers, no signup"
+          description="Handy calculators for BMI, hydration, and walking calories."
+          centered
+        />
+      </ScrollReveal>
       <div class="grid gap-5 md:grid-cols-3">
-        <ToolCard
-          title="BMI Calculator"
-          description="Check your body mass index with context that makes sense after 50."
-          href="/tools/bmi-calculator"
-          icon="⚖️"
-          accent="from-emerald-600 to-teal-700"
-        />
-        <ToolCard
-          title="Water Intake"
-          description="Estimate how much water your body needs based on weight and activity."
-          href="/tools/water-intake-calculator"
-          icon="💧"
-          accent="from-sky-600 to-blue-700"
-        />
-        <ToolCard
-          title="Walking Calories"
-          description="See how much your daily walk is doing for your health."
-          href="/tools/walking-calorie-calculator"
-          icon="🚶"
-          accent="from-amber-500 to-orange-600"
-        />
+        <ScrollReveal delay={0}>
+          <ToolCard
+            title="BMI Calculator"
+            description="Check your body mass index with context that makes sense after 50."
+            href="/tools/bmi-calculator"
+            icon="⚖️"
+            accent="from-emerald-600 to-teal-700"
+            image="https://images.unsplash.com/photo-1571019614242-c5c5dee996f8?auto=format&fit=crop&w=600&q=80"
+          />
+        </ScrollReveal>
+        <ScrollReveal delay={100}>
+          <ToolCard
+            title="Water Intake"
+            description="Estimate how much water your body needs daily."
+            href="/tools/water-intake-calculator"
+            icon="💧"
+            accent="from-sky-600 to-blue-700"
+            image="https://images.unsplash.com/photo-1548839140-5a941f994e83?auto=format&fit=crop&w=600&q=80"
+          />
+        </ScrollReveal>
+        <ScrollReveal delay={200}>
+          <ToolCard
+            title="Walking Calories"
+            description="See how much your daily walk is doing for your health."
+            href="/tools/walking-calorie-calculator"
+            icon="🚶"
+            accent="from-amber-500 to-orange-600"
+            image="https://images.unsplash.com/photo-1476480862126-209bf4358eba?auto=format&fit=crop&w=600&q=80"
+          />
+        </ScrollReveal>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA with background photo -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <div
-      class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sage-700 via-sage-800 to-sage-900 px-8 py-12 text-center shadow-2xl sm:px-16 sm:py-16"
-    >
-      <div
-        class="pointer-events-none absolute inset-0 opacity-10"
-        style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 32px 32px;"
-        aria-hidden="true"
-      ></div>
-      <p class="relative section-label !text-gold-light">Stay informed</p>
-      <h2 class="relative font-display mx-auto max-w-xl text-3xl font-bold text-white sm:text-4xl">
-        Health is a daily habit — we're here every step
-      </h2>
-      <p class="relative mx-auto mt-4 max-w-lg text-sage-200">
-        Bookmark {SITE.name} and check back for new guides. Your future self will thank you.
-      </p>
-      <a href="/articles" class="relative btn-primary mt-8 !bg-white !text-sage-800 !shadow-none hover:!bg-cream">
-        Explore all articles
-      </a>
-    </div>
+    <ScrollReveal>
+      <div class="relative overflow-hidden rounded-3xl shadow-2xl">
+        <img
+          src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80"
+          alt=""
+          class="absolute inset-0 h-full w-full object-cover"
+          aria-hidden="true"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-sage-900/95 to-sage-900/75" />
+        <div class="relative px-8 py-14 text-center sm:px-16 sm:py-16">
+          <p class="section-label !text-gold-light">Stay informed</p>
+          <h2 class="font-display mx-auto max-w-xl text-3xl font-bold text-white sm:text-4xl">
+            Health is a daily habit — we're here every step
+          </h2>
+          <p class="mx-auto mt-4 max-w-lg text-sage-200">
+            Bookmark {SITE.name} and check back for new guides. Your future self will thank you.
+          </p>
+          <a href="/articles" class="btn-primary mt-8 !bg-white !text-sage-800 !shadow-none hover:!bg-cream">
+            Explore all articles
+          </a>
+        </div>
+      </div>
+    </ScrollReveal>
   </section>
 </BaseLayout>

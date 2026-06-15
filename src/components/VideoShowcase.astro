@@ -1,0 +1,68 @@
+---
+import { WELLNESS_VIDEOS } from '../lib/media';
+import SectionHeading from './SectionHeading.astro';
+import ScrollReveal from './ScrollReveal.astro';
+---
+
+<section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+  <ScrollReveal>
+    <SectionHeading
+      label="Watch & learn"
+      title="Wellness in motion"
+      description="Short clips to inspire your next walk, meal, or stretch. Click to play — no account needed."
+      centered
+    />
+  </ScrollReveal>
+
+  <div class="grid gap-6 md:grid-cols-3">
+    {
+      WELLNESS_VIDEOS.map((clip, i) => (
+        <ScrollReveal delay={i * 120}>
+          <div class="video-card group overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-sage-100">
+            <div class="relative aspect-video overflow-hidden bg-sage-900">
+              <video
+                class="h-full w-full object-cover"
+                controls
+                playsinline
+                preload="none"
+                poster={clip.poster}
+                data-lazy-video
+              >
+                <source src={clip.src} type="video/mp4" />
+                Your browser does not support video playback.
+              </video>
+              <div class="video-play-overlay pointer-events-none absolute inset-0 flex items-center justify-center bg-sage-900/30 transition group-hover:bg-sage-900/10">
+                <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur transition group-hover:scale-110">
+                  <svg class="ml-1 h-6 w-6 text-sage-800" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </div>
+              <span class="absolute bottom-3 right-3 rounded-md bg-black/60 px-2 py-0.5 text-xs font-medium text-white">
+                {clip.duration}
+              </span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-lg font-bold text-ink">{clip.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted">{clip.description}</p>
+            </div>
+          </div>
+        </ScrollReveal>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-lazy-video]').forEach((el) => {
+    const video = el as HTMLVideoElement;
+    const card = video.closest('.video-card');
+    const overlay = card?.querySelector('.video-play-overlay');
+
+    video.addEventListener('play', () => overlay?.classList.add('hidden'));
+    video.addEventListener('pause', () => {
+      if (video.currentTime === 0 || video.ended) overlay?.classList.remove('hidden');
+    });
+    video.addEventListener('ended', () => overlay?.classList.remove('hidden'));
+  });
+</script>

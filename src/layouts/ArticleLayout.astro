@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import AdSlot from '../components/AdSlot.astro';
 import { SITE, getCategory } from '../lib/site';
+import { getCategoryImage } from '../lib/media';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 const { article } = Astro.props;
 const { title, description, category, publishDate, updatedDate, readTime } = article.data;
 const categoryMeta = getCategory(category);
+const heroImage = getCategoryImage(category);
 const url = new URL(`/articles/${article.id}`, SITE.url).href;
 
 const jsonLd = {
@@ -31,20 +33,26 @@ const jsonLd = {
     url: SITE.url,
   },
   mainEntityOfPage: url,
+  image: heroImage.src,
 };
 ---
 
 <BaseLayout title={title} description={description} canonical={url} ogType="article">
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <!-- Article hero band -->
-  <div
-    class:list={[
-      'bg-gradient-to-br py-12 sm:py-16',
-      categoryMeta?.gradient ?? 'from-sage-700 to-sage-900',
-    ]}
-  >
-    <div class="mx-auto max-w-3xl px-4 sm:px-6">
+  <header class="relative overflow-hidden">
+    <div class="absolute inset-0">
+      <img
+        src={heroImage.src.replace('w=600', 'w=1400')}
+        alt=""
+        class="h-full w-full object-cover"
+        aria-hidden="true"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-sage-900/95 via-sage-900/85 to-sage-900/70" />
+      <div class:list={['absolute inset-0 opacity-30 mix-blend-multiply bg-gradient-to-br', categoryMeta?.gradient ?? 'from-sage-700 to-sage-900']} />
+    </div>
+
+    <div class="relative mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
       {
         categoryMeta && (
           <a
@@ -74,14 +82,14 @@ const jsonLd = {
         <span>{readTime} min read</span>
       </p>
     </div>
-  </div>
+  </header>
 
   <article class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <div class="grid gap-10 lg:grid-cols-[1fr_300px]">
       <div>
         <AdSlot slot="1111111111" format="horizontal" class="mb-8" />
 
-        <div class="prose max-w-3xl">
+        <div class="prose max-w-3xl animate-fade-in">
           <slot />
         </div>
 
@@ -100,6 +108,14 @@ const jsonLd = {
       <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
         <AdSlot slot="2222222222" format="vertical" label="Sidebar ad" />
         <div class="overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-sage-100">
+          <img
+            src={heroImage.src}
+            alt={heroImage.alt}
+            width="300"
+            height="160"
+            class="h-32 w-full object-cover"
+            loading="lazy"
+          />
           <div class="bg-sage-700 px-5 py-4">
             <p class="font-display font-bold text-white">Free health tools</p>
           </div>

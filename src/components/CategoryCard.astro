@@ -1,0 +1,42 @@
+---
+import type { CategorySlug } from '../lib/site';
+import { getCategory } from '../lib/site';
+import { getCategoryImage } from '../lib/media';
+
+interface Props {
+  slug: CategorySlug;
+}
+
+const { slug } = Astro.props;
+const cat = getCategory(slug)!;
+const image = getCategoryImage(slug);
+---
+
+<a
+  href={`/category/${slug}`}
+  class="group card-lift relative block overflow-hidden rounded-2xl shadow-md ring-1 ring-sage-100"
+>
+  <div class="relative aspect-[4/3] overflow-hidden">
+    <img
+      src={image.src}
+      alt={image.alt}
+      width="400"
+      height="300"
+      class="category-img h-full w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-sage-900/90 via-sage-900/40 to-transparent" />
+    <div class:list={['absolute inset-0 bg-gradient-to-br opacity-40 mix-blend-multiply', cat.gradient]} />
+  </div>
+  <div class="absolute inset-x-0 bottom-0 p-5">
+    <span class="mb-2 inline-block text-2xl drop-shadow" aria-hidden="true">{cat.icon}</span>
+    <h3 class="font-display text-xl font-bold text-white">{cat.name}</h3>
+    <p class="mt-1 text-sm leading-relaxed text-white/80">{cat.description}</p>
+    <span class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-gold-light opacity-0 transition group-hover:opacity-100">
+      Explore
+      <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </span>
+  </div>
+</a>

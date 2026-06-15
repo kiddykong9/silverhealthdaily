@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORIES, getCategory } from '../../lib/site';
+import { getCategoryImage } from '../../lib/media';
 
 export async function getStaticPaths() {
   return CATEGORIES.map((cat) => ({ params: { category: cat.slug } }));
@@ -15,19 +16,27 @@ if (!category) {
   return Astro.redirect('/articles');
 }
 
+const image = getCategoryImage(category.slug);
 const articles = (await getCollection('articles'))
   .filter((a) => a.data.category === category.slug)
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 
 <BaseLayout title={`${category.name} Articles`} description={category.description}>
-  <section class:list={['bg-gradient-to-br py-14 sm:py-16', category.gradient]}>
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <span class="text-5xl" aria-hidden="true">{category.icon}</span>
+  <header class="relative overflow-hidden">
+    <img
+      src={image.src.replace('w=600', 'w=1400')}
+      alt={image.alt}
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-sage-900/90 to-sage-900/60" />
+    <div class:list={['absolute inset-0 opacity-40 mix-blend-multiply bg-gradient-to-br', category.gradient]} />
+    <div class="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+      <span class="text-5xl drop-shadow-lg" aria-hidden="true">{category.icon}</span>
       <h1 class="font-display mt-4 text-4xl font-bold text-white sm:text-5xl">{category.name}</h1>
       <p class="mt-3 max-w-2xl text-lg text-white/85">{category.description}</p>
     </div>
-  </section>
+  </header>
 
   <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
     {

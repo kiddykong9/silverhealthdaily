@@ -1,0 +1,39 @@
+---
+import { LIFESTYLE_GALLERY } from '../lib/media';
+import SectionHeading from './SectionHeading.astro';
+import ScrollReveal from './ScrollReveal.astro';
+---
+
+<section class="overflow-hidden bg-sage-900 py-16 lg:py-20">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <ScrollReveal>
+      <SectionHeading
+        label="Real life wellness"
+        title="Health looks like everyday moments"
+        description="Walking with a friend. Cooking something nourishing. Stretching before bed. Small habits, big impact."
+        dark
+      />
+    </ScrollReveal>
+
+    <div class="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+      {
+        LIFESTYLE_GALLERY.map((photo, i) => (
+          <ScrollReveal delay={i * 100} class="group relative aspect-[3/4] overflow-hidden rounded-2xl">
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              width="400"
+              height="533"
+              class="gallery-img h-full w-full object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-sage-900/80 via-sage-900/20 to-transparent opacity-80 transition group-hover:opacity-100" />
+            <p class="absolute bottom-4 left-4 font-display text-lg font-bold text-white">
+              {photo.caption}
+            </p>
+          </ScrollReveal>
+        ))
+      }
+    </div>
+  </div>
+</section>
