@@ -2,7 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import AdSlot from '../components/AdSlot.astro';
 import { SITE, getCategory } from '../lib/site';
-import { getCategoryImage } from '../lib/media';
+import { getArticleImage } from '../lib/media';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 const { article } = Astro.props;
 const { title, description, category, publishDate, updatedDate, readTime } = article.data;
 const categoryMeta = getCategory(category);
-const heroImage = getCategoryImage(category);
+const heroImage = getArticleImage(category, article.id);
 const url = new URL(`/articles/${article.id}`, SITE.url).href;
 
 const jsonLd = {
@@ -43,7 +43,7 @@ const jsonLd = {
   <header class="relative overflow-hidden">
     <div class="absolute inset-0">
       <img
-        src={heroImage.src.replace('w=600', 'w=1400')}
+        src={heroImage.src.replace('w=800', 'w=1400')}
         alt=""
         class="h-full w-full object-cover"
         aria-hidden="true"

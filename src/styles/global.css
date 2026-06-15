@@ -208,6 +208,20 @@ body::before {
   animation: scaleIn 1s ease-out both;
 }
 
+.hero-ken-burns {
+  animation: kenBurns 22s ease-in-out infinite alternate;
+  transform-origin: center center;
+}
+
+@keyframes kenBurns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
 .trust-item {
   animation: trustFadeIn 0.5s ease-out both;
 }
@@ -265,6 +279,11 @@ body::before {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-ken-burns {
+    animation: none !important;
     transform: none !important;
   }
 

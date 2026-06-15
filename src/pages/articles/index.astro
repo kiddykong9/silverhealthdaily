@@ -4,6 +4,7 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import ScrollReveal from '../../components/ScrollReveal.astro';
 import { getCollection } from 'astro:content';
+import { HERO } from '../../lib/media';
 
 const articles = (await getCollection('articles')).sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
@@ -16,7 +17,7 @@ const articles = (await getCollection('articles')).sort(
 >
   <header class="relative overflow-hidden">
     <img
-      src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1400&q=80"
+      src={HERO.src}
       alt=""
       class="absolute inset-0 h-full w-full object-cover"
       aria-hidden="true"

@@ -2,27 +2,22 @@
 import { HERO } from '../lib/media';
 ---
 
-<section class="relative min-h-[88vh] overflow-hidden lg:min-h-[92vh]">
-  <!-- Background video -->
+<section class="relative min-h-[85vh] overflow-hidden lg:min-h-[90vh]">
+  <!-- Ken Burns photo background (no broken hotlinked video) -->
   <div class="absolute inset-0" aria-hidden="true">
-    <video
-      class="hero-video h-full w-full object-cover"
-      autoplay
-      muted
-      loop
-      playsinline
-      poster={HERO.poster}
-      preload="metadata"
-    >
-      <source src={HERO.video} type="video/mp4" />
-    </video>
-    <div class="absolute inset-0 bg-gradient-to-r from-sage-900/92 via-sage-900/75 to-sage-900/40"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-sage-900/60 via-transparent to-transparent"></div>
+    <img
+      src={HERO.src}
+      alt=""
+      class="hero-ken-burns h-full w-full object-cover"
+      width="1600"
+      height="900"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-sage-900/93 via-sage-900/78 to-sage-900/45"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-sage-900/55 via-transparent to-sage-900/20"></div>
   </div>
 
-  <!-- Floating decorative shapes -->
-  <div class="hero-float absolute right-[10%] top-[20%] h-24 w-24 rounded-full bg-gold/20 blur-2xl" aria-hidden="true"></div>
-  <div class="hero-float-delay absolute bottom-[30%] left-[5%] h-32 w-32 rounded-full bg-sage-400/20 blur-3xl" aria-hidden="true"></div>
+  <div class="hero-float absolute right-[8%] top-[18%] h-28 w-28 rounded-full bg-gold/15 blur-2xl" aria-hidden="true"></div>
 
   <div class="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:py-28">
     <div class="reveal reveal-up" data-reveal>
@@ -34,9 +29,9 @@ import { HERO } from '../lib/media';
         Live longer,
         <span class="text-gold-light"> feel stronger</span>
       </h1>
-      <p class="mt-6 max-w-lg text-lg leading-relaxed text-white/85">
-        Real-world guides on nutrition, walking, sleep, and heart health — written in plain English,
-        backed by everyday wisdom.
+      <p class="mt-6 max-w-lg text-lg leading-relaxed text-white/88">
+        Practical guides on nutrition, walking, sleep, and heart health — written for real life after
+        50, not fitness influencers half your age.
       </p>
       <div class="mt-9 flex flex-wrap gap-4">
         <a href="/articles" class="btn-primary hero-btn">
@@ -45,46 +40,47 @@ import { HERO } from '../lib/media';
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
-        <a href="/tools" class="btn-secondary !border-white/30 !bg-white/10 !text-white backdrop-blur hover:!bg-white/20">
-          Free tools
+        <a href="#wellness-videos" class="btn-secondary !border-white/30 !bg-white/10 !text-white backdrop-blur hover:!bg-white/20">
+          Watch free videos
         </a>
       </div>
     </div>
 
-    <!-- Hero photo stack -->
     <div class="relative hidden lg:block">
-      <div class="reveal reveal-right hero-photo-main overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/20" data-reveal style="--reveal-delay: 150ms">
+      <div
+        class="reveal reveal-right overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/25"
+        data-reveal
+        style="--reveal-delay: 150ms"
+      >
         <img
-          src={HERO.poster}
+          src={HERO.src}
           alt={HERO.alt}
           width="640"
           height="480"
-          class="h-[420px] w-full object-cover"
+          class="h-[440px] w-full object-cover"
           loading="eager"
-          fetchpriority="high"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-sage-900/50 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-sage-900/60 to-transparent"></div>
         <div class="absolute bottom-5 left-5 right-5 rounded-xl bg-white/10 p-4 backdrop-blur-md ring-1 ring-white/20">
-          <p class="text-sm font-medium text-white/90">Movement at any age</p>
-          <p class="text-xs text-white/70">Low-impact habits that compound over years</p>
+          <p class="text-sm font-medium text-white">{HERO.alt}</p>
         </div>
       </div>
       <div
-        class="reveal reveal-up absolute -bottom-6 -left-6 overflow-hidden rounded-2xl shadow-xl ring-2 ring-white/30"
+        class="reveal reveal-up absolute -bottom-5 -left-5 overflow-hidden rounded-2xl shadow-xl ring-2 ring-white/40"
         data-reveal
         style="--reveal-delay: 300ms"
       >
         <img
-          src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=400&q=80"
-          alt="Happy senior couple outdoors"
-          width="200"
-          height="200"
-          class="h-36 w-36 object-cover"
+          src="https://images.unsplash.com/photo-1588874960056-07aa3d0afa3b?auto=format&fit=crop&w=400&q=80"
+          alt="Senior woman preparing healthy food"
+          width="180"
+          height="180"
+          class="h-32 w-32 object-cover"
           loading="lazy"
         />
       </div>
       <div
-        class="reveal reveal-up absolute -right-4 top-8 rounded-2xl bg-white px-5 py-4 shadow-xl"
+        class="reveal reveal-up absolute -right-4 top-6 rounded-2xl bg-white px-5 py-4 shadow-xl"
         data-reveal
         style="--reveal-delay: 450ms"
       >
@@ -94,19 +90,9 @@ import { HERO } from '../lib/media';
     </div>
   </div>
 
-  <!-- Scroll hint -->
-  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-white/50" aria-hidden="true">
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-white/40" aria-hidden="true">
     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
     </svg>
   </div>
 </section>
-
-<script>
-  const video = document.querySelector('.hero-video') as HTMLVideoElement | null;
-  if (video) {
-    video.play().catch(() => {
-      /* Autoplay blocked — poster image shows instead */
-    });
-  }
-</script>

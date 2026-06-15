@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolCard from '../../components/ToolCard.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
+import { TOOL_IMAGES } from '../../lib/media';
 ---
 
 <BaseLayout
@@ -27,6 +28,7 @@ import SectionHeading from '../../components/SectionHeading.astro';
         href="/tools/bmi-calculator"
         icon="⚖️"
         accent="from-emerald-600 to-teal-700"
+        image={TOOL_IMAGES.bmi.src}
       />
       <ToolCard
         title="Water Intake Calculator"
@@ -34,6 +36,7 @@ import SectionHeading from '../../components/SectionHeading.astro';
         href="/tools/water-intake-calculator"
         icon="💧"
         accent="from-sky-600 to-blue-700"
+        image={TOOL_IMAGES.water.src}
       />
       <ToolCard
         title="Walking Calorie Calculator"
@@ -41,6 +44,7 @@ import SectionHeading from '../../components/SectionHeading.astro';
         href="/tools/walking-calorie-calculator"
         icon="🚶"
         accent="from-amber-500 to-orange-600"
+        image={TOOL_IMAGES.walking.src}
       />
     </div>
   </div>
