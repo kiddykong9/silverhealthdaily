@@ -117,6 +117,10 @@ export const ARTICLE_IMAGES: Record<string, ImageAsset> = {
     src: u(PHOTOS.outdoorWalk),
     alt: 'Person walking outdoors for cardiovascular exercise',
   },
+  'how-to-track-calories-and-nutrition-free': {
+    src: u(PHOTOS.breakfastKitchen),
+    alt: 'Healthy meal preparation in a home kitchen',
+  },
   'understanding-blood-pressure-after-50': {
     src: u(PHOTOS.doctorVisit),
     alt: 'Blood pressure monitoring at a health visit',

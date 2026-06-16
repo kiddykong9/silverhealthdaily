@@ -20,7 +20,7 @@ export const TOOLS = [
   {
     href: '/tools/food-calorie-calculator',
     title: 'Food Nutrition Calculator',
-    description: 'Search 300k+ USDA foods with full nutrition facts — calories, protein, fat, sugar, and more.',
+    description: 'Search 300k+ USDA foods, scan barcodes, and log meals with full nutrition facts.',
     category: 'nutrition',
   },
   {

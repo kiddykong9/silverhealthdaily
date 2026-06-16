@@ -70,6 +70,7 @@ export function parseUsdaFood(food, multiplier = 1) {
     fdcId: Number(food.fdcId),
     description: String(food.description ?? 'Unknown food'),
     brandOwner: typeof food.brandOwner === 'string' ? food.brandOwner : undefined,
+    gtinUpc: typeof food.gtinUpc === 'string' ? food.gtinUpc : undefined,
     dataType: String(food.dataType ?? ''),
     servingSize: typeof food.servingSize === 'number' ? food.servingSize : null,
     servingSizeUnit: typeof food.servingSizeUnit === 'string' ? food.servingSizeUnit : null,
