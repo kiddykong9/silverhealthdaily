@@ -1,0 +1,502 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { TOOLS } from '../../lib/tools';
+
+const ACCESS_CODE = import.meta.env.PUBLIC_PLAN_ACCESS_CODE ?? '';
+const GUMROAD_URL = import.meta.env.PUBLIC_GUMROAD_PLAN_URL ?? '';
+const REQUIRE_ACCESS = Boolean(ACCESS_CODE);
+
+const allArticles = await getCollection('articles');
+const articleData = allArticles.map((a) => ({
+  id: a.id,
+  title: a.data.title,
+  description: a.data.description,
+}));
+const toolMap = Object.fromEntries(TOOLS.map((t) => [t.href, t]));
+---
+
+<BaseLayout
+  title="Health Plan Survey"
+  description="Complete your personalized health plan survey and download your custom PDF report."
+  noindex={true}
+>
+  <section class="bg-gradient-to-br from-sage-700 to-sage-900 py-10">
+    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
+      <h1 class="font-display text-2xl font-bold text-white sm:text-3xl">Build your health plan</h1>
+      <p class="mt-2 text-white/80">Step <span id="step-label">1</span> of <span id="step-total">7</span></p>
+      <div class="mx-auto mt-4 h-2 max-w-md overflow-hidden rounded-full bg-white/20">
+        <div id="progress-bar" class="h-full rounded-full bg-gold transition-all duration-300" style="width:14%"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+    {
+      REQUIRE_ACCESS && (
+        <div id="access-gate" class="mb-8 rounded-2xl border border-sage-200 bg-sage-50 p-6">
+          <h2 class="font-display text-lg font-bold text-sage-900">Enter your access code</h2>
+          <p class="mt-1 text-sm text-muted">
+            Enter the code from your purchase email to unlock the survey and PDF download.
+          </p>
+          <div class="mt-4 flex gap-3">
+            <input
+              type="text"
+              id="access-input"
+              placeholder="Access code"
+              class="flex-1 rounded-lg border border-sage-200 px-4 py-2.5 text-sm"
+            />
+            <button
+              type="button"
+              id="access-submit"
+              class="rounded-lg bg-sage-700 px-5 py-2.5 text-sm font-bold text-white hover:bg-sage-800"
+            >
+              Unlock
+            </button>
+          </div>
+          <p id="access-error" class="mt-2 hidden text-sm text-red-600">Invalid code. Check your email.</p>
+          {GUMROAD_URL && (
+            <p class="mt-3 text-sm text-muted">
+              Don't have a code?{' '}
+              <a href={GUMROAD_URL} target="_blank" rel="noopener" class="font-semibold text-sage-700 underline">
+                Get access here
+              </a>
+            </p>
+          )}
+        </div>
+      )
+    }
+
+    <form id="survey-form" class:list={['space-y-8', REQUIRE_ACCESS && 'pointer-events-none opacity-40']}>
+      <!-- Step 1: About -->
+      <fieldset data-step="1" class="survey-step">
+        <legend class="font-display text-xl font-bold text-sage-900">About you</legend>
+        <div class="mt-4 space-y-4">
+          <label class="block">
+            <span class="text-sm font-medium text-ink">First name (for your PDF)</span>
+            <input name="name" type="text" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" placeholder="Jane" />
+          </label>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-medium text-ink">Sex (for calorie formulas)</span>
+              <select name="sex" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-ink">Age</span>
+              <input name="age" type="number" min="18" max="100" value="55" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" />
+            </label>
+          </div>
+          <fieldset>
+            <span class="text-sm font-medium text-ink">Units</span>
+            <div class="mt-2 flex gap-4">
+              <label class="flex items-center gap-2 text-sm">
+                <input type="radio" name="units" value="imperial" checked /> Imperial (lb, ft)
+              </label>
+              <label class="flex items-center gap-2 text-sm">
+                <input type="radio" name="units" value="metric" /> Metric (kg, cm)
+              </label>
+            </div>
+          </fieldset>
+        </div>
+      </fieldset>
+
+      <!-- Step 2: Body -->
+      <fieldset data-step="2" class="survey-step hidden">
+        <legend class="font-display text-xl font-bold text-sage-900">Body metrics</legend>
+        <div id="imperial-fields" class="mt-4 grid gap-4 sm:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium text-ink">Weight (lb)</span>
+            <input name="weightLb" type="number" min="80" max="500" value="165" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" />
+          </label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="block">
+              <span class="text-sm font-medium text-ink">Height (ft)</span>
+              <input name="heightFt" type="number" min="4" max="7" value="5" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-ink">Inches</span>
+              <input name="heightIn" type="number" min="0" max="11" value="6" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" />
+            </label>
+          </div>
+        </div>
+        <div id="metric-fields" class="mt-4 hidden grid gap-4 sm:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium text-ink">Weight (kg)</span>
+            <input name="weightKg" type="number" min="35" max="250" value="75" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-medium text-ink">Height (cm)</span>
+            <input name="heightCm" type="number" min="120" max="230" value="168" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" />
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Step 3: Goals -->
+      <fieldset data-step="3" class="survey-step hidden">
+        <legend class="font-display text-xl font-bold text-sage-900">Your goals</legend>
+        <div class="mt-4 space-y-4">
+          <label class="block">
+            <span class="text-sm font-medium text-ink">What matters most right now?</span>
+            <select name="primaryGoal" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+              <option value="weight_loss">Healthy weight loss</option>
+              <option value="maintain">Maintain current weight</option>
+              <option value="energy">More daily energy</option>
+              <option value="heart">Heart health</option>
+              <option value="sleep">Better sleep</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="text-sm font-medium text-ink">Weight goal</span>
+            <select name="weightGoal" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+              <option value="lose_standard">Lose ~1 lb/week (standard)</option>
+              <option value="lose_slow">Lose ~0.5 lb/week (gentle)</option>
+              <option value="maintain">Maintain weight</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Step 4: Activity -->
+      <fieldset data-step="4" class="survey-step hidden">
+        <legend class="font-display text-xl font-bold text-sage-900">Activity & movement</legend>
+        <div class="mt-4 space-y-4">
+          <label class="block">
+            <span class="text-sm font-medium text-ink">Activity level</span>
+            <select name="activityLevel" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+              <option value="sedentary">Sedentary (desk job, little exercise)</option>
+              <option value="light">Light (1–2 days/week)</option>
+              <option value="moderate" selected>Moderate (3–5 days/week)</option>
+              <option value="active">Active (6–7 days/week)</option>
+              <option value="very_active">Very active (physical job + exercise)</option>
+            </select>
+          </label>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-medium text-ink">Current daily steps</span>
+              <input name="currentSteps" type="number" min="0" max="30000" value="5000" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-ink">Walking minutes per day (goal)</span>
+              <input name="walkingMinutes" type="number" min="10" max="120" value="30" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5" />
+            </label>
+          </div>
+          <label class="block">
+            <span class="text-sm font-medium text-ink">Walking fitness level</span>
+            <select name="walkingLevel" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+              <option value="beginner">Beginner — new to regular walking</option>
+              <option value="intermediate" selected>Intermediate — walk several times a week</option>
+              <option value="active">Active — already walk daily</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Step 5: Sleep -->
+      <fieldset data-step="5" class="survey-step hidden">
+        <legend class="font-display text-xl font-bold text-sage-900">Sleep</legend>
+        <div class="mt-4 space-y-4">
+          <p class="text-sm text-muted">What time do you usually wake up?</p>
+          <div class="grid grid-cols-3 gap-3">
+            <label class="block">
+              <span class="text-sm font-medium text-ink">Hour</span>
+              <select name="wakeHour" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((h) => (
+                  <option value={h} selected={h === 7}>
+                    {h}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-ink">Minute</span>
+              <select name="wakeMinute" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+                <option value="0">:00</option>
+                <option value="15">:15</option>
+                <option value="30" selected>:30</option>
+                <option value="45">:45</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-ink">AM/PM</span>
+              <select name="wakeAmPm" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+                <option value="AM" selected>AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </label>
+          </div>
+          <label class="block">
+            <span class="text-sm font-medium text-ink">Biggest sleep challenge</span>
+            <select name="sleepChallenge" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+              <option value="falling">Trouble falling asleep</option>
+              <option value="staying">Waking during the night</option>
+              <option value="schedule">Irregular schedule</option>
+              <option value="screens">Too much screen time before bed</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Step 6: Nutrition -->
+      <fieldset data-step="6" class="survey-step hidden">
+        <legend class="font-display text-xl font-bold text-sage-900">Nutrition preferences</legend>
+        <div class="mt-4 space-y-4">
+          <label class="block">
+            <span class="text-sm font-medium text-ink">Preferred eating style</span>
+            <select name="macroStyle" class="mt-1 w-full rounded-lg border border-sage-200 px-4 py-2.5">
+              <option value="balanced" selected>Balanced</option>
+              <option value="high-protein">Higher protein</option>
+              <option value="low-carb">Lower carb</option>
+              <option value="mediterranean">Mediterranean-style</option>
+            </select>
+          </label>
+          <fieldset>
+            <span class="text-sm font-medium text-ink">Top priorities (pick any)</span>
+            <div class="mt-2 space-y-2 text-sm">
+              {
+                ['More protein', 'Less sugar', 'More vegetables', 'Better hydration', 'Portion control', 'Meal planning'].map(
+                  (p) => (
+                    <label class="flex items-center gap-2">
+                      <input type="checkbox" name="priorities" value={p} /> {p}
+                    </label>
+                  ),
+                )
+              }
+            </div>
+          </fieldset>
+        </div>
+      </fieldset>
+
+      <!-- Step 7: Review -->
+      <fieldset data-step="7" class="survey-step hidden">
+        <legend class="font-display text-xl font-bold text-sage-900">Ready to generate</legend>
+        <p class="mt-2 text-muted">
+          We'll combine your answers with our BMI, calorie, macro, protein, water, step, walking, heart-rate,
+          and bedtime calculators into one personalized plan.
+        </p>
+        <button
+          type="button"
+          id="generate-btn"
+          class="mt-6 w-full rounded-xl bg-sage-700 py-3.5 text-sm font-bold text-white transition hover:bg-sage-800"
+        >
+          Generate my plan
+        </button>
+      </fieldset>
+    </form>
+
+  <div id="plan-result" class="hidden space-y-10">
+    <div class="rounded-2xl bg-sage-50 px-6 py-8">
+      <h2 class="font-display text-2xl font-bold text-sage-900" id="result-heading"></h2>
+      <p class="mt-2 text-ink-soft" id="result-summary"></p>
+      <button
+        type="button"
+        id="download-pdf"
+        class="mt-6 rounded-full bg-gold px-8 py-3 text-sm font-bold text-sage-900 shadow transition hover:bg-gold-light"
+      >
+        Download PDF
+      </button>
+      <button type="button" id="restart-survey" class="ml-4 text-sm font-semibold text-sage-700 underline">
+        Start over
+      </button>
+    </div>
+
+    <div id="result-sections" class="space-y-8"></div>
+
+    <div>
+      <h3 class="font-display text-xl font-bold text-sage-900">Recommended tools</h3>
+      <div id="result-tools" class="mt-4 grid gap-4 sm:grid-cols-2"></div>
+    </div>
+
+    <div>
+      <h3 class="font-display text-xl font-bold text-sage-900">Articles for you</h3>
+      <div id="result-articles" class="mt-4 grid gap-4 sm:grid-cols-2"></div>
+    </div>
+  </div>
+
+    <div id="nav-buttons" class="mt-10 flex justify-between">
+      <button type="button" id="prev-btn" class="hidden rounded-lg px-5 py-2.5 text-sm font-semibold text-sage-700 hover:bg-sage-50">
+        ← Back
+      </button>
+      <button type="button" id="next-btn" class="ml-auto rounded-lg bg-sage-700 px-6 py-2.5 text-sm font-bold text-white hover:bg-sage-800">
+        Next →
+      </button>
+    </div>
+  </div>
+
+  <script
+    define:vars={{
+      accessCode: ACCESS_CODE,
+      requireAccess: REQUIRE_ACCESS,
+      articleData,
+      toolMap,
+    }}
+  >
+    import { buildHealthPlan } from '../../lib/health-plan';
+    import { generatePlanPdf } from '../../lib/plan-pdf';
+
+    const TOTAL_STEPS = 7;
+    let currentStep = 1;
+    let currentPlan = null;
+    const STORAGE_KEY = 'shd-plan-access';
+
+    function unlockForm() {
+      const form = document.getElementById('survey-form');
+      const gate = document.getElementById('access-gate');
+      form?.classList.remove('pointer-events-none', 'opacity-40');
+      gate?.classList.add('hidden');
+    }
+
+    if (requireAccess) {
+      if (sessionStorage.getItem(STORAGE_KEY) === '1') unlockForm();
+      document.getElementById('access-submit')?.addEventListener('click', () => {
+        const input = document.getElementById('access-input');
+        const err = document.getElementById('access-error');
+        if (input?.value.trim().toLowerCase() === accessCode.toLowerCase()) {
+          sessionStorage.setItem(STORAGE_KEY, '1');
+          unlockForm();
+          err?.classList.add('hidden');
+        } else {
+          err?.classList.remove('hidden');
+        }
+      });
+    }
+
+    function getUnits() {
+      return document.querySelector('input[name="units"]:checked')?.value ?? 'imperial';
+    }
+
+    document.querySelectorAll('input[name="units"]').forEach((r) => {
+      r.addEventListener('change', () => {
+        const imperial = getUnits() === 'imperial';
+        document.getElementById('imperial-fields')?.classList.toggle('hidden', !imperial);
+        document.getElementById('metric-fields')?.classList.toggle('hidden', imperial);
+      });
+    });
+
+    function showStep(n) {
+      currentStep = n;
+      document.querySelectorAll('.survey-step').forEach((el) => {
+        el.classList.toggle('hidden', Number(el.dataset.step) !== n);
+      });
+      document.getElementById('step-label').textContent = String(n);
+      document.getElementById('progress-bar').style.width = `${(n / TOTAL_STEPS) * 100}%`;
+      document.getElementById('prev-btn').classList.toggle('hidden', n <= 1);
+      document.getElementById('next-btn').classList.toggle('hidden', n >= TOTAL_STEPS);
+      document.getElementById('nav-buttons').classList.toggle('hidden', n >= TOTAL_STEPS);
+    }
+
+    document.getElementById('prev-btn')?.addEventListener('click', () => showStep(currentStep - 1));
+    document.getElementById('next-btn')?.addEventListener('click', () => showStep(currentStep + 1));
+
+    function collectSurvey() {
+      const form = document.getElementById('survey-form');
+      const fd = new FormData(form);
+      const priorities = fd.getAll('priorities').map(String);
+      return {
+        name: String(fd.get('name') || ''),
+        sex: fd.get('sex'),
+        age: Number(fd.get('age')),
+        units: getUnits(),
+        weightLb: Number(fd.get('weightLb')),
+        heightFt: Number(fd.get('heightFt')),
+        heightIn: Number(fd.get('heightIn')),
+        weightKg: Number(fd.get('weightKg')),
+        heightCm: Number(fd.get('heightCm')),
+        primaryGoal: fd.get('primaryGoal'),
+        weightGoal: fd.get('weightGoal'),
+        activityLevel: fd.get('activityLevel'),
+        currentSteps: Number(fd.get('currentSteps')),
+        walkingMinutes: Number(fd.get('walkingMinutes')),
+        wakeHour: Number(fd.get('wakeHour')),
+        wakeMinute: Number(fd.get('wakeMinute')),
+        wakeAmPm: fd.get('wakeAmPm'),
+        sleepChallenge: fd.get('sleepChallenge'),
+        macroStyle: fd.get('macroStyle'),
+        walkingLevel: fd.get('walkingLevel'),
+        walkDaysPerWeek: 6,
+        priorities,
+      };
+    }
+
+    function renderSection(title, rows) {
+      const rowsHtml = rows
+        .map(([k, v]) => `<div class="flex justify-between border-b border-sage-100 py-2 text-sm"><span class="text-muted">${k}</span><span class="font-medium text-ink">${v}</span></div>`)
+        .join('');
+      return `<div class="rounded-2xl border border-sage-100 bg-white p-6"><h3 class="font-display font-bold text-sage-900">${title}</h3><div class="mt-3">${rowsHtml}</div></div>`;
+    }
+
+    function renderPlan(plan) {
+      document.getElementById('survey-form').classList.add('hidden');
+      document.getElementById('nav-buttons').classList.add('hidden');
+      document.getElementById('plan-result').classList.remove('hidden');
+
+      const heading = plan.survey.name ? `${plan.survey.name}'s Health Plan` : 'Your Health Plan';
+      document.getElementById('result-heading').textContent = heading;
+      document.getElementById('result-summary').textContent = plan.summary;
+
+      const sections = [
+        renderSection('Body & energy', [
+          ['BMI', `${plan.body.bmi} — ${plan.body.category}`],
+          ['Healthy weight', `${plan.body.idealWeight.lowKg}–${plan.body.idealWeight.highKg} kg`],
+          ['Daily calories', plan.energy.targetCalories.toLocaleString()],
+          ['TDEE', plan.energy.tdee.toLocaleString()],
+        ]),
+        renderSection('Nutrition', [
+          ['Protein', `${plan.nutrition.grams} g`],
+          ['Macros', plan.nutrition.splitLabel],
+          ['Breakfast', `${plan.nutrition.meals.breakfast.cal} cal`],
+          ['Lunch', `${plan.nutrition.meals.lunch.cal} cal`],
+          ['Dinner', `${plan.nutrition.meals.dinner.cal} cal`],
+        ]),
+        renderSection('Hydration & movement', [
+          ['Water', `${plan.hydration.oz} oz (${plan.hydration.liters} L)`],
+          ['Step goal', plan.movement.stepGoal.toLocaleString()],
+          ['Walking burn', `${plan.movement.walking.calories} cal / ${plan.survey.walkingMinutes} min`],
+          ['Heart rate (moderate)', plan.movement.heartRate.moderate],
+        ]),
+        renderSection('Sleep', [
+          ['Best bedtime', plan.sleep.bedtimes[0]?.time ?? '—'],
+          ['Sleep target', plan.sleep.bedtimes[0]?.label ?? '—'],
+        ]),
+      ];
+      document.getElementById('result-sections').innerHTML = sections.join('');
+
+      document.getElementById('result-tools').innerHTML = plan.recommendedTools
+        .slice(0, 8)
+        .map(
+          (t) => `
+        <a href="${t.href}" class="block rounded-xl border border-sage-200 bg-white px-4 py-3 text-sm transition hover:border-sage-400">
+          <span class="font-semibold text-sage-900">${t.title}</span>
+        </a>`,
+        )
+        .join('');
+
+      const articles = plan.recommendedArticles
+        .map((id) => articleData.find((a) => a.id === id))
+        .filter(Boolean);
+      document.getElementById('result-articles').innerHTML = articles
+        .map(
+          (a) => `
+        <a href="/articles/${a.id}" class="block rounded-xl border border-sage-200 bg-white p-4 transition hover:border-sage-400">
+          <h4 class="font-semibold text-sage-900">${a.title}</h4>
+          <p class="mt-1 text-sm text-muted line-clamp-2">${a.description}</p>
+        </a>`,
+        )
+        .join('');
+    }
+
+    document.getElementById('generate-btn')?.addEventListener('click', () => {
+      currentPlan = buildHealthPlan(collectSurvey());
+      renderPlan(currentPlan);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('download-pdf')?.addEventListener('click', () => {
+      if (currentPlan) generatePlanPdf(currentPlan);
+    });
+
+    document.getElementById('restart-survey')?.addEventListener('click', () => location.reload());
+  </script>
+</BaseLayout>
