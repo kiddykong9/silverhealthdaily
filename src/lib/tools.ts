@@ -60,6 +60,12 @@ export const TOOLS = [
     category: 'body',
   },
   {
+    href: '/tools/walking-calorie-calculator',
+    title: 'Walking Calories',
+    description: 'Calories burned on your daily walk.',
+    category: 'fitness',
+  },
+  {
     href: '/tools/bedtime-calculator',
     title: 'Bedtime Calculator',
     description: 'Best bedtimes based on sleep cycles and wake time.',
