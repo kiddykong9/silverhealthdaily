@@ -1,0 +1,388 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import ToolSidebar from '../../components/ToolSidebar.astro';
+import { NUTRITION_LABEL_ROWS } from '../../lib/nutrition';
+---
+
+<BaseLayout
+  title="Food Nutrition Calculator"
+  description="Search 300,000+ foods from the USDA database. Full nutrition facts — calories, protein, fat, carbs, sugar, sodium, and more."
+>
+  <section class="bg-gradient-to-br from-emerald-600 to-green-700 py-12">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-white sm:text-4xl">Food Nutrition Calculator</h1>
+      <p class="mt-2 text-white/85">
+        Search any food from the USDA FoodData Central database — branded products, whole foods, and restaurant survey items.
+      </p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="grid gap-10 lg:grid-cols-[1fr_280px]">
+      <div class="space-y-6">
+        <!-- Search -->
+        <div class="tool-panel">
+          <div class="tool-panel-header">
+            <p class="font-semibold text-white">Search foods</p>
+          </div>
+          <div class="p-6">
+            <div class="flex flex-col gap-4 sm:flex-row">
+              <input
+                id="search-input"
+                type="search"
+                placeholder="e.g. banana, chicken breast, Cheerios…"
+                class="form-input flex-1"
+                autocomplete="off"
+              />
+              <button type="button" id="search-btn" class="form-submit shrink-0 sm:!w-auto">Search</button>
+            </div>
+            <label class="mt-3 flex items-center gap-2 text-sm text-ink-soft">
+              <input id="include-branded" type="checkbox" checked class="rounded border-sage-300 text-sage-700" />
+              Include branded & packaged products
+            </label>
+            <p id="search-status" class="mt-3 text-sm text-muted" aria-live="polite"></p>
+            <ul id="search-results" class="mt-4 max-h-80 space-y-2 overflow-y-auto"></ul>
+          </div>
+        </div>
+
+        <!-- Selected food nutrition label -->
+        <div id="detail-panel" class="tool-panel hidden">
+          <div class="tool-panel-header">
+            <p id="detail-title" class="font-semibold text-white"></p>
+          </div>
+          <div class="p-6">
+            <p id="detail-meta" class="text-sm text-muted"></p>
+
+            <div class="mt-4 flex flex-wrap items-end gap-4">
+              <div>
+                <label for="servings" class="form-label">Servings</label>
+                <input id="servings" type="number" min="0.25" max="20" step="0.25" value="1" class="form-input !w-28" />
+              </div>
+              <button type="button" id="add-btn" class="form-submit !w-auto !px-6 !py-2.5 !text-sm">
+                Add to log
+              </button>
+            </div>
+
+            <div class="nutrition-label mt-6 max-w-sm">
+              <p class="text-lg font-bold text-ink">Nutrition Facts</p>
+              <p id="label-serving" class="border-b-4 border-ink pb-1 text-sm text-muted"></p>
+              <div class="border-b border-ink py-1">
+                <p class="text-sm font-bold">Amount per serving</p>
+                <p class="flex items-end gap-2">
+                  <span class="text-3xl font-black leading-none">Calories</span>
+                  <span id="label-calories" class="ml-auto text-3xl font-black leading-none">—</span>
+                </p>
+              </div>
+              <p class="border-b border-ink py-0.5 text-right text-xs font-bold">% Daily Value*</p>
+              <div id="label-rows"></div>
+              <p class="mt-2 text-[10px] leading-tight text-muted">
+                * Percent Daily Values based on a 2,000 calorie diet. Data from USDA FoodData Central — values are estimates.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Food log -->
+        <div class="tool-panel">
+          <div class="tool-panel-header flex items-center justify-between gap-4">
+            <p class="font-semibold text-white">Your food log</p>
+            <button type="button" id="clear-log" class="text-sm text-white/80 underline hover:text-white">
+              Clear all
+            </button>
+          </div>
+          <div class="p-6">
+            <ul id="log-list" class="space-y-2 text-sm">
+              <li id="log-empty" class="rounded-lg bg-sage-50 px-4 py-6 text-center text-muted">
+                Search for a food above, then add it here to track your meal.
+              </li>
+            </ul>
+            <div id="log-totals" class="nutrition-label mt-6 hidden max-w-sm">
+              <p class="text-lg font-bold text-ink">Daily totals</p>
+              <div class="border-b-4 border-ink pb-1">
+                <p class="flex items-end gap-2">
+                  <span class="text-2xl font-black">Calories</span>
+                  <span id="total-calories" class="ml-auto text-2xl font-black">0</span>
+                </p>
+              </div>
+              <div id="total-rows"></div>
+            </div>
+          </div>
+        </div>
+
+        <AdSlot slot="4444444444" />
+      </div>
+
+      <aside class="lg:sticky lg:top-24 lg:self-start">
+        <ToolSidebar current="/tools/food-calorie-calculator" />
+      </aside>
+    </div>
+  </div>
+
+  <style>
+    .nutrition-label {
+      border: 2px solid #1a1a1a;
+      padding: 0.75rem;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #ccc;
+      padding: 0.2rem 0;
+      font-size: 0.875rem;
+    }
+    .label-row.indent {
+      padding-left: 1rem;
+    }
+    .label-row.bold {
+      font-weight: 700;
+    }
+  </style>
+
+  <script define:vars={{ labelRows: NUTRITION_LABEL_ROWS }}>
+    /** @typedef {{ fdcId: number, description: string, brandOwner?: string, dataType: string, servingSize: number|null, servingSizeUnit: string|null, householdServing?: string, nutrition: Record<string, number|null> }} ParsedFood */
+
+    /** @type {ParsedFood|null} */
+    let selected = null;
+    /** @type {{ uid: string, food: ParsedFood, servings: number }[]} */
+    let log = [];
+
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const searchStatus = document.getElementById('search-status');
+    const searchResults = document.getElementById('search-results');
+    const includeBranded = document.getElementById('include-branded');
+    const detailPanel = document.getElementById('detail-panel');
+    const detailTitle = document.getElementById('detail-title');
+    const detailMeta = document.getElementById('detail-meta');
+    const servingsEl = document.getElementById('servings');
+    const addBtn = document.getElementById('add-btn');
+    const labelServing = document.getElementById('label-serving');
+    const labelCalories = document.getElementById('label-calories');
+    const labelRowsEl = document.getElementById('label-rows');
+    const logList = document.getElementById('log-list');
+    const logEmpty = document.getElementById('log-empty');
+    const logTotals = document.getElementById('log-totals');
+    const totalCalories = document.getElementById('total-calories');
+    const totalRowsEl = document.getElementById('total-rows');
+
+    const DV = {
+      totalFat: 78,
+      saturatedFat: 20,
+      cholesterol: 300,
+      sodium: 2300,
+      totalCarbs: 275,
+      fiber: 28,
+      addedSugars: 50,
+      protein: 50,
+      vitaminD: 20,
+      calcium: 1300,
+      iron: 18,
+      potassium: 4700,
+    };
+
+    function formatVal(key, val) {
+      if (val == null) return '—';
+      if (key === 'calories') return String(Math.round(val));
+      if (val < 0.01 && val > 0) return '<0.01';
+      return String(val);
+    }
+
+    function servingText(food, mult = 1) {
+      const base =
+        food.householdServing ||
+        (food.servingSize && food.servingSizeUnit
+          ? `${food.servingSize} ${food.servingSizeUnit}`
+          : '1 serving');
+      return mult === 1 ? base : `${mult} × ${base}`;
+    }
+
+    function scaleNutrition(nutrition, mult) {
+      const out = {};
+      for (const [k, v] of Object.entries(nutrition)) {
+        out[k] = v != null ? Math.round(v * mult * 100) / 100 : null;
+      }
+      return out;
+    }
+
+    function renderLabelRows(container, nutrition, showDv = true) {
+      container.innerHTML = labelRows
+        .filter((r) => r.key !== 'calories')
+        .map((row) => {
+          const val = nutrition[row.key];
+          if (val == null && row.key !== 'transFat') return '';
+          const dv = DV[row.key];
+          const pct = dv && val != null ? Math.round((val / dv) * 100) : null;
+          return `<div class="label-row${row.indent ? ' indent' : ''}${row.bold ? ' bold' : ''}">
+            <span>${row.label} ${val != null ? formatVal(row.key, val) + row.unit : ''}</span>
+            ${showDv && pct != null ? `<span>${pct}%</span>` : '<span></span>'}
+          </div>`;
+        })
+        .join('');
+    }
+
+    function renderDetail() {
+      if (!selected) return;
+      const mult = Number(servingsEl.value) || 1;
+      const n = scaleNutrition(selected.nutrition, mult);
+
+      detailTitle.textContent = selected.description;
+      detailMeta.textContent = [
+        selected.brandOwner,
+        selected.dataType,
+        selected.fdcId ? `FDC #${selected.fdcId}` : '',
+      ]
+        .filter(Boolean)
+        .join(' · ');
+
+      labelServing.textContent = `Serving size ${servingText(selected, mult)}`;
+      labelCalories.textContent = formatVal('calories', n.calories);
+      renderLabelRows(labelRowsEl, n);
+    }
+
+    async function runSearch() {
+      const q = searchInput.value.trim();
+      if (q.length < 2) {
+        searchStatus.textContent = 'Enter at least 2 characters.';
+        return;
+      }
+
+      searchStatus.textContent = 'Searching USDA database…';
+      searchResults.innerHTML = '';
+      searchBtn.disabled = true;
+
+      try {
+        const branded = includeBranded.checked ? '1' : '0';
+        const res = await fetch(`/api/food-search?q=${encodeURIComponent(q)}&branded=${branded}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Search failed');
+
+        searchStatus.textContent = `${data.totalHits.toLocaleString()} results — showing ${data.foods.length}`;
+        searchResults.innerHTML = data.foods
+          .map((food) => {
+            const cal = food.nutrition?.calories;
+            const sub = [food.brandOwner, food.dataType].filter(Boolean).join(' · ');
+            return `<li>
+              <button type="button" data-fdc="${food.fdcId}" class="w-full rounded-xl border border-sage-200 bg-white px-4 py-3 text-left transition hover:border-sage-400 hover:bg-sage-50">
+                <span class="block font-medium text-ink">${food.description}</span>
+                <span class="block text-xs text-muted">${sub}${cal != null ? ` · ${Math.round(cal)} cal/serving` : ''}</span>
+              </button>
+            </li>`;
+          })
+          .join('');
+
+        searchResults.querySelectorAll('[data-fdc]').forEach((btn) => {
+          btn.addEventListener('click', () => selectFood(Number(btn.dataset.fdc), data.foods));
+        });
+      } catch (err) {
+        searchStatus.textContent = err.message || 'Search unavailable. Try again later.';
+      } finally {
+        searchBtn.disabled = false;
+      }
+    }
+
+    async function selectFood(fdcId, cachedFoods) {
+      detailPanel.classList.remove('hidden');
+      detailTitle.textContent = 'Loading…';
+      servingsEl.value = '1';
+
+      const cached = cachedFoods?.find((f) => f.fdcId === fdcId);
+      if (cached?.nutrition?.calories != null) {
+        selected = cached;
+        renderDetail();
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/food/${fdcId}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to load food');
+        selected = data;
+        renderDetail();
+      } catch (err) {
+        detailMeta.textContent = err.message;
+      }
+    }
+
+    function renderLog() {
+      if (log.length === 0) {
+        logEmpty.classList.remove('hidden');
+        logTotals.classList.add('hidden');
+        logList.querySelectorAll('[data-entry]').forEach((el) => el.remove());
+        return;
+      }
+
+      logEmpty.classList.add('hidden');
+      logTotals.classList.remove('hidden');
+      logList.querySelectorAll('[data-entry]').forEach((el) => el.remove());
+
+      const allNutrition = [];
+
+      log.forEach((entry) => {
+        const n = scaleNutrition(entry.food.nutrition, entry.servings);
+        allNutrition.push(n);
+
+        const li = document.createElement('li');
+        li.dataset.entry = entry.uid;
+        li.className =
+          'flex items-center justify-between gap-3 rounded-lg border border-sage-100 bg-white px-4 py-3';
+        li.innerHTML = `
+          <span>
+            <span class="font-medium text-ink">${entry.food.description}</span>
+            <span class="block text-muted">${servingText(entry.food, entry.servings)}</span>
+          </span>
+          <span class="flex items-center gap-3 shrink-0">
+            <span class="font-semibold text-sage-800">${formatVal('calories', n.calories)} cal</span>
+            <button type="button" data-remove="${entry.uid}" class="text-muted hover:text-red-600" aria-label="Remove">✕</button>
+          </span>`;
+        logList.appendChild(li);
+      });
+
+      const totals = {};
+      for (const n of allNutrition) {
+        for (const [k, v] of Object.entries(n)) {
+          if (v != null) totals[k] = Math.round(((totals[k] ?? 0) + v) * 100) / 100;
+        }
+      }
+
+      totalCalories.textContent = formatVal('calories', totals.calories);
+      renderLabelRows(totalRowsEl, totals, false);
+    }
+
+    searchBtn.addEventListener('click', runSearch);
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') runSearch();
+    });
+
+    let debounce;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(runSearch, 450);
+    });
+
+    servingsEl.addEventListener('input', renderDetail);
+    addBtn.addEventListener('click', () => {
+      if (!selected) return;
+      const servings = Number(servingsEl.value) || 1;
+      log.push({
+        uid: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        food: selected,
+        servings,
+      });
+      renderLog();
+    });
+
+    logList.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-remove]');
+      if (!btn) return;
+      log = log.filter((x) => x.uid !== btn.dataset.remove);
+      renderLog();
+    });
+
+    document.getElementById('clear-log').addEventListener('click', () => {
+      log = [];
+      renderLog();
+    });
+  </script>
+</BaseLayout>

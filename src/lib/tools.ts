@@ -18,6 +18,12 @@ export const TOOLS = [
     category: 'nutrition',
   },
   {
+    href: '/tools/food-calorie-calculator',
+    title: 'Food Nutrition Calculator',
+    description: 'Search 300k+ USDA foods with full nutrition facts — calories, protein, fat, sugar, and more.',
+    category: 'nutrition',
+  },
+  {
     href: '/tools/walking-calorie-calculator',
     title: 'Walking Calories',
     description: 'Calories burned on your daily walk.',

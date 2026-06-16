@@ -155,6 +155,7 @@ export const TOOL_IMAGES = {
   water: { src: u(PHOTOS.waterGlass), alt: 'Close-up of a glass of water for healthy hydration' },
   walking: CATEGORY_IMAGES.fitness,
   protein: { src: u(PHOTOS.healthySpread), alt: 'Protein-rich whole foods on a table' },
+  foodCalories: { src: u(PHOTOS.breakfastKitchen), alt: 'Healthy breakfast prepared in a home kitchen' },
   bedtime: CATEGORY_IMAGES.sleep,
   habits: CATEGORY_IMAGES.wellness,
   walkingPlan: { src: u(PHOTOS.outdoorWalk), alt: 'Person walking outdoors on a sunny path' },

@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v6.4.7"><title>Food Nutrition Calculator | Silver Health Daily</title><meta name="description" content="Search 300,000+ foods from the USDA database. Full nutrition facts — calories, protein, fat, carbs, sugar, sodium, and more."><link rel="canonical" href="https://silverhealthdaily.com/tools/food-calorie-calculator/"><meta property="og:site_name" content="Silver Health Daily"><meta property="og:title" content="Food Nutrition Calculator | Silver Health Daily"><meta property="og:description" content="Search 300,000+ foods from the USDA database. Full nutrition facts — calories, protein, fat, carbs, sugar, sodium, and more."><meta property="og:url" content="https://silverhealthdaily.com/tools/food-calorie-calculator/"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Food Nutrition Calculator | Silver Health Daily"><meta name="twitter:description" content="Search 300,000+ foods from the USDA database. Full nutrition facts — calories, protein, fat, carbs, sugar, sodium, and more."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="alternate" type="application/rss+xml" title="Silver Health Daily RSS" href="/rss.xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://images.unsplash.com"><link rel="preconnect" href="https://www.youtube-nocookie.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/BaseLayout.DX3fm-l9.css"><style>.nutrition-label[data-astro-cid-ikmaex5y]{border:2px solid #1a1a1a;padding:.75rem;font-family:ui-sans-serif,system-ui,sans-serif}.label-row[data-astro-cid-ikmaex5y]{display:flex;justify-content:space-between;border-bottom:1px solid #ccc;padding:.2rem 0;font-size:.875rem}.label-row[data-astro-cid-ikmaex5y].indent{padding-left:1rem}.label-row[data-astro-cid-ikmaex5y].bold{font-weight:700}
+</style></head> <body class="min-h-screen flex flex-col"> <header class="sticky top-0 z-50 border-b border-sage-100/80 bg-cream/90 backdrop-blur-md"> <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-4"> <a href="/" class="group flex items-center gap-3 min-w-0"> <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage-700 shadow-md shadow-sage-700/25 transition group-hover:bg-sage-800"> <svg class="h-6 w-6 text-gold-light" viewBox="0 0 24 24" fill="none" aria-hidden="true"> <path d="M12 3c-3 0-5 2.5-5 6 0 4 2 8 5 12 3-4 5-8 5-12 0-3.5-2-6-5-6z" fill="currentColor" opacity="0.9"></path> <circle cx="12" cy="9" r="2" fill="#2f5439"></circle> </svg> </span> <span class="min-w-0"> <span class="font-display block truncate text-lg font-bold leading-tight text-sage-900 sm:text-xl"> Silver Health Daily </span> <span class="hidden text-xs font-medium text-gold sm:block">Live well at every age</span> </span> </a> <nav class="hidden items-center gap-1 md:flex" aria-label="Main"> <a href="/start" class="rounded-full px-4 py-2 text-sm font-semibold transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Get Started </a><a href="/articles" class="rounded-full px-4 py-2 text-sm font-semibold transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Articles </a><a href="/tools" class="rounded-full px-4 py-2 text-sm font-semibold transition bg-sage-100 text-sage-800"> Tools </a><a href="/about" class="rounded-full px-4 py-2 text-sm font-semibold transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> About </a> </nav> <div class="flex items-center gap-2"> <a href="/articles" class="btn-primary hidden !px-5 !py-2.5 !text-sm sm:inline-flex">
+Start reading
+</a> <a href="/articles" class="btn-primary !px-4 !py-2 !text-sm sm:hidden">
+Read
+</a> </div> </div> </header> <main class="flex-1">  <section class="bg-gradient-to-br from-emerald-600 to-green-700 py-12" data-astro-cid-ikmaex5y> <div class="mx-auto max-w-3xl px-4 sm:px-6" data-astro-cid-ikmaex5y> <h1 class="font-display text-3xl font-bold text-white sm:text-4xl" data-astro-cid-ikmaex5y>Food Nutrition Calculator</h1> <p class="mt-2 text-white/85" data-astro-cid-ikmaex5y>
+Search any food from the USDA FoodData Central database — branded products, whole foods, and restaurant survey items.
+</p> </div> </section> <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6" data-astro-cid-ikmaex5y> <div class="grid gap-10 lg:grid-cols-[1fr_280px]" data-astro-cid-ikmaex5y> <div class="space-y-6" data-astro-cid-ikmaex5y> <!-- Search --> <div class="tool-panel" data-astro-cid-ikmaex5y> <div class="tool-panel-header" data-astro-cid-ikmaex5y> <p class="font-semibold text-white" data-astro-cid-ikmaex5y>Search foods</p> </div> <div class="p-6" data-astro-cid-ikmaex5y> <div class="flex flex-col gap-4 sm:flex-row" data-astro-cid-ikmaex5y> <input id="search-input" type="search" placeholder="e.g. banana, chicken breast, Cheerios…" class="form-input flex-1" autocomplete="off" data-astro-cid-ikmaex5y> <button type="button" id="search-btn" class="form-submit shrink-0 sm:!w-auto" data-astro-cid-ikmaex5y>Search</button> </div> <label class="mt-3 flex items-center gap-2 text-sm text-ink-soft" data-astro-cid-ikmaex5y> <input id="include-branded" type="checkbox" checked class="rounded border-sage-300 text-sage-700" data-astro-cid-ikmaex5y>
+Include branded & packaged products
+</label> <p id="search-status" class="mt-3 text-sm text-muted" aria-live="polite" data-astro-cid-ikmaex5y></p> <ul id="search-results" class="mt-4 max-h-80 space-y-2 overflow-y-auto" data-astro-cid-ikmaex5y></ul> </div> </div> <!-- Selected food nutrition label --> <div id="detail-panel" class="tool-panel hidden" data-astro-cid-ikmaex5y> <div class="tool-panel-header" data-astro-cid-ikmaex5y> <p id="detail-title" class="font-semibold text-white" data-astro-cid-ikmaex5y></p> </div> <div class="p-6" data-astro-cid-ikmaex5y> <p id="detail-meta" class="text-sm text-muted" data-astro-cid-ikmaex5y></p> <div class="mt-4 flex flex-wrap items-end gap-4" data-astro-cid-ikmaex5y> <div data-astro-cid-ikmaex5y> <label for="servings" class="form-label" data-astro-cid-ikmaex5y>Servings</label> <input id="servings" type="number" min="0.25" max="20" step="0.25" value="1" class="form-input !w-28" data-astro-cid-ikmaex5y> </div> <button type="button" id="add-btn" class="form-submit !w-auto !px-6 !py-2.5 !text-sm" data-astro-cid-ikmaex5y>
+Add to log
+</button> </div> <div class="nutrition-label mt-6 max-w-sm" data-astro-cid-ikmaex5y> <p class="text-lg font-bold text-ink" data-astro-cid-ikmaex5y>Nutrition Facts</p> <p id="label-serving" class="border-b-4 border-ink pb-1 text-sm text-muted" data-astro-cid-ikmaex5y></p> <div class="border-b border-ink py-1" data-astro-cid-ikmaex5y> <p class="text-sm font-bold" data-astro-cid-ikmaex5y>Amount per serving</p> <p class="flex items-end gap-2" data-astro-cid-ikmaex5y> <span class="text-3xl font-black leading-none" data-astro-cid-ikmaex5y>Calories</span> <span id="label-calories" class="ml-auto text-3xl font-black leading-none" data-astro-cid-ikmaex5y>—</span> </p> </div> <p class="border-b border-ink py-0.5 text-right text-xs font-bold" data-astro-cid-ikmaex5y>% Daily Value*</p> <div id="label-rows" data-astro-cid-ikmaex5y></div> <p class="mt-2 text-[10px] leading-tight text-muted" data-astro-cid-ikmaex5y>
+* Percent Daily Values based on a 2,000 calorie diet. Data from USDA FoodData Central — values are estimates.
+</p> </div> </div> </div> <!-- Food log --> <div class="tool-panel" data-astro-cid-ikmaex5y> <div class="tool-panel-header flex items-center justify-between gap-4" data-astro-cid-ikmaex5y> <p class="font-semibold text-white" data-astro-cid-ikmaex5y>Your food log</p> <button type="button" id="clear-log" class="text-sm text-white/80 underline hover:text-white" data-astro-cid-ikmaex5y>
+Clear all
+</button> </div> <div class="p-6" data-astro-cid-ikmaex5y> <ul id="log-list" class="space-y-2 text-sm" data-astro-cid-ikmaex5y> <li id="log-empty" class="rounded-lg bg-sage-50 px-4 py-6 text-center text-muted" data-astro-cid-ikmaex5y>
+Search for a food above, then add it here to track your meal.
+</li> </ul> <div id="log-totals" class="nutrition-label mt-6 hidden max-w-sm" data-astro-cid-ikmaex5y> <p class="text-lg font-bold text-ink" data-astro-cid-ikmaex5y>Daily totals</p> <div class="border-b-4 border-ink pb-1" data-astro-cid-ikmaex5y> <p class="flex items-end gap-2" data-astro-cid-ikmaex5y> <span class="text-2xl font-black" data-astro-cid-ikmaex5y>Calories</span> <span id="total-calories" class="ml-auto text-2xl font-black" data-astro-cid-ikmaex5y>0</span> </p> </div> <div id="total-rows" data-astro-cid-ikmaex5y></div> </div> </div> </div> <div class="ad-container my-6 " aria-label="Advertisement"> <div class="ad-placeholder" role="complementary"> <span>Advertisement — add PUBLIC_ADSENSE_CLIENT_ID to enable</span> </div> </div> <script type="module">const e=document.querySelector(".adsbygoogle")?.getAttribute("data-ad-client");e&&typeof window<"u"&&(window.adsbygoogle=window.adsbygoogle||[]).push({});</script> </div> <aside class="lg:sticky lg:top-24 lg:self-start" data-astro-cid-ikmaex5y> <div class="overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-sage-100"> <div class="bg-sage-700 px-5 py-4"> <p class="font-display font-bold text-white">Free health tools</p> </div> <ul class="max-h-80 space-y-0.5 overflow-y-auto p-3 text-sm"> <li> <a href="/tools/bmi-calculator" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> BMI Calculator </a> </li><li> <a href="/tools/water-intake-calculator" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Water Intake </a> </li><li> <a href="/tools/protein-calculator" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Protein Calculator </a> </li><li> <a href="/tools/food-calorie-calculator" class="block rounded-lg px-3 py-2 font-medium transition bg-sage-100 text-sage-900"> Food Nutrition Calculator </a> </li><li> <a href="/tools/walking-calorie-calculator" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Walking Calories </a> </li><li> <a href="/tools/bedtime-calculator" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Bedtime Calculator </a> </li><li> <a href="/tools/target-heart-rate-calculator" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Target Heart Rate </a> </li><li> <a href="/tools/step-goal-calculator" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Step Goal </a> </li><li> <a href="/tools/7-day-walking-plan" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> 7-Day Walking Plan </a> </li><li> <a href="/tools/7-day-hydration-plan" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> 7-Day Hydration Plan </a> </li><li> <a href="/tools/7-day-sleep-plan" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> 7-Day Sleep Plan </a> </li><li> <a href="/tools/habit-tracker" class="block rounded-lg px-3 py-2 font-medium transition text-ink-soft hover:bg-sage-50 hover:text-sage-800"> Habit Tracker </a> </li> </ul> <div class="border-t border-sage-100 px-4 py-3"> <a href="/start" class="text-sm font-semibold text-sage-700 hover:text-sage-900">
+Get a personalized plan →
+</a> </div> </div> </aside> </div> </div>  <script>(function(){const labelRows = [{"key":"calories","label":"Calories","unit":"kcal","bold":true},{"key":"totalFat","label":"Total Fat","unit":"g","bold":true},{"key":"saturatedFat","label":"Saturated Fat","unit":"g","indent":true},{"key":"transFat","label":"Trans Fat","unit":"g","indent":true},{"key":"cholesterol","label":"Cholesterol","unit":"mg","bold":true},{"key":"sodium","label":"Sodium","unit":"mg","bold":true},{"key":"totalCarbs","label":"Total Carbohydrate","unit":"g","bold":true},{"key":"fiber","label":"Dietary Fiber","unit":"g","indent":true},{"key":"totalSugars","label":"Total Sugars","unit":"g","indent":true},{"key":"addedSugars","label":"Added Sugars","unit":"g","indent":true},{"key":"protein","label":"Protein","unit":"g","bold":true},{"key":"vitaminD","label":"Vitamin D","unit":"mcg"},{"key":"calcium","label":"Calcium","unit":"mg"},{"key":"iron","label":"Iron","unit":"mg"},{"key":"potassium","label":"Potassium","unit":"mg"}];
+
+    /** @typedef {{ fdcId: number, description: string, brandOwner?: string, dataType: string, servingSize: number|null, servingSizeUnit: string|null, householdServing?: string, nutrition: Record<string, number|null> }} ParsedFood */
+
+    /** @type {ParsedFood|null} */
+    let selected = null;
+    /** @type {{ uid: string, food: ParsedFood, servings: number }[]} */
+    let log = [];
+
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const searchStatus = document.getElementById('search-status');
+    const searchResults = document.getElementById('search-results');
+    const includeBranded = document.getElementById('include-branded');
+    const detailPanel = document.getElementById('detail-panel');
+    const detailTitle = document.getElementById('detail-title');
+    const detailMeta = document.getElementById('detail-meta');
+    const servingsEl = document.getElementById('servings');
+    const addBtn = document.getElementById('add-btn');
+    const labelServing = document.getElementById('label-serving');
+    const labelCalories = document.getElementById('label-calories');
+    const labelRowsEl = document.getElementById('label-rows');
+    const logList = document.getElementById('log-list');
+    const logEmpty = document.getElementById('log-empty');
+    const logTotals = document.getElementById('log-totals');
+    const totalCalories = document.getElementById('total-calories');
+    const totalRowsEl = document.getElementById('total-rows');
+
+    const DV = {
+      totalFat: 78,
+      saturatedFat: 20,
+      cholesterol: 300,
+      sodium: 2300,
+      totalCarbs: 275,
+      fiber: 28,
+      addedSugars: 50,
+      protein: 50,
+      vitaminD: 20,
+      calcium: 1300,
+      iron: 18,
+      potassium: 4700,
+    };
+
+    function formatVal(key, val) {
+      if (val == null) return '—';
+      if (key === 'calories') return String(Math.round(val));
+      if (val < 0.01 && val > 0) return '<0.01';
+      return String(val);
+    }
+
+    function servingText(food, mult = 1) {
+      const base =
+        food.householdServing ||
+        (food.servingSize && food.servingSizeUnit
+          ? `${food.servingSize} ${food.servingSizeUnit}`
+          : '1 serving');
+      return mult === 1 ? base : `${mult} × ${base}`;
+    }
+
+    function scaleNutrition(nutrition, mult) {
+      const out = {};
+      for (const [k, v] of Object.entries(nutrition)) {
+        out[k] = v != null ? Math.round(v * mult * 100) / 100 : null;
+      }
+      return out;
+    }
+
+    function renderLabelRows(container, nutrition, showDv = true) {
+      container.innerHTML = labelRows
+        .filter((r) => r.key !== 'calories')
+        .map((row) => {
+          const val = nutrition[row.key];
+          if (val == null && row.key !== 'transFat') return '';
+          const dv = DV[row.key];
+          const pct = dv && val != null ? Math.round((val / dv) * 100) : null;
+          return `<div class="label-row${row.indent ? ' indent' : ''}${row.bold ? ' bold' : ''}">
+            <span>${row.label} ${val != null ? formatVal(row.key, val) + row.unit : ''}</span>
+            ${showDv && pct != null ? `<span>${pct}%</span>` : '<span></span>'}
+          </div>`;
+        })
+        .join('');
+    }
+
+    function renderDetail() {
+      if (!selected) return;
+      const mult = Number(servingsEl.value) || 1;
+      const n = scaleNutrition(selected.nutrition, mult);
+
+      detailTitle.textContent = selected.description;
+      detailMeta.textContent = [
+        selected.brandOwner,
+        selected.dataType,
+        selected.fdcId ? `FDC #${selected.fdcId}` : '',
+      ]
+        .filter(Boolean)
+        .join(' · ');
+
+      labelServing.textContent = `Serving size ${servingText(selected, mult)}`;
+      labelCalories.textContent = formatVal('calories', n.calories);
+      renderLabelRows(labelRowsEl, n);
+    }
+
+    async function runSearch() {
+      const q = searchInput.value.trim();
+      if (q.length < 2) {
+        searchStatus.textContent = 'Enter at least 2 characters.';
+        return;
+      }
+
+      searchStatus.textContent = 'Searching USDA database…';
+      searchResults.innerHTML = '';
+      searchBtn.disabled = true;
+
+      try {
+        const branded = includeBranded.checked ? '1' : '0';
+        const res = await fetch(`/api/food-search?q=${encodeURIComponent(q)}&branded=${branded}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Search failed');
+
+        searchStatus.textContent = `${data.totalHits.toLocaleString()} results — showing ${data.foods.length}`;
+        searchResults.innerHTML = data.foods
+          .map((food) => {
+            const cal = food.nutrition?.calories;
+            const sub = [food.brandOwner, food.dataType].filter(Boolean).join(' · ');
+            return `<li>
+              <button type="button" data-fdc="${food.fdcId}" class="w-full rounded-xl border border-sage-200 bg-white px-4 py-3 text-left transition hover:border-sage-400 hover:bg-sage-50">
+                <span class="block font-medium text-ink">${food.description}</span>
+                <span class="block text-xs text-muted">${sub}${cal != null ? ` · ${Math.round(cal)} cal/serving` : ''}</span>
+              </button>
+            </li>`;
+          })
+          .join('');
+
+        searchResults.querySelectorAll('[data-fdc]').forEach((btn) => {
+          btn.addEventListener('click', () => selectFood(Number(btn.dataset.fdc), data.foods));
+        });
+      } catch (err) {
+        searchStatus.textContent = err.message || 'Search unavailable. Try again later.';
+      } finally {
+        searchBtn.disabled = false;
+      }
+    }
+
+    async function selectFood(fdcId, cachedFoods) {
+      detailPanel.classList.remove('hidden');
+      detailTitle.textContent = 'Loading…';
+      servingsEl.value = '1';
+
+      const cached = cachedFoods?.find((f) => f.fdcId === fdcId);
+      if (cached?.nutrition?.calories != null) {
+        selected = cached;
+        renderDetail();
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/food/${fdcId}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to load food');
+        selected = data;
+        renderDetail();
+      } catch (err) {
+        detailMeta.textContent = err.message;
+      }
+    }
+
+    function renderLog() {
+      if (log.length === 0) {
+        logEmpty.classList.remove('hidden');
+        logTotals.classList.add('hidden');
+        logList.querySelectorAll('[data-entry]').forEach((el) => el.remove());
+        return;
+      }
+
+      logEmpty.classList.add('hidden');
+      logTotals.classList.remove('hidden');
+      logList.querySelectorAll('[data-entry]').forEach((el) => el.remove());
+
+      const allNutrition = [];
+
+      log.forEach((entry) => {
+        const n = scaleNutrition(entry.food.nutrition, entry.servings);
+        allNutrition.push(n);
+
+        const li = document.createElement('li');
+        li.dataset.entry = entry.uid;
+        li.className =
+          'flex items-center justify-between gap-3 rounded-lg border border-sage-100 bg-white px-4 py-3';
+        li.innerHTML = `
+          <span>
+            <span class="font-medium text-ink">${entry.food.description}</span>
+            <span class="block text-muted">${servingText(entry.food, entry.servings)}</span>
+          </span>
+          <span class="flex items-center gap-3 shrink-0">
+            <span class="font-semibold text-sage-800">${formatVal('calories', n.calories)} cal</span>
+            <button type="button" data-remove="${entry.uid}" class="text-muted hover:text-red-600" aria-label="Remove">✕</button>
+          </span>`;
+        logList.appendChild(li);
+      });
+
+      const totals = {};
+      for (const n of allNutrition) {
+        for (const [k, v] of Object.entries(n)) {
+          if (v != null) totals[k] = Math.round(((totals[k] ?? 0) + v) * 100) / 100;
+        }
+      }
+
+      totalCalories.textContent = formatVal('calories', totals.calories);
+      renderLabelRows(totalRowsEl, totals, false);
+    }
+
+    searchBtn.addEventListener('click', runSearch);
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') runSearch();
+    });
+
+    let debounce;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(runSearch, 450);
+    });
+
+    servingsEl.addEventListener('input', renderDetail);
+    addBtn.addEventListener('click', () => {
+      if (!selected) return;
+      const servings = Number(servingsEl.value) || 1;
+      log.push({
+        uid: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        food: selected,
+        servings,
+      });
+      renderLog();
+    });
+
+    logList.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-remove]');
+      if (!btn) return;
+      log = log.filter((x) => x.uid !== btn.dataset.remove);
+      renderLog();
+    });
+
+    document.getElementById('clear-log').addEventListener('click', () => {
+      log = [];
+      renderLog();
+    });
+  })();</script>  </main> <footer class="mt-20 bg-sage-900 text-sage-100"> <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6"> <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-4"> <div class="lg:col-span-2"> <div class="flex items-center gap-3"> <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-sage-700"> <svg class="h-5 w-5 text-gold-light" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"> <path d="M12 3c-3 0-5 2.5-5 6 0 4 2 8 5 12 3-4 5-8 5-12 0-3.5-2-6-5-6z"></path> </svg> </span> <p class="font-display text-xl font-bold text-white">Silver Health Daily</p> </div> <p class="mt-4 max-w-md text-sm leading-relaxed text-sage-200"> Warm, practical health guides and free tools for everyday wellness. Nutrition, movement, sleep, and heart health — written to be read in minutes, not medical textbooks. </p> <a href="mailto:hello@silverhealthdaily.com" class="mt-4 inline-block text-sm font-medium text-gold-light hover:text-white"> hello@silverhealthdaily.com </a> </div> <div> <p class="mb-4 text-xs font-bold uppercase tracking-widest text-gold">Explore</p> <ul class="space-y-2.5 text-sm"> <li> <a href="/start" class="text-sage-200 transition hover:text-white"> Get Started </a> </li><li> <a href="/articles" class="text-sage-200 transition hover:text-white"> Articles </a> </li><li> <a href="/tools" class="text-sage-200 transition hover:text-white"> Tools </a> </li><li> <a href="/about" class="text-sage-200 transition hover:text-white"> About </a> </li> </ul> </div> <div> <p class="mb-4 text-xs font-bold uppercase tracking-widest text-gold">Topics</p> <ul class="space-y-2.5 text-sm"> <li> <a href="/category/nutrition" class="text-sage-200 transition hover:text-white"> Nutrition </a> </li><li> <a href="/category/fitness" class="text-sage-200 transition hover:text-white"> Fitness </a> </li><li> <a href="/category/sleep" class="text-sage-200 transition hover:text-white"> Sleep </a> </li><li> <a href="/category/heart-health" class="text-sage-200 transition hover:text-white"> Heart Health </a> </li><li> <a href="/category/brain-memory" class="text-sage-200 transition hover:text-white"> Brain &amp; Memory </a> </li><li> <a href="/category/wellness" class="text-sage-200 transition hover:text-white"> Wellness </a> </li> </ul> </div> </div> <div class="mt-12 flex flex-col gap-4 border-t border-sage-700 pt-8 sm:flex-row sm:items-center sm:justify-between"> <p class="text-sm text-sage-300">
+© 2026 Silver Health Daily. For informational purposes only — not medical advice.
+</p> <div class="flex flex-wrap gap-4 text-sm"> <a href="/privacy" class="text-sage-300 hover:text-white">Privacy</a> <a href="/terms" class="text-sage-300 hover:text-white">Terms</a> <a href="/disclaimer" class="text-sage-300 hover:text-white">Disclaimer</a> <a href="/contact" class="text-sage-300 hover:text-white">Contact</a> </div> </div> </div> </footer> <div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-[100] hidden border-t border-sage-200 bg-white/95 p-4 shadow-2xl backdrop-blur-md" role="dialog" aria-label="Cookie consent"> <div class="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"> <p class="text-sm text-ink-soft">
+We use cookies for analytics and ads. See our
+<a href="/privacy" class="font-semibold text-sage-700 underline">Privacy Policy</a>.
+</p> <div class="flex shrink-0 gap-3"> <button id="cookie-decline" type="button" class="rounded-full border border-sage-200 px-5 py-2 text-sm font-semibold text-ink-soft transition hover:bg-sage-50">
+Decline
+</button> <button id="cookie-accept" type="button" class="rounded-full bg-sage-700 px-5 py-2 text-sm font-semibold text-white transition hover:bg-sage-800">
+Accept
+</button> </div> </div> </div> <script type="module">const t="shd_cookie_consent",e=document.getElementById("cookie-banner"),d=document.getElementById("cookie-accept"),o=document.getElementById("cookie-decline");e&&!localStorage.getItem(t)&&e.classList.remove("hidden");function n(c){localStorage.setItem(t,c),e?.classList.add("hidden"),c==="accepted"&&window.dispatchEvent(new Event("shd:consent-accepted"))}d?.addEventListener("click",()=>n("accepted"));o?.addEventListener("click",()=>n("declined"));</script>  <script type="module">const t=window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(t)document.querySelectorAll("[data-reveal]").forEach(e=>e.classList.add("is-visible"));else{const e=new IntersectionObserver(r=>{r.forEach(s=>{s.isIntersecting&&(s.target.classList.add("is-visible"),e.unobserve(s.target))})},{threshold:.12,rootMargin:"0px 0px -40px 0px"});document.querySelectorAll("[data-reveal]").forEach(r=>e.observe(r))}</script> </body> </html>
