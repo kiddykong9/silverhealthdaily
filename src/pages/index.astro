@@ -9,15 +9,27 @@ import VideoShowcase from '../components/VideoShowcase.astro';
 import CategoryCard from '../components/CategoryCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
+import DailyTip from '../components/DailyTip.astro';
 import { getCollection } from 'astro:content';
 import { SITE, CATEGORIES, TRUST_POINTS } from '../lib/site';
 import { TOOL_IMAGES, CATEGORY_IMAGES } from '../lib/media';
+import { TOOLS } from '../lib/tools';
 
 const articles = (await getCollection('articles'))
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 const featured = articles.filter((a) => a.data.featured).slice(0, 3);
 const latest = articles.slice(0, 6);
 const articleCount = articles.length;
+
+const homepageToolImages: Record<string, { src: string; alt: string }> = {
+  '/tools/bmi-calculator': TOOL_IMAGES.bmi,
+  '/tools/water-intake-calculator': TOOL_IMAGES.water,
+  '/tools/protein-calculator': TOOL_IMAGES.protein,
+  '/tools/walking-calorie-calculator': TOOL_IMAGES.walking,
+  '/tools/bedtime-calculator': TOOL_IMAGES.bedtime,
+  '/tools/habit-tracker': TOOL_IMAGES.habits,
+};
+const homepageTools = TOOLS.slice(0, 6);
 ---
 
 <BaseLayout>
@@ -46,7 +58,11 @@ const articleCount = articles.length;
     </div>
   </section>
 
-  <AdSlot slot="3333333333" format="horizontal" class="mx-auto max-w-6xl px-4 pt-10" />
+  <div class="py-6">
+    <DailyTip />
+  </div>
+
+  <AdSlot slot="3333333333" format="horizontal" class="mx-auto max-w-6xl px-4 pt-4" />
 
   <!-- Categories with photos -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
@@ -126,40 +142,42 @@ const articleCount = articles.length;
       <ScrollReveal>
         <SectionHeading
           label="Free tools"
-          title="Quick answers, no signup"
-          description="Handy calculators for BMI, hydration, and walking calories."
+          title="Calculators, planners & trackers"
+          description="BMI, hydration, protein, sleep, walking plans, and a daily habit tracker — no signup required."
           centered
         />
       </ScrollReveal>
-      <div class="grid gap-5 md:grid-cols-3">
-        <ScrollReveal delay={0}>
-          <ToolCard
-            title="BMI Calculator"
-            description="Check your body mass index with plain-language context you can actually use."
-            href="/tools/bmi-calculator"
-            image={TOOL_IMAGES.bmi.src}
-            imageAlt={TOOL_IMAGES.bmi.alt}
-          />
-        </ScrollReveal>
-        <ScrollReveal delay={100}>
-          <ToolCard
-            title="Water Intake"
-            description="Estimate how much water your body needs daily."
-            href="/tools/water-intake-calculator"
-            image={TOOL_IMAGES.water.src}
-            imageAlt={TOOL_IMAGES.water.alt}
-          />
-        </ScrollReveal>
-        <ScrollReveal delay={200}>
-          <ToolCard
-            title="Walking Calories"
-            description="See how much your daily walk is doing for your health."
-            href="/tools/walking-calorie-calculator"
-            image={TOOL_IMAGES.walking.src}
-            imageAlt={TOOL_IMAGES.walking.alt}
-          />
-        </ScrollReveal>
+      <div class="mb-8 text-center">
+        <a
+          href="/start"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-sage-700 hover:text-sage-900"
+        >
+          Get a personalized plan →
+        </a>
       </div>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          homepageTools.map((tool, i) => {
+            const img = homepageToolImages[tool.href] ?? TOOL_IMAGES.bmi;
+            return (
+              <ScrollReveal delay={i * 60}>
+                <ToolCard
+                  title={tool.title}
+                  description={tool.description}
+                  href={tool.href}
+                  image={img.src}
+                  imageAlt={img.alt}
+                />
+              </ScrollReveal>
+            );
+          })
+        }
+      </div>
+      <p class="mt-8 text-center">
+        <a href="/tools" class="btn-primary !inline-flex">
+          View all {TOOLS.length} tools
+        </a>
+      </p>
     </div>
   </section>
 
@@ -183,8 +201,8 @@ const articleCount = articles.length;
           <p class="mx-auto mt-4 max-w-lg text-sage-200">
             Bookmark {SITE.name} and check back for new guides. Your future self will thank you.
           </p>
-          <a href="/articles" class="btn-primary mt-8 !bg-white !text-sage-800 !shadow-none hover:!bg-cream">
-            Explore all articles
+          <a href="/start" class="btn-primary mt-8 !bg-white !text-sage-800 !shadow-none hover:!bg-cream">
+            Get your personalized plan
           </a>
         </div>
       </div>

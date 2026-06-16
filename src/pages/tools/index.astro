@@ -3,42 +3,58 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolCard from '../../components/ToolCard.astro';
 import PageHero from '../../components/PageHero.astro';
 import { TOOL_IMAGES, PAGE_HEROES } from '../../lib/media';
+import { TOOLS } from '../../lib/tools';
+
+const toolImages: Record<string, { src: string; alt: string }> = {
+  '/tools/bmi-calculator': TOOL_IMAGES.bmi,
+  '/tools/water-intake-calculator': TOOL_IMAGES.water,
+  '/tools/protein-calculator': TOOL_IMAGES.protein,
+  '/tools/walking-calorie-calculator': TOOL_IMAGES.walking,
+  '/tools/bedtime-calculator': TOOL_IMAGES.bedtime,
+  '/tools/target-heart-rate-calculator': TOOL_IMAGES.heartRate,
+  '/tools/step-goal-calculator': TOOL_IMAGES.steps,
+  '/tools/7-day-walking-plan': TOOL_IMAGES.walkingPlan,
+  '/tools/7-day-hydration-plan': TOOL_IMAGES.water,
+  '/tools/7-day-sleep-plan': TOOL_IMAGES.bedtime,
+  '/tools/habit-tracker': TOOL_IMAGES.habits,
+};
 ---
 
 <BaseLayout
   title="Free Health Tools"
-  description="Free BMI, water intake, and walking calorie calculators for everyday health."
+  description="Free calculators and planners for BMI, hydration, protein, sleep, walking, and daily wellness habits."
 >
   <PageHero
     image={PAGE_HEROES.tools}
-    label="Calculators"
+    label="Calculators & planners"
     title="Free health tools"
-    description="Simple calculators to support everyday wellness. Results are estimates — not medical advice."
+    description="Simple calculators and weekly plans to support everyday wellness. Results are estimates — not medical advice."
   />
 
   <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <div class="mb-8 text-center">
+      <a
+        href="/start"
+        class="inline-flex items-center gap-2 rounded-full bg-sage-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sage-800"
+      >
+        Not sure where to start? Get a personalized plan
+      </a>
+    </div>
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <ToolCard
-        title="BMI Calculator"
-        description="Calculate body mass index with plain-language results."
-        href="/tools/bmi-calculator"
-        image={TOOL_IMAGES.bmi.src}
-        imageAlt={TOOL_IMAGES.bmi.alt}
-      />
-      <ToolCard
-        title="Water Intake Calculator"
-        description="Estimate how much water to drink daily."
-        href="/tools/water-intake-calculator"
-        image={TOOL_IMAGES.water.src}
-        imageAlt={TOOL_IMAGES.water.alt}
-      />
-      <ToolCard
-        title="Walking Calorie Calculator"
-        description="Estimate calories burned while walking."
-        href="/tools/walking-calorie-calculator"
-        image={TOOL_IMAGES.walking.src}
-        imageAlt={TOOL_IMAGES.walking.alt}
-      />
+      {
+        TOOLS.map((tool) => {
+          const img = toolImages[tool.href] ?? TOOL_IMAGES.bmi;
+          return (
+            <ToolCard
+              title={tool.title}
+              description={tool.description}
+              href={tool.href}
+              image={img.src}
+              imageAlt={img.alt}
+            />
+          );
+        })
+      }
     </div>
   </div>
 </BaseLayout>

@@ -105,6 +105,18 @@ export const ARTICLE_IMAGES: Record<string, ImageAsset> = {
     src: u(PHOTOS.calmBedroom),
     alt: 'Peaceful bedroom environment for quality sleep',
   },
+  'how-much-protein-do-you-need-daily': {
+    src: u(PHOTOS.healthySpread),
+    alt: 'Protein-rich whole foods on a table',
+  },
+  'best-bedtime-for-your-wake-up-time': {
+    src: u(PHOTOS.calmBedroom),
+    alt: 'Calm bedroom setup for restful sleep',
+  },
+  'target-heart-rate-when-walking': {
+    src: u(PHOTOS.outdoorWalk),
+    alt: 'Person walking outdoors for cardiovascular exercise',
+  },
   'understanding-blood-pressure-after-50': {
     src: u(PHOTOS.doctorVisit),
     alt: 'Blood pressure monitoring at a health visit',
@@ -142,6 +154,12 @@ export const TOOL_IMAGES = {
   bmi: CATEGORY_IMAGES['heart-health'],
   water: { src: u(PHOTOS.waterGlass), alt: 'Close-up of a glass of water for healthy hydration' },
   walking: CATEGORY_IMAGES.fitness,
+  protein: { src: u(PHOTOS.healthySpread), alt: 'Protein-rich whole foods on a table' },
+  bedtime: CATEGORY_IMAGES.sleep,
+  habits: CATEGORY_IMAGES.wellness,
+  walkingPlan: { src: u(PHOTOS.outdoorWalk), alt: 'Person walking outdoors on a sunny path' },
+  heartRate: CATEGORY_IMAGES['heart-health'],
+  steps: { src: u(PHOTOS.trailRun), alt: 'Active person on a walking trail' },
 } as const;
 
 export const PAGE_HEROES = {

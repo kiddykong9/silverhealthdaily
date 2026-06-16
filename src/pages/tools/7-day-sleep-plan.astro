@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import ToolSidebar from '../../components/ToolSidebar.astro';
+---
+
+<BaseLayout
+  title="7-Day Sleep Plan"
+  description="A gentle week of wind-down habits to improve sleep quality and consistency."
+>
+  <section class="bg-gradient-to-br from-indigo-600 to-purple-700 py-12">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6">
+      <h1 class="font-display text-3xl font-bold text-white sm:text-4xl">7-Day Sleep Plan</h1>
+      <p class="mt-2 text-white/85">One habit per night — build a routine that sticks.</p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="grid gap-10 lg:grid-cols-[1fr_280px]">
+      <div>
+        <div class="tool-panel">
+          <div class="tool-panel-header">
+            <p class="font-semibold text-white">Your sleep goal</p>
+          </div>
+          <div class="p-6">
+            <form id="sleep-form" class="space-y-5">
+              <div>
+                <label for="wake" class="form-label">Usual wake-up time</label>
+                <input id="wake" type="time" value="07:00" class="form-input" />
+              </div>
+              <div>
+                <label for="issue" class="form-label">Biggest challenge</label>
+                <select id="issue" class="form-input">
+                  <option value="falling">Falling asleep</option>
+                  <option value="staying">Waking during the night</option>
+                  <option value="schedule">Irregular schedule</option>
+                  <option value="screens">Too much screen time at night</option>
+                </select>
+              </div>
+              <button type="submit" class="form-submit">Generate sleep plan</button>
+            </form>
+            <ol id="sleep-list" class="mt-6 hidden space-y-3"></ol>
+          </div>
+        </div>
+        <AdSlot slot="4444444444" class="mt-8" />
+      </div>
+      <aside class="lg:sticky lg:top-24 lg:self-start">
+        <ToolSidebar current="/tools/7-day-sleep-plan" />
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const PLANS: Record<string, string[]> = {
+      falling: [
+        'Set a fixed wake time — even on weekends',
+        'No caffeine after 2 PM',
+        'Dim lights 60 minutes before bed',
+        'Write tomorrow’s to-do list to clear your mind',
+        'Try 5 minutes of slow breathing in bed',
+        'Keep bedroom cool — around 65–68°F',
+        'Use the bedtime calculator to lock in your target time',
+      ],
+      staying: [
+        'Avoid large meals within 3 hours of bed',
+        'Limit fluids 2 hours before sleep',
+        'If awake 20+ min, get up and read in dim light',
+        'Same wake time every day',
+        'Reduce alcohol — it fragments sleep',
+        'Short afternoon nap only (20 min max) if needed',
+        'Track sleep habit in the wellness tracker',
+      ],
+      schedule: [
+        'Pick one wake time and stick to it 7 days',
+        'Get morning light within 30 min of waking',
+        'Move bedtime earlier by 15 min each night',
+        'No long weekend sleep-ins (max 1 hour later)',
+        'Anchor meals at regular times',
+        'Exercise before evening — not right before bed',
+        'Review your plan — adjust bedtime with the calculator',
+      ],
+      screens: [
+        'Charge phone outside the bedroom',
+        'Enable night mode at 8 PM',
+        'Replace scrolling with 10 min of reading',
+        'No screens 30 min before bed',
+        'Use an alarm clock instead of your phone',
+        'Try a podcast or audiobook with a sleep timer',
+        'Celebrate a full week of screen-free wind-down',
+      ],
+    };
+
+    const form = document.getElementById('sleep-form') as HTMLFormElement;
+    const list = document.getElementById('sleep-list')!;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const issue = (document.getElementById('issue') as HTMLSelectElement).value;
+      const plan = PLANS[issue] ?? PLANS.falling;
+
+      list.innerHTML = plan
+        .map(
+          (tip, i) =>
+            `<li class="rounded-xl border border-sage-200 bg-white px-4 py-3"><span class="font-semibold text-sage-900">Night ${i + 1}</span> — ${tip}</li>`,
+        )
+        .join('');
+      list.classList.remove('hidden');
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ArticleCard from './ArticleCard.astro';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+}
+
+const { articles } = Astro.props;
+---
+
+{
+  articles.length > 0 && (
+    <section class="mt-14 border-t border-sage-100 pt-12">
+      <h2 class="font-display mb-6 text-2xl font-bold text-sage-900">Continue reading</h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {articles.map((article) => (
+          <ArticleCard article={article} />
+        ))}
+      </div>
+    </section>
+  )
+}

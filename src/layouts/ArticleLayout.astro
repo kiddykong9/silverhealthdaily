@@ -1,15 +1,18 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import AdSlot from '../components/AdSlot.astro';
+import RelatedArticles from '../components/RelatedArticles.astro';
+import ToolSidebar from '../components/ToolSidebar.astro';
 import { SITE, getCategory } from '../lib/site';
 import { getArticleImage } from '../lib/media';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   article: CollectionEntry<'articles'>;
+  relatedArticles?: CollectionEntry<'articles'>[];
 }
 
-const { article } = Astro.props;
+const { article, relatedArticles = [] } = Astro.props;
 const { title, description, category, publishDate, updatedDate, readTime } = article.data;
 const categoryMeta = getCategory(category);
 const heroImage = getArticleImage(category, article.id);
@@ -92,6 +95,8 @@ const jsonLd = {
           <slot />
         </div>
 
+        <RelatedArticles articles={relatedArticles} />
+
         <div
           class="mt-12 flex gap-4 rounded-2xl border border-amber-200/80 bg-gradient-to-r from-amber-50 to-orange-50 p-6 text-sm text-amber-950"
         >
@@ -115,36 +120,8 @@ const jsonLd = {
             class="h-32 w-full object-cover"
             loading="lazy"
           />
-          <div class="bg-sage-700 px-5 py-4">
-            <p class="font-display font-bold text-white">Free health tools</p>
-          </div>
-          <ul class="space-y-1 p-4 text-sm">
-            <li>
-              <a
-                href="/tools/bmi-calculator"
-                class="block rounded-lg px-3 py-2.5 font-medium text-ink-soft transition hover:bg-sage-50 hover:text-sage-800"
-              >
-                BMI Calculator
-              </a>
-            </li>
-            <li>
-              <a
-                href="/tools/water-intake-calculator"
-                class="block rounded-lg px-3 py-2.5 font-medium text-ink-soft transition hover:bg-sage-50 hover:text-sage-800"
-              >
-                Water Intake
-              </a>
-            </li>
-            <li>
-              <a
-                href="/tools/walking-calorie-calculator"
-                class="block rounded-lg px-3 py-2.5 font-medium text-ink-soft transition hover:bg-sage-50 hover:text-sage-800"
-              >
-                Walking Calories
-              </a>
-            </li>
-          </ul>
         </div>
+        <ToolSidebar />
       </aside>
     </div>
   </article>

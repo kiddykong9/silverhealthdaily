@@ -68,6 +68,7 @@ export function getCategory(slug: CategorySlug) {
 export const ADSENSE_CLIENT = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID ?? '';
 
 export const NAV_LINKS = [
+  { href: '/start', label: 'Get Started' },
   { href: '/articles', label: 'Articles' },
   { href: '/tools', label: 'Tools' },
   { href: '/about', label: 'About' },
