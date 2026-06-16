@@ -7,17 +7,13 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 border-b border-sage-100/80 bg-cream/90 backdrop-blur-md">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-4">
     <a href="/" class="group flex items-center gap-3 min-w-0">
-      <span
-        class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sage-700 shadow-md shadow-sage-700/25 transition group-hover:bg-sage-800"
-      >
-        <svg class="h-6 w-6 text-gold-light" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path
-            d="M12 3c-3 0-5 2.5-5 6 0 4 2 8 5 12 3-4 5-8 5-12 0-3.5-2-6-5-6z"
-            fill="currentColor"
-            opacity="0.9"></path>
-          <circle cx="12" cy="9" r="2" fill="#2f5439"></circle>
-        </svg>
-      </span>
+      <img
+        src="/logo.svg"
+        alt={`${SITE.name} logo`}
+        width="44"
+        height="44"
+        class="h-11 w-11 shrink-0 rounded-full ring-1 ring-sage-200 transition group-hover:scale-[1.02]"
+      />
       <span class="min-w-0">
         <span class="font-display block truncate text-lg font-bold leading-tight text-sage-900 sm:text-xl">
           {SITE.name}

@@ -1,6 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none" role="img" aria-label="Silver Health Daily">
-  <rect width="192" height="192" rx="40" fill="#2f5439"/>
-  <path d="M48 120c0-36 24-60 48-60s48 24 48 60" stroke="#e8d48a" stroke-width="10" stroke-linecap="round"/>
-  <circle cx="96" cy="72" r="18" fill="#e8d48a"/>
-  <path d="M72 144h48" stroke="#b8d4be" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="96" cy="96" r="92" fill="#F7F6F1" />
+  <circle cx="96" cy="96" r="84" stroke="#0F6A66" stroke-width="4" />
+
+  <path d="M95 44v99" stroke="#3F9644" stroke-width="7" stroke-linecap="round" />
+
+  <path d="M95 63C85 56 70 58 59 69c10 4 22 13 31 27 7-15 7-24 5-33z" fill="#4AA04C" />
+  <path d="M95 60c-4 10-3 18-1 28 8-12 18-20 27-24-8-7-18-9-26-4z" fill="#449847" />
+
+  <path d="M95 99c-9-6-22-5-31 4 7 3 16 9 22 20 8-9 10-18 9-24z" fill="#449847" />
+  <path d="M95 103c-1 10 1 18 5 26 8-10 18-17 29-20-8-9-22-12-34-6z" fill="#3F9644" />
+
+  <path d="M30 146c17-5 40-5 62 3 24 8 48 9 70 3v12H30v-18z" fill="#0F6A66" />
+  <path d="M30 147c16-9 37-12 62-8 22 4 46 4 70 0" stroke="#F7F6F1" stroke-width="3" />
 </svg>
