@@ -1,0 +1,105 @@
+---
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
+---
+
+<ToolPageLayout
+  title="Ideal Weight Range Calculator"
+  description="Estimate a healthy weight range based on your height using BMI and Devine formula."
+  current="/tools/ideal-weight-calculator"
+  heroClass="from-violet-600 to-purple-700"
+>
+  <p slot="subtitle">Healthy weight is a range, not a single number — body composition matters too.</p>
+
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Your height</p>
+    </div>
+    <div class="p-6">
+      <form id="ideal-form" class="space-y-5">
+        <div>
+          <label for="sex" class="form-label">Sex (for Devine estimate)</label>
+          <select id="sex" class="form-input">
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+          </select>
+        </div>
+        <div>
+          <label for="unit" class="form-label">Units</label>
+          <select id="unit" class="form-input">
+            <option value="imperial">Imperial (ft/in)</option>
+            <option value="metric">Metric (cm)</option>
+          </select>
+        </div>
+        <div id="imp-h" class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="height-ft" class="form-label">Height (ft)</label>
+            <input id="height-ft" type="number" class="form-input" placeholder="5" />
+          </div>
+          <div>
+            <label for="height-in" class="form-label">Height (in)</label>
+            <input id="height-in" type="number" class="form-input" placeholder="8" />
+          </div>
+        </div>
+        <div id="met-h" class="hidden">
+          <label for="height-cm" class="form-label">Height (cm)</label>
+          <input id="height-cm" type="number" class="form-input" placeholder="170" />
+        </div>
+        <button type="submit" class="form-submit">Calculate range</button>
+      </form>
+      <div id="ideal-result" class="result-box mt-6 hidden space-y-4">
+        <div>
+          <p class="text-sm font-medium text-muted">Healthy BMI range (18.5–24.9)</p>
+          <p id="bmi-range" class="font-display text-2xl font-bold text-sage-800"></p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-muted">Devine formula estimate</p>
+          <p id="devine" class="font-display text-2xl font-bold text-sage-800"></p>
+        </div>
+        <p class="text-sm text-muted">
+          Compare with <a href="/tools/bmi-calculator" class="font-semibold text-sage-700 hover:underline">BMI Calculator</a> using your current weight.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const unit = document.getElementById('unit') as HTMLSelectElement;
+    unit.addEventListener('change', () => {
+      const m = unit.value === 'metric';
+      document.getElementById('imp-h')!.classList.toggle('hidden', m);
+      document.getElementById('met-h')!.classList.toggle('hidden', !m);
+    });
+
+    document.getElementById('ideal-form')!.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const sex = (document.getElementById('sex') as HTMLSelectElement).value;
+      let heightIn = 0;
+
+      if (unit.value === 'imperial') {
+        const ft = Number((document.getElementById('height-ft') as HTMLInputElement).value);
+        const inches = Number((document.getElementById('height-in') as HTMLInputElement).value);
+        if (!ft) return;
+        heightIn = ft * 12 + inches;
+      } else {
+        const cm = Number((document.getElementById('height-cm') as HTMLInputElement).value);
+        if (!cm) return;
+        heightIn = cm / 2.54;
+      }
+
+      const heightM = heightIn * 0.0254;
+      const lowKg = 18.5 * heightM * heightM;
+      const highKg = 24.9 * heightM * heightM;
+      const lowLb = Math.round(lowKg * 2.20462);
+      const highLb = Math.round(highKg * 2.20462);
+
+      const devineLb =
+        sex === 'male'
+          ? 50 + 2.3 * Math.max(0, heightIn - 60)
+          : 45.5 + 2.3 * Math.max(0, heightIn - 60);
+
+      document.getElementById('bmi-range')!.textContent = `${lowLb}–${highLb} lb (${lowKg.toFixed(1)}–${highKg.toFixed(1)} kg)`;
+      document.getElementById('devine')!.textContent = `~${Math.round(devineLb)} lb (${Math.round(devineLb * 0.453592)} kg)`;
+      document.getElementById('ideal-result')!.classList.remove('hidden');
+    });
+  </script>
+</ToolPageLayout>

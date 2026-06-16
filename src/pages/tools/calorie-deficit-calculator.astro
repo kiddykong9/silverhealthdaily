@@ -1,0 +1,78 @@
+---
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
+---
+
+<ToolPageLayout
+  title="Calorie Deficit Calculator"
+  description="Estimate a safe daily calorie target and timeline for gradual weight loss."
+  current="/tools/calorie-deficit-calculator"
+  heroClass="from-rose-600 to-orange-600"
+>
+  <p slot="subtitle">Slow, steady loss is safer and easier to maintain than crash dieting.</p>
+
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Your plan</p>
+    </div>
+    <div class="p-6">
+      <form id="deficit-form" class="space-y-5">
+        <div>
+          <label for="tdee" class="form-label">Current maintenance calories (TDEE)</label>
+          <input id="tdee" type="number" min="1200" max="5000" class="form-input" placeholder="e.g. 2200" />
+          <p class="mt-1 text-xs text-muted">
+            Use our <a href="/tools/daily-calorie-calculator" class="text-sage-700 underline">Daily Calorie Calculator</a> if unsure.
+          </p>
+        </div>
+        <div>
+          <label for="loss-rate" class="form-label">Target loss per week</label>
+          <select id="loss-rate" class="form-input">
+            <option value="0.25">0.25 kg / 0.5 lb (gentle)</option>
+            <option value="0.5">0.5 kg / 1 lb (moderate)</option>
+            <option value="0.75">0.75 kg / 1.5 lb (aggressive — discuss with doctor)</option>
+          </select>
+        </div>
+        <div>
+          <label for="to-lose" class="form-label">Weight to lose (optional, kg)</label>
+          <input id="to-lose" type="number" min="1" max="50" step="0.5" class="form-input" placeholder="e.g. 5" />
+        </div>
+        <button type="submit" class="form-submit">Calculate deficit plan</button>
+      </form>
+      <div id="deficit-result" class="result-box mt-6 hidden space-y-3">
+        <div>
+          <p class="text-sm font-medium text-muted">Daily calorie target</p>
+          <p id="target-cal" class="font-display text-4xl font-bold text-sage-800"></p>
+        </div>
+        <p id="deficit-amt" class="text-ink-soft"></p>
+        <p id="timeline" class="text-ink-soft"></p>
+        <p class="text-sm text-muted">Never go below ~1,200 kcal (women) or ~1,500 kcal (men) without medical supervision.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('deficit-form')!.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const tdee = Number((document.getElementById('tdee') as HTMLInputElement).value);
+      const kgPerWeek = Number((document.getElementById('loss-rate') as HTMLSelectElement).value);
+      const toLose = Number((document.getElementById('to-lose') as HTMLInputElement).value);
+      if (!tdee) return;
+
+      const dailyDeficit = Math.round((kgPerWeek * 7700) / 7);
+      const target = Math.max(1200, tdee - dailyDeficit);
+
+      document.getElementById('target-cal')!.textContent = `${target.toLocaleString()} kcal / day`;
+      document.getElementById('deficit-amt')!.textContent =
+        `Daily deficit: ~${dailyDeficit} kcal below maintenance (${tdee.toLocaleString()} kcal)`;
+
+      if (toLose > 0) {
+        const weeks = Math.ceil((toLose * 7700) / (dailyDeficit * 7));
+        document.getElementById('timeline')!.textContent =
+          `At this rate, losing ${toLose} kg takes roughly ${weeks} weeks.`;
+      } else {
+        document.getElementById('timeline')!.textContent = '';
+      }
+
+      document.getElementById('deficit-result')!.classList.remove('hidden');
+    });
+  </script>
+</ToolPageLayout>

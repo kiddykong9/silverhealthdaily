@@ -1,0 +1,85 @@
+---
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
+---
+
+<ToolPageLayout
+  title="Macro Calculator"
+  description="Split daily calories into protein, carbs, and fat grams based on your goal."
+  current="/tools/macro-calculator"
+  heroClass="from-emerald-600 to-teal-700"
+>
+  <p slot="subtitle">Macros are the building blocks of your diet — adjust the split to match your goal.</p>
+
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Daily targets</p>
+    </div>
+    <div class="p-6">
+      <form id="macro-form" class="space-y-5">
+        <div>
+          <label for="calories" class="form-label">Daily calories</label>
+          <input id="calories" type="number" min="1000" max="5000" class="form-input" placeholder="e.g. 2000" />
+          <p class="mt-1 text-xs text-muted">
+            Don't know yours? Try the <a href="/tools/daily-calorie-calculator" class="text-sage-700 underline">Daily Calorie Calculator</a>.
+          </p>
+        </div>
+        <div>
+          <label for="goal" class="form-label">Macro split</label>
+          <select id="goal" class="form-input">
+            <option value="balanced">Balanced (30% protein / 40% carbs / 30% fat)</option>
+            <option value="high-protein">High protein (40% / 30% / 30%)</option>
+            <option value="low-carb">Lower carb (35% / 25% / 40%)</option>
+            <option value="mediterranean">Mediterranean-style (25% / 45% / 30%)</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit">Calculate macros</button>
+      </form>
+      <div id="macro-result" class="result-box mt-6 hidden">
+        <p class="text-sm font-medium text-muted">Daily macro targets</p>
+        <div class="mt-4 grid gap-4 sm:grid-cols-3">
+          <div class="rounded-xl bg-sage-50 p-4 text-center">
+            <p class="text-xs font-semibold uppercase text-sage-600">Protein</p>
+            <p id="macro-p" class="font-display text-3xl font-bold text-sage-800"></p>
+          </div>
+          <div class="rounded-xl bg-sage-50 p-4 text-center">
+            <p class="text-xs font-semibold uppercase text-sage-600">Carbs</p>
+            <p id="macro-c" class="font-display text-3xl font-bold text-sage-800"></p>
+          </div>
+          <div class="rounded-xl bg-sage-50 p-4 text-center">
+            <p class="text-xs font-semibold uppercase text-sage-600">Fat</p>
+            <p id="macro-f" class="font-display text-3xl font-bold text-sage-800"></p>
+          </div>
+        </div>
+        <p id="macro-detail" class="mt-4 text-sm text-ink-soft"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SPLITS: Record<string, [number, number, number]> = {
+      balanced: [0.3, 0.4, 0.3],
+      'high-protein': [0.4, 0.3, 0.3],
+      'low-carb': [0.35, 0.25, 0.4],
+      mediterranean: [0.25, 0.45, 0.3],
+    };
+
+    document.getElementById('macro-form')!.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const cal = Number((document.getElementById('calories') as HTMLInputElement).value);
+      const goal = (document.getElementById('goal') as HTMLSelectElement).value;
+      if (!cal) return;
+
+      const [pPct, cPct, fPct] = SPLITS[goal];
+      const pG = Math.round((cal * pPct) / 4);
+      const cG = Math.round((cal * cPct) / 4);
+      const fG = Math.round((cal * fPct) / 9);
+
+      document.getElementById('macro-p')!.textContent = `${pG}g`;
+      document.getElementById('macro-c')!.textContent = `${cG}g`;
+      document.getElementById('macro-f')!.textContent = `${fG}g`;
+      document.getElementById('macro-detail')!.textContent =
+        `Split: ${Math.round(pPct * 100)}% protein · ${Math.round(cPct * 100)}% carbs · ${Math.round(fPct * 100)}% fat`;
+      document.getElementById('macro-result')!.classList.remove('hidden');
+    });
+  </script>
+</ToolPageLayout>

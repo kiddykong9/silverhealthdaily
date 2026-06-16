@@ -1,0 +1,133 @@
+---
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
+---
+
+<ToolPageLayout
+  title="Daily Calorie Calculator (TDEE)"
+  description="Estimate how many calories you burn per day based on age, weight, height, sex, and activity level."
+  current="/tools/daily-calorie-calculator"
+  heroClass="from-orange-500 to-amber-600"
+>
+  <p slot="subtitle">
+    Your total daily energy expenditure (TDEE) is a starting point for meal planning — not a strict rule.
+  </p>
+
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Your details</p>
+    </div>
+    <div class="p-6">
+      <form id="tdee-form" class="space-y-5">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="sex" class="form-label">Sex</label>
+            <select id="sex" class="form-input">
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
+          <div>
+            <label for="age" class="form-label">Age (years)</label>
+            <input id="age" type="number" min="18" max="100" value="45" class="form-input" />
+          </div>
+        </div>
+        <div>
+          <label for="unit" class="form-label">Units</label>
+          <select id="unit" class="form-input">
+            <option value="imperial">Imperial (lb, ft/in)</option>
+            <option value="metric">Metric (kg, cm)</option>
+          </select>
+        </div>
+        <div id="imp-fields" class="grid gap-4 sm:grid-cols-3">
+          <div>
+            <label for="weight-lb" class="form-label">Weight (lb)</label>
+            <input id="weight-lb" type="number" class="form-input" placeholder="160" />
+          </div>
+          <div>
+            <label for="height-ft" class="form-label">Height (ft)</label>
+            <input id="height-ft" type="number" class="form-input" placeholder="5" />
+          </div>
+          <div>
+            <label for="height-in" class="form-label">Height (in)</label>
+            <input id="height-in" type="number" class="form-input" placeholder="8" />
+          </div>
+        </div>
+        <div id="met-fields" class="hidden grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="weight-kg" class="form-label">Weight (kg)</label>
+            <input id="weight-kg" type="number" class="form-input" placeholder="73" />
+          </div>
+          <div>
+            <label for="height-cm" class="form-label">Height (cm)</label>
+            <input id="height-cm" type="number" class="form-input" placeholder="170" />
+          </div>
+        </div>
+        <div>
+          <label for="activity" class="form-label">Activity level</label>
+          <select id="activity" class="form-input">
+            <option value="1.2">Sedentary (desk job, little exercise)</option>
+            <option value="1.375">Light (1–3 days/week)</option>
+            <option value="1.55">Moderate (3–5 days/week)</option>
+            <option value="1.725">Active (6–7 days/week)</option>
+            <option value="1.9">Very active (physical job + exercise)</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit">Calculate daily calories</button>
+      </form>
+      <div id="tdee-result" class="result-box mt-6 hidden">
+        <p class="text-sm font-medium text-muted">Estimated daily calories (TDEE)</p>
+        <p id="tdee-value" class="font-display text-5xl font-bold text-sage-800"></p>
+        <p id="tdee-bmr" class="mt-2 text-ink-soft"></p>
+        <p class="mt-4 text-sm text-muted">
+          Track meals with our <a href="/tools/food-calorie-calculator" class="font-semibold text-sage-700 hover:underline">Food Nutrition Calculator</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('tdee-form') as HTMLFormElement;
+    const unit = document.getElementById('unit') as HTMLSelectElement;
+    const imp = document.getElementById('imp-fields')!;
+    const met = document.getElementById('met-fields')!;
+    const result = document.getElementById('tdee-result')!;
+
+    unit.addEventListener('change', () => {
+      const isMetric = unit.value === 'metric';
+      imp.classList.toggle('hidden', isMetric);
+      met.classList.toggle('hidden', !isMetric);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const sex = (document.getElementById('sex') as HTMLSelectElement).value;
+      const age = Number((document.getElementById('age') as HTMLInputElement).value);
+      const mult = Number((document.getElementById('activity') as HTMLSelectElement).value);
+      let kg = 0;
+      let cm = 0;
+
+      if (unit.value === 'imperial') {
+        const lb = Number((document.getElementById('weight-lb') as HTMLInputElement).value);
+        const ft = Number((document.getElementById('height-ft') as HTMLInputElement).value);
+        const inches = Number((document.getElementById('height-in') as HTMLInputElement).value);
+        if (!lb || !ft) return;
+        kg = lb * 0.453592;
+        cm = (ft * 12 + inches) * 2.54;
+      } else {
+        kg = Number((document.getElementById('weight-kg') as HTMLInputElement).value);
+        cm = Number((document.getElementById('height-cm') as HTMLInputElement).value);
+        if (!kg || !cm) return;
+      }
+
+      const bmr =
+        sex === 'male'
+          ? 10 * kg + 6.25 * cm - 5 * age + 5
+          : 10 * kg + 6.25 * cm - 5 * age - 161;
+      const tdee = Math.round(bmr * mult);
+
+      document.getElementById('tdee-value')!.textContent = `${tdee.toLocaleString()} kcal / day`;
+      document.getElementById('tdee-bmr')!.textContent = `Resting metabolism (BMR): ~${Math.round(bmr).toLocaleString()} kcal`;
+      result.classList.remove('hidden');
+    });
+  </script>
+</ToolPageLayout>

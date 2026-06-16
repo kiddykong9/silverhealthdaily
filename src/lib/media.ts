@@ -121,6 +121,14 @@ export const ARTICLE_IMAGES: Record<string, ImageAsset> = {
     src: u(PHOTOS.breakfastKitchen),
     alt: 'Healthy meal preparation in a home kitchen',
   },
+  'how-many-calories-do-you-need-daily': {
+    src: u(PHOTOS.homeCooking),
+    alt: 'Home-cooked meal for daily nutrition planning',
+  },
+  'how-to-calculate-macros-for-weight-loss': {
+    src: u(PHOTOS.healthySpread),
+    alt: 'Balanced macronutrient foods on a table',
+  },
   'understanding-blood-pressure-after-50': {
     src: u(PHOTOS.doctorVisit),
     alt: 'Blood pressure monitoring at a health visit',
@@ -165,6 +173,10 @@ export const TOOL_IMAGES = {
   walkingPlan: { src: u(PHOTOS.outdoorWalk), alt: 'Person walking outdoors on a sunny path' },
   heartRate: CATEGORY_IMAGES['heart-health'],
   steps: { src: u(PHOTOS.trailRun), alt: 'Active person on a walking trail' },
+  tdee: { src: u(PHOTOS.breakfastKitchen), alt: 'Balanced meal planning in a home kitchen' },
+  macro: { src: u(PHOTOS.healthySpread), alt: 'Macro-rich whole foods on a table' },
+  deficit: CATEGORY_IMAGES.fitness,
+  idealWeight: CATEGORY_IMAGES['heart-health'],
 } as const;
 
 export const PAGE_HEROES = {

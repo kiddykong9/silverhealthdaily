@@ -24,6 +24,30 @@ export const TOOLS = [
     category: 'nutrition',
   },
   {
+    href: '/tools/daily-calorie-calculator',
+    title: 'Daily Calorie (TDEE)',
+    description: 'Estimate total daily calories burned from activity and metabolism.',
+    category: 'nutrition',
+  },
+  {
+    href: '/tools/macro-calculator',
+    title: 'Macro Calculator',
+    description: 'Split daily calories into protein, carbs, and fat grams.',
+    category: 'nutrition',
+  },
+  {
+    href: '/tools/calorie-deficit-calculator',
+    title: 'Calorie Deficit',
+    description: 'Safe daily calorie target and timeline for gradual weight loss.',
+    category: 'nutrition',
+  },
+  {
+    href: '/tools/ideal-weight-calculator',
+    title: 'Ideal Weight Range',
+    description: 'Healthy weight range based on height and BMI.',
+    category: 'body',
+  },
+  {
     href: '/tools/walking-calorie-calculator',
     title: 'Walking Calories',
     description: 'Calories burned on your daily walk.',
@@ -83,8 +107,8 @@ export type RelatedTool = {
 /** Curated cross-links — tools that naturally follow each other in a wellness workflow. */
 export const TOOL_RELATED: Record<ToolSlug, RelatedTool[]> = {
   '/tools/bmi-calculator': [
-    { href: '/tools/protein-calculator', reason: 'Set a daily protein target for your weight' },
-    { href: '/tools/walking-calorie-calculator', reason: 'See how walking burns calories' },
+    { href: '/tools/ideal-weight-calculator', reason: 'See your healthy weight range for your height' },
+    { href: '/tools/daily-calorie-calculator', reason: 'Estimate calories you burn each day' },
     { href: '/tools/food-calorie-calculator', reason: 'Track what you eat against your goals' },
   ],
   '/tools/water-intake-calculator': [
@@ -93,14 +117,14 @@ export const TOOL_RELATED: Record<ToolSlug, RelatedTool[]> = {
     { href: '/tools/habit-tracker', reason: 'Check off water daily on your device' },
   ],
   '/tools/protein-calculator': [
+    { href: '/tools/macro-calculator', reason: 'Balance protein with carbs and fat' },
     { href: '/tools/food-calorie-calculator', reason: 'Log meals and track protein intake' },
-    { href: '/tools/water-intake-calculator', reason: 'Hydration supports recovery and energy' },
-    { href: '/tools/bmi-calculator', reason: 'Check BMI alongside nutrition goals' },
+    { href: '/tools/daily-calorie-calculator', reason: 'Find your total daily calorie needs' },
   ],
   '/tools/food-calorie-calculator': [
+    { href: '/tools/daily-calorie-calculator', reason: 'Know your daily calorie target first' },
+    { href: '/tools/macro-calculator', reason: 'Split calories into protein, carbs, and fat' },
     { href: '/tools/protein-calculator', reason: 'Find your daily protein target' },
-    { href: '/tools/water-intake-calculator', reason: 'How much water do you need?' },
-    { href: '/tools/habit-tracker', reason: 'Track water, movement, and sleep too' },
   ],
   '/tools/walking-calorie-calculator': [
     { href: '/tools/step-goal-calculator', reason: 'Set a personalized step target' },
@@ -142,6 +166,26 @@ export const TOOL_RELATED: Record<ToolSlug, RelatedTool[]> = {
     { href: '/tools/water-intake-calculator', reason: 'Know your hydration target' },
     { href: '/tools/7-day-walking-plan', reason: 'Add a walking routine' },
   ],
+  '/tools/daily-calorie-calculator': [
+    { href: '/tools/macro-calculator', reason: 'Turn calories into protein, carbs, and fat' },
+    { href: '/tools/food-calorie-calculator', reason: 'Log meals against your TDEE' },
+    { href: '/tools/calorie-deficit-calculator', reason: 'Plan gradual weight loss safely' },
+  ],
+  '/tools/macro-calculator': [
+    { href: '/tools/daily-calorie-calculator', reason: 'Calculate your daily calorie needs' },
+    { href: '/tools/food-calorie-calculator', reason: 'Track macros from real foods' },
+    { href: '/tools/protein-calculator', reason: 'Double-check your protein target' },
+  ],
+  '/tools/calorie-deficit-calculator': [
+    { href: '/tools/daily-calorie-calculator', reason: 'Find your maintenance calories (TDEE)' },
+    { href: '/tools/food-calorie-calculator', reason: 'Stay within your daily target' },
+    { href: '/tools/walking-calorie-calculator', reason: 'Burn extra calories with walking' },
+  ],
+  '/tools/ideal-weight-calculator': [
+    { href: '/tools/bmi-calculator', reason: 'Check where you are on the BMI scale' },
+    { href: '/tools/daily-calorie-calculator', reason: 'Calories for your current weight' },
+    { href: '/tools/calorie-deficit-calculator', reason: 'Plan a gradual path to your range' },
+  ],
 };
 
 export function getTool(href: ToolSlug) {
@@ -163,6 +207,10 @@ export const TOOL_IMAGES_MAP: Record<string, string> = {
   '/tools/water-intake-calculator': 'water',
   '/tools/protein-calculator': 'protein',
   '/tools/food-calorie-calculator': 'foodCalories',
+  '/tools/daily-calorie-calculator': 'tdee',
+  '/tools/macro-calculator': 'macro',
+  '/tools/calorie-deficit-calculator': 'deficit',
+  '/tools/ideal-weight-calculator': 'idealWeight',
   '/tools/walking-calorie-calculator': 'walking',
   '/tools/bedtime-calculator': 'bedtime',
   '/tools/target-heart-rate-calculator': 'heartRate',

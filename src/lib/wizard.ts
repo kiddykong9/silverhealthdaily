@@ -44,13 +44,17 @@ const BASE: Record<WizardFocus, Omit<WizardResult, 'articles'> & { articles: str
   },
   weight: {
     title: 'Your healthy weight plan',
-    summary: 'Sustainable progress comes from walking, protein, and realistic goals.',
+    summary: 'Sustainable progress comes from realistic calorie targets, protein, and daily movement.',
     articles: [
+      'how-many-calories-do-you-need-daily',
+      'how-to-calculate-macros-for-weight-loss',
       'best-walking-routines-for-adults-over-50',
-      'heart-healthy-foods-after-50',
-      'low-impact-exercises-joint-pain',
     ],
-    tools: ['/tools/bmi-calculator', '/tools/7-day-walking-plan', '/tools/walking-calorie-calculator'],
+    tools: [
+      '/tools/daily-calorie-calculator',
+      '/tools/calorie-deficit-calculator',
+      '/tools/food-calorie-calculator',
+    ],
   },
 };
 

@@ -3,22 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolCard from '../../components/ToolCard.astro';
 import PageHero from '../../components/PageHero.astro';
 import { TOOL_IMAGES, PAGE_HEROES } from '../../lib/media';
-import { TOOLS } from '../../lib/tools';
-
-const toolImages: Record<string, { src: string; alt: string }> = {
-  '/tools/bmi-calculator': TOOL_IMAGES.bmi,
-  '/tools/water-intake-calculator': TOOL_IMAGES.water,
-  '/tools/protein-calculator': TOOL_IMAGES.protein,
-  '/tools/food-calorie-calculator': TOOL_IMAGES.foodCalories,
-  '/tools/walking-calorie-calculator': TOOL_IMAGES.walking,
-  '/tools/bedtime-calculator': TOOL_IMAGES.bedtime,
-  '/tools/target-heart-rate-calculator': TOOL_IMAGES.heartRate,
-  '/tools/step-goal-calculator': TOOL_IMAGES.steps,
-  '/tools/7-day-walking-plan': TOOL_IMAGES.walkingPlan,
-  '/tools/7-day-hydration-plan': TOOL_IMAGES.water,
-  '/tools/7-day-sleep-plan': TOOL_IMAGES.bedtime,
-  '/tools/habit-tracker': TOOL_IMAGES.habits,
-};
+import { TOOLS, TOOL_IMAGES_MAP } from '../../lib/tools';
 ---
 
 <BaseLayout
@@ -44,7 +29,8 @@ const toolImages: Record<string, { src: string; alt: string }> = {
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {
         TOOLS.map((tool) => {
-          const img = toolImages[tool.href] ?? TOOL_IMAGES.bmi;
+          const key = (TOOL_IMAGES_MAP[tool.href] ?? 'bmi') as keyof typeof TOOL_IMAGES;
+          const img = TOOL_IMAGES[key];
           return (
             <ToolCard
               title={tool.title}
