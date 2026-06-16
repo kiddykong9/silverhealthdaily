@@ -34,6 +34,10 @@ const jsonLd = {
     '@type': 'Organization',
     name: SITE.name,
     url: SITE.url,
+    logo: {
+      '@type': 'ImageObject',
+      url: SITE.logo,
+    },
   },
   mainEntityOfPage: url,
   image: heroImage.src,
