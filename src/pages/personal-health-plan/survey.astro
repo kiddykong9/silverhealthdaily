@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { TOOLS } from '../../lib/tools';
 
 const ACCESS_CODE = import.meta.env.PUBLIC_PLAN_ACCESS_CODE ?? '';
 const GUMROAD_URL = import.meta.env.PUBLIC_GUMROAD_PLAN_URL ?? '';
@@ -13,7 +12,11 @@ const articleData = allArticles.map((a) => ({
   title: a.data.title,
   description: a.data.description,
 }));
-const toolMap = Object.fromEntries(TOOLS.map((t) => [t.href, t]));
+const surveyConfig = {
+  accessCode: ACCESS_CODE,
+  requireAccess: REQUIRE_ACCESS,
+  articleData,
+};
 ---
 
 <BaseLayout
@@ -325,16 +328,14 @@ const toolMap = Object.fromEntries(TOOLS.map((t) => [t.href, t]));
     </div>
   </div>
 
-  <script
-    define:vars={{
-      accessCode: ACCESS_CODE,
-      requireAccess: REQUIRE_ACCESS,
-      articleData,
-      toolMap,
-    }}
-  >
+  <script id="survey-config" type="application/json" set:html={JSON.stringify(surveyConfig)} />
+
+  <script>
     import { buildHealthPlan } from '../../lib/health-plan';
-    import { generatePlanPdf } from '../../lib/plan-pdf';
+
+    const { accessCode, requireAccess, articleData } = JSON.parse(
+      document.getElementById('survey-config')?.textContent ?? '{}',
+    );
 
     const TOTAL_STEPS = 7;
     let currentStep = 1;
@@ -389,6 +390,8 @@ const toolMap = Object.fromEntries(TOOLS.map((t) => [t.href, t]));
 
     document.getElementById('prev-btn')?.addEventListener('click', () => showStep(currentStep - 1));
     document.getElementById('next-btn')?.addEventListener('click', () => showStep(currentStep + 1));
+
+    document.getElementById('survey-form')?.addEventListener('submit', (e) => e.preventDefault());
 
     function collectSurvey() {
       const form = document.getElementById('survey-form');
@@ -493,8 +496,10 @@ const toolMap = Object.fromEntries(TOOLS.map((t) => [t.href, t]));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    document.getElementById('download-pdf')?.addEventListener('click', () => {
-      if (currentPlan) generatePlanPdf(currentPlan);
+    document.getElementById('download-pdf')?.addEventListener('click', async () => {
+      if (!currentPlan) return;
+      const { generatePlanPdf } = await import('../../lib/plan-pdf');
+      generatePlanPdf(currentPlan);
     });
 
     document.getElementById('restart-survey')?.addEventListener('click', () => location.reload());
