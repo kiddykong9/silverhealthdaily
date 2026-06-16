@@ -5,14 +5,13 @@ import ArticleCard from '../components/ArticleCard.astro';
 import ToolCard from '../components/ToolCard.astro';
 import HeroMedia from '../components/HeroMedia.astro';
 import PhotoGallery from '../components/PhotoGallery.astro';
-import VideoShowcase from '../components/VideoShowcase.astro';
 import CategoryCard from '../components/CategoryCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
 import DailyTip from '../components/DailyTip.astro';
 import { getCollection } from 'astro:content';
 import { SITE, CATEGORIES, TRUST_POINTS } from '../lib/site';
-import { TOOL_IMAGES, CATEGORY_IMAGES } from '../lib/media';
+import { TOOL_IMAGES, LIFESTYLE_GALLERY } from '../lib/media';
 import { TOOLS, TOOL_IMAGES_MAP } from '../lib/tools';
 
 const articles = (await getCollection('articles'))
@@ -103,8 +102,6 @@ const articleCount = articles.length;
   </section>
 
   <PhotoGallery />
-
-  <VideoShowcase />
 
   <!-- Featured -->
   {
@@ -200,7 +197,7 @@ const articleCount = articles.length;
     <ScrollReveal>
       <div class="relative overflow-hidden rounded-3xl shadow-2xl">
         <img
-          src={CATEGORY_IMAGES.wellness.src.replace('w=800', 'w=1600')}
+          src={LIFESTYLE_GALLERY[3].src.replace('w=800', 'w=1600')}
           alt=""
           class="absolute inset-0 h-full w-full object-cover"
           aria-hidden="true"
