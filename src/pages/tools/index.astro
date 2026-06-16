@@ -4,21 +4,34 @@ import ToolCard from '../../components/ToolCard.astro';
 import PageHero from '../../components/PageHero.astro';
 import { TOOL_IMAGES, PAGE_HEROES } from '../../lib/media';
 import { TOOLS, TOOL_IMAGES_MAP } from '../../lib/tools';
+
+const CATEGORY_LABELS: Record<string, string> = {
+  nutrition: 'Nutrition & calories',
+  body: 'Body composition',
+  fitness: 'Fitness & walking',
+  sleep: 'Sleep',
+  'heart-health': 'Heart health',
+  wellness: 'Daily habits',
+};
+
+const grouped = Object.groupBy(TOOLS, (t) => t.category);
+const categoryOrder = ['nutrition', 'body', 'fitness', 'sleep', 'heart-health', 'wellness'];
 ---
 
 <BaseLayout
-  title="Free Health Tools"
-  description="Free calculators and planners for BMI, hydration, protein, sleep, walking, and daily wellness habits."
+  title="Free Health Calculators & Planners"
+  description="18 free health calculators: BMI, TDEE, macros, protein, water intake, walking calories, sleep, and 7-day wellness plans."
+  ogImage={PAGE_HEROES.tools.src.replace('w=1400', 'w=1200')}
 >
   <PageHero
     image={PAGE_HEROES.tools}
     label="Calculators & planners"
-    title="Free health tools"
-    description="Simple calculators and weekly plans to support everyday wellness. Results are estimates — not medical advice."
+    title="Free health calculators"
+    description="BMI, calories, macros, hydration, walking, sleep, and weekly plans — instant results, no signup."
   />
 
   <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-    <div class="mb-8 text-center">
+    <div class="mb-10 text-center">
       <a
         href="/start"
         class="inline-flex items-center gap-2 rounded-full bg-sage-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sage-800"
@@ -26,22 +39,34 @@ import { TOOLS, TOOL_IMAGES_MAP } from '../../lib/tools';
         Not sure where to start? Get a personalized plan
       </a>
     </div>
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {
-        TOOLS.map((tool) => {
-          const key = (TOOL_IMAGES_MAP[tool.href] ?? 'bmi') as keyof typeof TOOL_IMAGES;
-          const img = TOOL_IMAGES[key];
-          return (
-            <ToolCard
-              title={tool.title}
-              description={tool.description}
-              href={tool.href}
-              image={img.src}
-              imageAlt={img.alt}
-            />
-          );
-        })
-      }
-    </div>
+
+    {
+      categoryOrder.map((cat) => {
+        const tools = grouped[cat];
+        if (!tools?.length) return null;
+        return (
+          <section class="mb-14">
+            <h2 class="font-display mb-6 text-2xl font-bold text-ink">
+              {CATEGORY_LABELS[cat] ?? cat}
+            </h2>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {tools.map((tool) => {
+                const key = (TOOL_IMAGES_MAP[tool.href] ?? 'bmi') as keyof typeof TOOL_IMAGES;
+                const img = TOOL_IMAGES[key];
+                return (
+                  <ToolCard
+                    title={tool.title}
+                    description={tool.description}
+                    href={tool.href}
+                    image={img.src}
+                    imageAlt={img.alt}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        );
+      })
+    }
   </div>
 </BaseLayout>

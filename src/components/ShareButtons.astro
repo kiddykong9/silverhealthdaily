@@ -1,0 +1,48 @@
+---
+import { SITE } from '../lib/site';
+
+interface Props {
+  title: string;
+  url: string;
+  image?: string;
+}
+
+const { title, url, image } = Astro.props;
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+const encodedImage = encodeURIComponent(image ?? SITE.defaultOgImage);
+
+const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImage}&description=${encodedTitle}`;
+const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+const xUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+---
+
+<div class="not-prose my-8 rounded-2xl border border-sage-100 bg-sage-50/60 p-5">
+  <p class="mb-3 text-sm font-semibold text-sage-800">Share this guide</p>
+  <div class="flex flex-wrap gap-2">
+    <a
+      href={pinterestUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 rounded-full bg-[#E60023] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+    >
+      Pin on Pinterest
+    </a>
+    <a
+      href={facebookUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 rounded-full bg-[#1877F2] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+    >
+      Share
+    </a>
+    <a
+      href={xUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+    >
+      Post on X
+    </a>
+  </div>
+</div>

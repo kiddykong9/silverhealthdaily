@@ -12,6 +12,7 @@ interface Props {
   description?: string;
   canonical?: string;
   ogType?: string;
+  ogImage?: string;
   noindex?: boolean;
 }
 
@@ -20,11 +21,13 @@ const {
   description = SITE.description,
   canonical,
   ogType = 'website',
+  ogImage,
   noindex = false,
 } = Astro.props;
 
 const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE.url).href;
+const shareImage = ogImage ?? SITE.defaultOgImage;
 ---
 
 <!doctype html>
@@ -44,10 +47,14 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE.url).href;
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content={ogType} />
     <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:alt" content={pageTitle} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={shareImage} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="48x48" />
     <link rel="icon" href="/logo.svg" type="image/svg+xml" sizes="192x192" />

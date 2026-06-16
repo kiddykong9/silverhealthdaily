@@ -3,6 +3,8 @@ export const SITE = {
   tagline: 'Live well at every age',
   url: 'https://silverhealthdaily.com',
   logo: 'https://silverhealthdaily.com/logo.svg',
+  defaultOgImage:
+    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=85&fm=webp',
   description:
     'Warm, practical health guides and free tools for everyday wellness. Nutrition, movement, sleep, and heart health — written to be read in minutes, not medical textbooks.',
   email: 'hello@silverhealthdaily.com',

@@ -1,4 +1,5 @@
 import type { CategorySlug } from './site';
+import { TOOL_IMAGES_MAP } from './tools';
 
 /** Curated Unsplash images — professional, age-neutral wellness photography. IDs HTTP-verified. */
 const u = (id: string, w = 800) =>
@@ -176,6 +177,26 @@ export const ARTICLE_IMAGES: Record<string, ImageAsset> = {
     P.wellnessSpa,
     'Active recovery and wellness after exercise',
   ),
+  'normal-blood-pressure-by-age': img(
+    P.doctorVisit,
+    'Blood pressure check during a routine health visit',
+  ),
+  'how-to-lose-weight-after-50': img(
+    P.trailRun,
+    'Outdoor fitness for sustainable weight management',
+  ),
+  'walking-for-weight-loss-how-much': img(
+    P.outdoorPath,
+    'Daily walking path for weight loss goals',
+  ),
+  'how-many-calories-to-eat-to-lose-weight': img(
+    P.healthySpread,
+    'Portion-aware meals for calorie-controlled eating',
+  ),
+  'foods-that-lower-blood-pressure-naturally': img(
+    P.freshProduce,
+    'Fresh produce for a heart-healthy DASH-style diet',
+  ),
 };
 
 export const LIFESTYLE_GALLERY = [
@@ -226,6 +247,11 @@ export function getArticleImage(slug: CategorySlug, articleId: string): ImageAss
 
 export function heroSrc(asset: ImageAsset, width = 1400): string {
   return asset.src.replace(/w=\d+/, `w=${width}`);
+}
+
+export function getToolOgImage(href: string): string {
+  const key = (TOOL_IMAGES_MAP[href] ?? 'bmi') as keyof typeof TOOL_IMAGES;
+  return heroSrc(TOOL_IMAGES[key], 1200);
 }
 
 export const ALL_PHOTO_IDS = Object.values(P);

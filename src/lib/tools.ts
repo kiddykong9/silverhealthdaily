@@ -224,6 +224,49 @@ export function getRelatedTools(current: ToolSlug): (RelatedTool & { title: stri
     .filter(Boolean) as (RelatedTool & { title: string; description: string })[];
 }
 
+/** Top tools shown in contextual article sidebar — highest search intent per category. */
+export const CATEGORY_TOP_TOOLS: Record<string, ToolSlug[]> = {
+  nutrition: [
+    '/tools/food-calorie-calculator',
+    '/tools/daily-calorie-calculator',
+    '/tools/protein-calculator',
+    '/tools/water-intake-calculator',
+    '/tools/macro-calculator',
+  ],
+  fitness: [
+    '/tools/step-goal-calculator',
+    '/tools/walking-calorie-calculator',
+    '/tools/7-day-walking-plan',
+    '/tools/target-heart-rate-calculator',
+    '/tools/bmi-calculator',
+  ],
+  sleep: ['/tools/bedtime-calculator', '/tools/7-day-sleep-plan', '/tools/habit-tracker'],
+  'heart-health': [
+    '/tools/target-heart-rate-calculator',
+    '/tools/walking-calorie-calculator',
+    '/tools/bmi-calculator',
+    '/tools/daily-calorie-calculator',
+  ],
+  'brain-memory': ['/tools/habit-tracker', '/tools/7-day-sleep-plan', '/tools/water-intake-calculator'],
+  wellness: [
+    '/tools/habit-tracker',
+    '/tools/7-day-hydration-plan',
+    '/tools/7-day-sleep-plan',
+    '/tools/bmi-calculator',
+  ],
+  body: [
+    '/tools/bmi-calculator',
+    '/tools/body-fat-calculator',
+    '/tools/ideal-weight-calculator',
+    '/tools/calorie-deficit-calculator',
+  ],
+};
+
+export function getToolsForCategory(category: string): typeof TOOLS[number][] {
+  const hrefs = CATEGORY_TOP_TOOLS[category] ?? [];
+  return hrefs.map((h) => getTool(h)).filter(Boolean) as typeof TOOLS[number][];
+}
+
 export const TOOL_IMAGES_MAP: Record<string, string> = {
   '/tools/bmi-calculator': 'bmi',
   '/tools/water-intake-calculator': 'water',

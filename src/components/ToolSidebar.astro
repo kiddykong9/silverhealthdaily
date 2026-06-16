@@ -1,20 +1,23 @@
 ---
-import { TOOLS } from '../lib/tools';
+import { TOOLS, getToolsForCategory } from '../lib/tools';
 
 interface Props {
   current?: string;
+  category?: string;
 }
 
-const { current } = Astro.props;
+const { current, category } = Astro.props;
+const tools = category ? getToolsForCategory(category) : TOOLS;
+const heading = category ? 'Recommended tools' : 'Free health tools';
 ---
 
 <div class="overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-sage-100">
   <div class="bg-sage-700 px-5 py-4">
-    <p class="font-display font-bold text-white">Free health tools</p>
+    <p class="font-display font-bold text-white">{heading}</p>
   </div>
   <ul class="max-h-80 space-y-0.5 overflow-y-auto p-3 text-sm">
     {
-      TOOLS.map((tool) => (
+      tools.map((tool) => (
         <li>
           <a
             href={tool.href}

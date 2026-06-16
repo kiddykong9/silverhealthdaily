@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+}
+
+const { articles } = Astro.props;
+---
+
+{
+  articles.length > 0 && (
+    <section class="mt-10 rounded-2xl border border-sage-100 bg-sage-50/50 p-6">
+      <h2 class="font-display mb-4 text-xl font-bold text-ink">Related health guides</h2>
+      <ul class="space-y-3">
+        {articles.map((a) => (
+          <li>
+            <a
+              href={`/articles/${a.id}`}
+              class="group block rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-sage-100 transition hover:ring-sage-300"
+            >
+              <span class="font-semibold text-sage-800 group-hover:text-sage-900">{a.data.title}</span>
+              <span class="mt-1 block text-sm text-ink-soft">{a.data.readTime} min read</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
