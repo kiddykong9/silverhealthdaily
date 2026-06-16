@@ -1,56 +1,47 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import AdSlot from '../../components/AdSlot.astro';
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
 ---
 
-<BaseLayout
+<ToolPageLayout
   title="Walking Calorie Calculator"
   description="Estimate calories burned from walking based on weight, pace, and duration."
+  current="/tools/walking-calorie-calculator"
+  heroClass="from-amber-500 to-orange-600"
 >
-  <section class="bg-gradient-to-br from-amber-500 to-orange-600 py-12">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6">
-      <span class="text-4xl">🚶</span>
-      <h1 class="font-display mt-3 text-3xl font-bold text-white sm:text-4xl">Walking Calorie Calculator</h1>
-      <p class="mt-2 text-white/85">
-        Walking is one of the most accessible exercises — see what your walks are worth.
-      </p>
-    </div>
-  </section>
+  <span slot="hero" class="text-4xl">🚶</span>
+  <p slot="subtitle">Walking is one of the most accessible exercises — see what your walks are worth.</p>
 
-  <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-    <div class="tool-panel">
-      <div class="tool-panel-header">
-        <p class="font-semibold text-white">Your walk</p>
-      </div>
-      <div class="p-6">
-        <form id="walk-form" class="space-y-5">
-          <div>
-            <label for="w-weight" class="form-label">Weight (lb)</label>
-            <input id="w-weight" type="number" min="80" max="400" required class="form-input" />
-          </div>
-          <div>
-            <label for="pace" class="form-label">Walking pace</label>
-            <select id="pace" class="form-input">
-              <option value="2.0">Slow (2 mph)</option>
-              <option value="3.0">Moderate (3 mph)</option>
-              <option value="3.5">Brisk (3.5 mph)</option>
-              <option value="4.0">Very brisk (4 mph)</option>
-            </select>
-          </div>
-          <div>
-            <label for="minutes" class="form-label">Duration (minutes)</label>
-            <input id="minutes" type="number" min="5" max="180" required class="form-input" />
-          </div>
-          <button type="submit" class="form-submit">Calculate calories</button>
-        </form>
-        <div id="walk-result" class="result-box hidden">
-          <p class="text-sm font-medium text-muted">Estimated calories burned</p>
-          <p id="calories" class="font-display text-5xl font-bold text-sage-800"></p>
-          <p id="distance" class="mt-2 text-ink-soft"></p>
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Your walk</p>
+    </div>
+    <div class="p-6">
+      <form id="walk-form" class="space-y-5">
+        <div>
+          <label for="w-weight" class="form-label">Weight (lb)</label>
+          <input id="w-weight" type="number" min="80" max="400" required class="form-input" />
         </div>
+        <div>
+          <label for="pace" class="form-label">Walking pace</label>
+          <select id="pace" class="form-input">
+            <option value="2.0">Slow (2 mph)</option>
+            <option value="3.0">Moderate (3 mph)</option>
+            <option value="3.5">Brisk (3.5 mph)</option>
+            <option value="4.0">Very brisk (4 mph)</option>
+          </select>
+        </div>
+        <div>
+          <label for="minutes" class="form-label">Duration (minutes)</label>
+          <input id="minutes" type="number" min="5" max="180" required class="form-input" />
+        </div>
+        <button type="submit" class="form-submit">Calculate calories</button>
+      </form>
+      <div id="walk-result" class="result-box hidden">
+        <p class="text-sm font-medium text-muted">Estimated calories burned</p>
+        <p id="calories" class="font-display text-5xl font-bold text-sage-800"></p>
+        <p id="distance" class="mt-2 text-ink-soft"></p>
       </div>
     </div>
-    <AdSlot slot="6666666666" class="mt-8" />
   </div>
 
   <script>
@@ -81,4 +72,4 @@ import AdSlot from '../../components/AdSlot.astro';
       result.classList.remove('hidden');
     });
   </script>
-</BaseLayout>
+</ToolPageLayout>

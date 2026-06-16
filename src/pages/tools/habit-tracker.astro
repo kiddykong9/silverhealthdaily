@@ -1,80 +1,63 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import AdSlot from '../../components/AdSlot.astro';
-import ToolSidebar from '../../components/ToolSidebar.astro';
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
 ---
 
-<BaseLayout
+<ToolPageLayout
   title="Wellness Habit Tracker"
   description="Track daily water, movement, and sleep habits. Data stays on your device — no account needed."
+  current="/tools/habit-tracker"
+  heroClass="from-amber-500 to-orange-600"
 >
-  <section class="bg-gradient-to-br from-amber-500 to-orange-600 py-12">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6">
-      <h1 class="font-display text-3xl font-bold text-white sm:text-4xl">Wellness Habit Tracker</h1>
-      <p class="mt-2 text-white/85">
-        Check off three simple habits each day. Your streak and history are saved locally in your browser.
-      </p>
+  <p slot="subtitle">Check off three simple habits each day. Your streak and history are saved locally in your browser.</p>
+
+  <div class="tool-panel">
+    <div class="tool-panel-header flex items-center justify-between">
+      <p class="font-semibold text-white">Today's habits</p>
+      <p id="today-label" class="text-sm text-white/80"></p>
     </div>
-  </section>
-
-  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-    <div class="grid gap-10 lg:grid-cols-[1fr_280px]">
-      <div>
-        <div class="tool-panel">
-          <div class="tool-panel-header flex items-center justify-between">
-            <p class="font-semibold text-white">Today's habits</p>
-            <p id="today-label" class="text-sm text-white/80"></p>
-          </div>
-          <div class="p-6">
-            <div class="mb-6 flex items-center gap-4 rounded-xl bg-sage-50 px-5 py-4">
-              <div>
-                <p class="text-sm font-medium text-muted">Current streak</p>
-                <p id="streak" class="font-display text-3xl font-bold text-sage-800">0 days</p>
-              </div>
-              <div class="ml-auto text-right">
-                <p class="text-sm font-medium text-muted">This week</p>
-                <p id="week-count" class="font-display text-2xl font-bold text-sage-800">0/7</p>
-              </div>
-            </div>
-
-            <ul id="habit-list" class="space-y-3">
-              <li>
-                <label class="flex cursor-pointer items-center gap-4 rounded-xl border border-sage-200 px-4 py-4 transition hover:bg-sage-50">
-                  <input type="checkbox" data-habit="water" class="h-5 w-5 rounded border-sage-300 text-sage-700" />
-                  <span>
-                    <span class="block font-semibold text-ink">Drank enough water</span>
-                    <span class="text-sm text-muted">8 glasses or your personal target</span>
-                  </span>
-                </label>
-              </li>
-              <li>
-                <label class="flex cursor-pointer items-center gap-4 rounded-xl border border-sage-200 px-4 py-4 transition hover:bg-sage-50">
-                  <input type="checkbox" data-habit="walk" class="h-5 w-5 rounded border-sage-300 text-sage-700" />
-                  <span>
-                    <span class="block font-semibold text-ink">Moved for 20+ minutes</span>
-                    <span class="text-sm text-muted">Walk, stretch, or gentle exercise</span>
-                  </span>
-                </label>
-              </li>
-              <li>
-                <label class="flex cursor-pointer items-center gap-4 rounded-xl border border-sage-200 px-4 py-4 transition hover:bg-sage-50">
-                  <input type="checkbox" data-habit="sleep" class="h-5 w-5 rounded border-sage-300 text-sage-700" />
-                  <span>
-                    <span class="block font-semibold text-ink">7+ hours of sleep</span>
-                    <span class="text-sm text-muted">Or your personal sleep goal</span>
-                  </span>
-                </label>
-              </li>
-            </ul>
-
-            <p id="save-status" class="mt-4 text-sm text-sage-600" aria-live="polite"></p>
-          </div>
+    <div class="p-6">
+      <div class="mb-6 flex items-center gap-4 rounded-xl bg-sage-50 px-5 py-4">
+        <div>
+          <p class="text-sm font-medium text-muted">Current streak</p>
+          <p id="streak" class="font-display text-3xl font-bold text-sage-800">0 days</p>
         </div>
-        <AdSlot slot="4444444444" class="mt-8" />
+        <div class="ml-auto text-right">
+          <p class="text-sm font-medium text-muted">This week</p>
+          <p id="week-count" class="font-display text-2xl font-bold text-sage-800">0/7</p>
+        </div>
       </div>
-      <aside class="lg:sticky lg:top-24 lg:self-start">
-        <ToolSidebar current="/tools/habit-tracker" />
-      </aside>
+
+      <ul id="habit-list" class="space-y-3">
+        <li>
+          <label class="flex cursor-pointer items-center gap-4 rounded-xl border border-sage-200 px-4 py-4 transition hover:bg-sage-50">
+            <input type="checkbox" data-habit="water" class="h-5 w-5 rounded border-sage-300 text-sage-700" />
+            <span>
+              <span class="block font-semibold text-ink">Drank enough water</span>
+              <span class="text-sm text-muted">8 glasses or your personal target</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label class="flex cursor-pointer items-center gap-4 rounded-xl border border-sage-200 px-4 py-4 transition hover:bg-sage-50">
+            <input type="checkbox" data-habit="walk" class="h-5 w-5 rounded border-sage-300 text-sage-700" />
+            <span>
+              <span class="block font-semibold text-ink">Moved for 20+ minutes</span>
+              <span class="text-sm text-muted">Walk, stretch, or gentle exercise</span>
+            </span>
+          </label>
+        </li>
+        <li>
+          <label class="flex cursor-pointer items-center gap-4 rounded-xl border border-sage-200 px-4 py-4 transition hover:bg-sage-50">
+            <input type="checkbox" data-habit="sleep" class="h-5 w-5 rounded border-sage-300 text-sage-700" />
+            <span>
+              <span class="block font-semibold text-ink">7+ hours of sleep</span>
+              <span class="text-sm text-muted">Or your personal sleep goal</span>
+            </span>
+          </label>
+        </li>
+      </ul>
+
+      <p id="save-status" class="mt-4 text-sm text-sage-600" aria-live="polite"></p>
     </div>
   </div>
 
@@ -155,4 +138,4 @@ import ToolSidebar from '../../components/ToolSidebar.astro';
     document.getElementById('streak')!.textContent = `${calcStreak(data)} days`;
     document.getElementById('week-count')!.textContent = `${weekComplete(data)}/7`;
   </script>
-</BaseLayout>
+</ToolPageLayout>

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AdSlot from '../../components/AdSlot.astro';
 import ToolSidebar from '../../components/ToolSidebar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
 import { NUTRITION_LABEL_ROWS } from '../../lib/nutrition';
 ---
 
@@ -146,6 +147,8 @@ import { NUTRITION_LABEL_ROWS } from '../../lib/nutrition';
             </div>
           </div>
         </div>
+
+        <RelatedTools current="/tools/food-calorie-calculator" />
 
         <p class="text-sm text-muted">
           New to tracking?

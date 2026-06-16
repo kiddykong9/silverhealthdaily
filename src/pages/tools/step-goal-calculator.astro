@@ -1,58 +1,41 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import AdSlot from '../../components/AdSlot.astro';
-import ToolSidebar from '../../components/ToolSidebar.astro';
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
 ---
 
-<BaseLayout
+<ToolPageLayout
   title="Daily Step Goal Calculator"
   description="Get a personalized daily step target based on your current activity and goals."
+  current="/tools/step-goal-calculator"
+  heroClass="from-sky-600 to-blue-700"
 >
-  <section class="bg-gradient-to-br from-sky-600 to-blue-700 py-12">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6">
-      <h1 class="font-display text-3xl font-bold text-white sm:text-4xl">Daily Step Goal Calculator</h1>
-      <p class="mt-2 text-white/85">
-        10,000 steps is a popular target — but the right number depends on where you are today.
-      </p>
-    </div>
-  </section>
+  <p slot="subtitle">10,000 steps is a popular target — but the right number depends on where you are today.</p>
 
-  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-    <div class="grid gap-10 lg:grid-cols-[1fr_280px]">
-      <div>
-        <div class="tool-panel">
-          <div class="tool-panel-header">
-            <p class="font-semibold text-white">Your starting point</p>
-          </div>
-          <div class="p-6">
-            <form id="steps-form" class="space-y-5">
-              <div>
-                <label for="current" class="form-label">Average steps per day now (estimate)</label>
-                <input id="current" type="number" min="500" max="25000" value="4000" class="form-input" />
-              </div>
-              <div>
-                <label for="goal-type" class="form-label">Goal</label>
-                <select id="goal-type" class="form-input">
-                  <option value="maintain">Maintain current fitness</option>
-                  <option value="improve">Gradually improve (+15%)</option>
-                  <option value="active">Reach active lifestyle (8,000+)</option>
-                  <option value="challenge">Challenge target (10,000)</option>
-                </select>
-              </div>
-              <button type="submit" class="form-submit">Calculate step goal</button>
-            </form>
-            <div id="steps-result" class="result-box mt-6 hidden">
-              <p class="text-sm font-medium text-muted">Your daily step goal</p>
-              <p id="steps-value" class="font-display text-5xl font-bold text-sage-800"></p>
-              <p id="steps-tip" class="mt-2 text-ink-soft"></p>
-            </div>
-          </div>
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Your starting point</p>
+    </div>
+    <div class="p-6">
+      <form id="steps-form" class="space-y-5">
+        <div>
+          <label for="current" class="form-label">Average steps per day now (estimate)</label>
+          <input id="current" type="number" min="500" max="25000" value="4000" class="form-input" />
         </div>
-        <AdSlot slot="4444444444" class="mt-8" />
+        <div>
+          <label for="goal-type" class="form-label">Goal</label>
+          <select id="goal-type" class="form-input">
+            <option value="maintain">Maintain current fitness</option>
+            <option value="improve">Gradually improve (+15%)</option>
+            <option value="active">Reach active lifestyle (8,000+)</option>
+            <option value="challenge">Challenge target (10,000)</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit">Calculate step goal</button>
+      </form>
+      <div id="steps-result" class="result-box mt-6 hidden">
+        <p class="text-sm font-medium text-muted">Your daily step goal</p>
+        <p id="steps-value" class="font-display text-5xl font-bold text-sage-800"></p>
+        <p id="steps-tip" class="mt-2 text-ink-soft"></p>
       </div>
-      <aside class="lg:sticky lg:top-24 lg:self-start">
-        <ToolSidebar current="/tools/step-goal-calculator" />
-      </aside>
     </div>
   </div>
 
@@ -85,4 +68,4 @@ import ToolSidebar from '../../components/ToolSidebar.astro';
       result.classList.remove('hidden');
     });
   </script>
-</BaseLayout>
+</ToolPageLayout>

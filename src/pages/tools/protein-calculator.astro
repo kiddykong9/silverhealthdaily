@@ -1,68 +1,51 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import AdSlot from '../../components/AdSlot.astro';
-import ToolSidebar from '../../components/ToolSidebar.astro';
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
 ---
 
-<BaseLayout
+<ToolPageLayout
   title="Daily Protein Calculator"
   description="Estimate how much protein you need per day based on weight and activity level."
+  current="/tools/protein-calculator"
+  heroClass="from-emerald-600 to-teal-700"
 >
-  <section class="bg-gradient-to-br from-emerald-600 to-teal-700 py-12">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6">
-      <h1 class="font-display text-3xl font-bold text-white sm:text-4xl">Daily Protein Calculator</h1>
-      <p class="mt-2 text-white/85">
-        Protein supports muscle, recovery, and satiety. Needs vary by weight and activity.
-      </p>
-    </div>
-  </section>
+  <p slot="subtitle">Protein supports muscle, recovery, and satiety. Needs vary by weight and activity.</p>
 
-  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-    <div class="grid gap-10 lg:grid-cols-[1fr_280px]">
-      <div>
-        <div class="tool-panel">
-          <div class="tool-panel-header">
-            <p class="font-semibold text-white">Your details</p>
-          </div>
-          <div class="p-6">
-            <form id="protein-form" class="space-y-5">
-              <div>
-                <label for="unit" class="form-label">Units</label>
-                <select id="unit" class="form-input">
-                  <option value="imperial">Imperial (lb)</option>
-                  <option value="metric">Metric (kg)</option>
-                </select>
-              </div>
-              <div>
-                <label for="weight" class="form-label">Body weight</label>
-                <input id="weight" type="number" min="40" max="400" class="form-input" placeholder="e.g. 160" />
-              </div>
-              <div>
-                <label for="activity" class="form-label">Activity level</label>
-                <select id="activity" class="form-input">
-                  <option value="0.8">Mostly sedentary (0.8 g/kg)</option>
-                  <option value="1.0">Light activity (1.0 g/kg)</option>
-                  <option value="1.2">Moderate exercise (1.2 g/kg)</option>
-                  <option value="1.4">Very active (1.4 g/kg)</option>
-                </select>
-              </div>
-              <button type="submit" class="form-submit">Calculate protein</button>
-            </form>
-            <div id="protein-result" class="result-box mt-6 hidden">
-              <p class="text-sm font-medium text-muted">Daily protein target</p>
-              <p id="protein-value" class="font-display text-5xl font-bold text-sage-800"></p>
-              <p id="protein-range" class="mt-2 text-ink-soft"></p>
-              <p class="mt-4 text-sm text-muted">
-                Spread protein across meals — roughly a palm-sized portion per meal is an easy visual guide.
-              </p>
-            </div>
-          </div>
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Your details</p>
+    </div>
+    <div class="p-6">
+      <form id="protein-form" class="space-y-5">
+        <div>
+          <label for="unit" class="form-label">Units</label>
+          <select id="unit" class="form-input">
+            <option value="imperial">Imperial (lb)</option>
+            <option value="metric">Metric (kg)</option>
+          </select>
         </div>
-        <AdSlot slot="4444444444" class="mt-8" />
+        <div>
+          <label for="weight" class="form-label">Body weight</label>
+          <input id="weight" type="number" min="40" max="400" class="form-input" placeholder="e.g. 160" />
+        </div>
+        <div>
+          <label for="activity" class="form-label">Activity level</label>
+          <select id="activity" class="form-input">
+            <option value="0.8">Mostly sedentary (0.8 g/kg)</option>
+            <option value="1.0">Light activity (1.0 g/kg)</option>
+            <option value="1.2">Moderate exercise (1.2 g/kg)</option>
+            <option value="1.4">Very active (1.4 g/kg)</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit">Calculate protein</button>
+      </form>
+      <div id="protein-result" class="result-box mt-6 hidden">
+        <p class="text-sm font-medium text-muted">Daily protein target</p>
+        <p id="protein-value" class="font-display text-5xl font-bold text-sage-800"></p>
+        <p id="protein-range" class="mt-2 text-ink-soft"></p>
+        <p class="mt-4 text-sm text-muted">
+          Spread protein across meals — roughly a palm-sized portion per meal is an easy visual guide.
+        </p>
       </div>
-      <aside class="lg:sticky lg:top-24 lg:self-start">
-        <ToolSidebar current="/tools/protein-calculator" />
-      </aside>
     </div>
   </div>
 
@@ -89,4 +72,4 @@ import ToolSidebar from '../../components/ToolSidebar.astro';
       result.classList.remove('hidden');
     });
   </script>
-</BaseLayout>
+</ToolPageLayout>
