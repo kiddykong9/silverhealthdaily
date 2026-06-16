@@ -146,6 +146,30 @@ export const ARTICLE_IMAGES: Record<string, ImageAsset> = {
     P.trailRun,
     'Outdoor daylight exercise for overall wellbeing',
   ),
+  'what-is-a-healthy-bmi': img(
+    P.doctorVisit,
+    'Clinical wellness check and body metrics',
+  ),
+  'how-to-estimate-body-fat-percentage': img(
+    P.gymWorkout,
+    'Strength training and body composition',
+  ),
+  'how-many-steps-per-day-for-health': img(
+    P.outdoorPath,
+    'Daily walking on an outdoor path',
+  ),
+  'safe-calorie-deficit-for-weight-loss': img(
+    P.saladGreens,
+    'Portion-controlled whole-food meal',
+  ),
+  'how-to-plan-daily-meals-for-your-calorie-goal': img(
+    P.homeCooking,
+    'Planned home-cooked meals in the kitchen',
+  ),
+  'how-many-calories-does-walking-burn': img(
+    P.runningTrack,
+    'Brisk walking and cardio on an outdoor track',
+  ),
 };
 
 export const LIFESTYLE_GALLERY = [
