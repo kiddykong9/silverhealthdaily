@@ -6,20 +6,14 @@ const currentPath = Astro.url.pathname;
 
 <header class="sticky top-0 z-50 border-b border-sage-100/80 bg-cream/90 backdrop-blur-md">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-4">
-    <a href="/" class="group flex items-center gap-3 min-w-0">
+    <a href="/" class="group min-w-0 shrink">
       <img
-        src="/logo.png"
-        alt={`${SITE.name} logo`}
-        width="44"
-        height="44"
-        class="h-11 w-11 shrink-0 rounded-full ring-1 ring-sage-200 object-cover transition group-hover:scale-[1.02]"
+        src="/brand-logo.png"
+        alt={SITE.name}
+        width="280"
+        height="72"
+        class="h-10 w-auto max-w-[200px] object-contain object-left transition group-hover:opacity-90 sm:h-12 sm:max-w-[280px]"
       />
-      <span class="min-w-0">
-        <span class="font-display block truncate text-lg font-bold leading-tight text-sage-900 sm:text-xl">
-          {SITE.name}
-        </span>
-        <span class="hidden text-xs font-medium text-gold sm:block">{SITE.tagline}</span>
-      </span>
     </a>
 
     <nav class="hidden items-center gap-1 md:flex" aria-label="Main">
