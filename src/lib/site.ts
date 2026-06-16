@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Silver Health Daily',
   tagline: 'Live well at every age',
   url: 'https://silverhealthdaily.com',
-  logo: 'https://silverhealthdaily.com/logo.svg',
+  logo: 'https://silverhealthdaily.com/logo.png',
   defaultOgImage:
     'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=85&fm=webp',
   description:
