@@ -1,0 +1,97 @@
+---
+import ProductShowcase from '../components/ProductShowcase.astro';
+---
+
+<div id="home-tab-bar" class="sticky top-[52px] z-40 border-b border-sage-200 bg-cream/95 shadow-sm backdrop-blur-md sm:top-[60px] md:top-[68px]">
+  <div class="mx-auto flex max-w-6xl gap-2 px-4 py-2.5 sm:px-6">
+    <button
+      type="button"
+      data-home-tab="free"
+      class="home-tab flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition sm:flex-none sm:px-6"
+      aria-selected="true"
+    >
+      Free guides & tools
+    </button>
+    <button
+      type="button"
+      data-home-tab="program"
+      class="home-tab flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition sm:flex-none sm:px-6"
+      aria-selected="false"
+    >
+      7-Day Program
+      <span class="rounded-full bg-gold px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-sage-900">
+        New
+      </span>
+    </button>
+  </div>
+</div>
+
+<div id="home-panel-free">
+  <slot name="free" />
+</div>
+
+<div id="home-panel-program" class="hidden" hidden>
+  <ProductShowcase embedded />
+</div>
+
+<style is:global>
+  #home-tab-bar .home-tab[aria-selected='true'] {
+    background-color: var(--color-sage-700);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+  #home-tab-bar .home-tab[aria-selected='false'] {
+    color: var(--color-ink-soft);
+  }
+  #home-tab-bar .home-tab[aria-selected='false']:hover {
+    background-color: var(--color-sage-50);
+    color: var(--color-sage-800);
+  }
+  #home-tab-bar .home-tab[data-home-tab='program'][aria-selected='false'] {
+    box-shadow: inset 0 0 0 1px rgb(196 160 53 / 0.4);
+  }
+</style>
+
+<script>
+  function setHomeTab(tab, pushHash = true) {
+    const freePanel = document.getElementById('home-panel-free');
+    const programPanel = document.getElementById('home-panel-program');
+    const heroWrap = document.getElementById('home-hero-wrap');
+    const buttons = document.querySelectorAll('[data-home-tab]');
+
+    buttons.forEach((btn) => {
+      const active = btn.dataset.homeTab === tab;
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    if (tab === 'program') {
+      heroWrap?.classList.add('hidden');
+      freePanel?.classList.add('hidden');
+      programPanel?.classList.remove('hidden');
+      programPanel?.removeAttribute('hidden');
+      if (pushHash) history.replaceState(null, '', '#program');
+    } else {
+      heroWrap?.classList.remove('hidden');
+      programPanel?.classList.add('hidden');
+      programPanel?.setAttribute('hidden', '');
+      freePanel?.classList.remove('hidden');
+      if (pushHash) history.replaceState(null, '', window.location.pathname);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('[data-home-tab]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setHomeTab(btn.dataset.homeTab);
+    });
+  });
+
+  if (window.location.hash === '#program') {
+    setHomeTab('program', false);
+  }
+
+  window.addEventListener('hashchange', () => {
+    setHomeTab(window.location.hash === '#program' ? 'program' : 'free', false);
+  });
+</script>

@@ -1,0 +1,260 @@
+---
+const GUMROAD_URL = import.meta.env.PUBLIC_GUMROAD_PLAN_URL ?? '';
+const PRICE = import.meta.env.PUBLIC_PLAN_PRICE ?? '$9';
+
+interface Props {
+  embedded?: boolean;
+}
+
+const { embedded = false } = Astro.props;
+
+const includes = [
+  { icon: '🏋️', title: '7-day workout cycle', desc: 'Training days, active recovery, and real rest days — warm-ups, exercises, cool-downs included.' },
+  { icon: '🍽️', title: '28 meal recipes', desc: 'Breakfast, lunch, dinner, and snack every day — ingredients, steps, and calories scaled to you.' },
+  { icon: '🛒', title: 'Grocery list', desc: 'Shop once for the whole week. No wondering what to buy on Wednesday.' },
+  { icon: '😴', title: 'Sleep & evening routines', desc: 'Bedtime targets and nightly habits matched to your wake time and sleep challenges.' },
+  { icon: '📊', title: 'Your numbers built in', desc: 'Calories, protein, macros, steps, and heart-rate zones woven into each day — not a separate spreadsheet.' },
+  { icon: '📄', title: 'Print-ready PDF', desc: '12+ pages you can save, print, or pull up on your phone at the grocery store.' },
+];
+
+const pains = [
+  'You used the calorie calculator… then stared at the fridge with no idea what to cook.',
+  'You walked a few days, skipped a few, and never had a real plan to follow.',
+  'You started Monday strong and lost momentum by Thursday — again.',
+];
+
+const faqs = [
+  {
+    q: 'How is this different from your free tools?',
+    a: 'Free tools answer one question at a time — BMI, calories, protein. The 7-Day Program connects everything into a full week: what to eat, when to move, when to rest, and what to buy.',
+  },
+  {
+    q: 'Is the plan personalized?',
+    a: 'Yes. Your survey answers — weight, age, goals, activity level, eating style — shape your calorie targets, workout difficulty, recipe portions, and weekly schedule.',
+  },
+  {
+    q: 'How long does the survey take?',
+    a: 'About 5 minutes. You get a full on-screen preview plus a downloadable PDF immediately after.',
+  },
+  {
+    q: 'Do I need a gym?',
+    a: 'No. Workouts use walking, bodyweight strength, and at-home circuits. Built for everyday fitness, not athletes.',
+  },
+];
+---
+
+<section class:list={['bg-cream', embedded ? '' : 'min-h-screen']}>
+  <!-- Hero -->
+  <div class="relative overflow-hidden bg-gradient-to-br from-sage-800 via-sage-900 to-sage-950 py-16 lg:py-20">
+    <div class="absolute inset-0 opacity-20" aria-hidden="true">
+      <div class="absolute -right-20 top-10 h-64 w-64 rounded-full bg-gold blur-3xl"></div>
+      <div class="absolute -left-10 bottom-0 h-48 w-48 rounded-full bg-emerald-400 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
+      <p class="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-gold-light">
+        <span class="h-1.5 w-1.5 rounded-full bg-gold animate-pulse"></span>
+        Premium · Personalized · Instant download
+      </p>
+      <h1 class="font-display mt-6 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+        Stop guessing.<br class="hidden sm:block" /> Follow your week.
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg text-white/85">
+        A complete 7-day health program built from your body, your goals, and our entire calculator
+        suite — workouts, rest days, recipes, and a grocery list in one PDF.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a
+          href="/personal-health-plan/survey"
+          class="rounded-full bg-gold px-8 py-4 text-sm font-bold text-sage-900 shadow-lg shadow-gold/25 transition hover:bg-gold-light hover:shadow-gold/40"
+        >
+          Build my plan — takes 5 min
+        </a>
+        {
+          GUMROAD_URL ? (
+            <a
+              href={GUMROAD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-full border-2 border-white/30 px-8 py-4 text-sm font-bold text-white transition hover:bg-white/10"
+            >
+              Get access · {PRICE}
+            </a>
+          ) : (
+            <a
+              href="/personal-health-plan"
+              class="rounded-full border-2 border-white/30 px-8 py-4 text-sm font-bold text-white transition hover:bg-white/10"
+            >
+              See everything included
+            </a>
+          )
+        }
+      </div>
+      <p class="mt-4 text-xs text-white/50">Educational use only · Not medical advice</p>
+    </div>
+  </div>
+
+  <!-- Problem -->
+  <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+    <h2 class="font-display text-center text-2xl font-bold text-sage-900">Sound familiar?</h2>
+    <div class="mt-8 space-y-4">
+      {
+        pains.map((pain) => (
+          <div class="flex gap-4 rounded-2xl border border-sage-100 bg-white p-5 shadow-sm">
+            <span class="text-xl text-coral" aria-hidden="true">—</span>
+            <p class="text-ink-soft">{pain}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-8 text-center text-lg font-medium text-sage-800">
+      The 7-Day Program is the bridge between “I know my numbers” and “I know exactly what to do
+      today.”
+    </p>
+  </div>
+
+  <!-- Comparison -->
+  <div class="border-y border-sage-100 bg-white py-14">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6">
+      <h2 class="font-display text-center text-2xl font-bold text-sage-900">Free tools vs. 7-Day Program</h2>
+      <div class="mt-8 overflow-hidden rounded-2xl border border-sage-200">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="bg-sage-50">
+              <th class="px-5 py-4 font-semibold text-muted"></th>
+              <th class="px-5 py-4 font-semibold text-muted">Free calculators</th>
+              <th class="px-5 py-4 font-semibold text-sage-900">7-Day Program</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-sage-100">
+            {
+              [
+                ['Daily calorie target', '✓', '✓'],
+                ['Full week of workouts', '—', '✓'],
+                ['Rest & recovery days', '—', '✓'],
+                ['Meal recipes with ingredients', '—', '✓'],
+                ['Grocery shopping list', '—', '✓'],
+                ['Evening & sleep routines', 'Partial', '✓'],
+                ['Print-ready PDF', '—', '✓'],
+              ].map(([feature, free, plan]) => (
+                <tr>
+                  <td class="px-5 py-3 font-medium text-ink">{feature}</td>
+                  <td class="px-5 py-3 text-muted">{free}</td>
+                  <td class="px-5 py-3 font-semibold text-sage-800">{plan}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Includes grid -->
+  <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+    <h2 class="font-display text-center text-2xl font-bold text-sage-900">Everything in your plan</h2>
+    <p class="mx-auto mt-3 max-w-xl text-center text-muted">
+      One survey → one PDF → seven days you can actually follow.
+    </p>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        includes.map((item) => (
+          <div class="rounded-2xl border border-sage-100 bg-white p-6 shadow-sm transition hover:border-sage-200 hover:shadow-md">
+            <span class="text-2xl" aria-hidden="true">{item.icon}</span>
+            <h3 class="font-display mt-3 font-bold text-sage-900">{item.title}</h3>
+            <p class="mt-2 text-sm text-muted">{item.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Sample week -->
+  <div class="bg-sage-900 py-14 text-white">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6">
+      <h2 class="font-display text-center text-2xl font-bold">A sample week (yours adapts to your goal)</h2>
+      <div class="mt-8 grid gap-3 sm:grid-cols-2">
+        {
+          [
+            { day: 'Mon', type: 'Workout', text: 'Brisk walk + intro strength', color: 'border-sage-500 bg-sage-800' },
+            { day: 'Tue', type: 'Rest', text: 'Stretching + meal prep', color: 'border-amber-500/50 bg-amber-900/30' },
+            { day: 'Wed', type: 'Workout', text: 'Walk intervals', color: 'border-sage-500 bg-sage-800' },
+            { day: 'Thu', type: 'Recovery', text: 'Easy active recovery walk', color: 'border-sky-500/50 bg-sky-900/30' },
+            { day: 'Fri', type: 'Workout', text: 'At-home strength circuit', color: 'border-sage-500 bg-sage-800' },
+            { day: 'Sat', type: 'Workout', text: 'Long steady walk', color: 'border-sage-500 bg-sage-800' },
+            { day: 'Sun', type: 'Rest', text: 'Yoga, mobility & week prep', color: 'border-amber-500/50 bg-amber-900/30' },
+          ].map((d) => (
+            <div class:list={['rounded-xl border-l-4 px-5 py-4', d.color]}>
+              <span class="text-xs font-bold uppercase tracking-wide text-gold-light">{d.type}</span>
+              <p class="font-display mt-1 font-bold">{d.day}</p>
+              <p class="mt-0.5 text-sm text-white/80">{d.text}</p>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-6 text-center text-sm text-white/60">
+        Each day also includes 4 meals with full recipes — not just calorie numbers.
+      </p>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6">
+    <h2 class="font-display text-2xl font-bold text-sage-900">Ready in 3 steps</h2>
+    <ol class="mt-8 space-y-6 text-left">
+      {
+        [
+          { step: '1', title: 'Take the 5-minute survey', desc: 'Body stats, goals, activity, sleep, and eating preferences.' },
+          { step: '2', title: 'Review your full week on screen', desc: 'Expand each day — workouts, meals, hydration, evening routine.' },
+          { step: '3', title: 'Download your PDF & start Monday', desc: 'Print it, save it on your phone, or shop with the grocery list.' },
+        ].map((s) => (
+          <li class="flex gap-5 rounded-2xl border border-sage-100 bg-white p-6 shadow-sm">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sage-700 text-sm font-bold text-white">
+              {s.step}
+            </span>
+            <div>
+              <p class="font-display font-bold text-sage-900">{s.title}</p>
+              <p class="mt-1 text-sm text-muted">{s.desc}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <!-- FAQ -->
+  <div class="border-t border-sage-100 bg-sage-50 py-14">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6">
+      <h2 class="font-display text-center text-2xl font-bold text-sage-900">Questions</h2>
+      <div class="mt-8 space-y-4">
+        {
+          faqs.map((faq) => (
+            <details class="group rounded-2xl border border-sage-100 bg-white px-5 py-4 shadow-sm">
+              <summary class="cursor-pointer list-none font-semibold text-sage-900">{faq.q}</summary>
+              <p class="mt-3 text-sm text-muted">{faq.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Final CTA -->
+  <div class="bg-gradient-to-br from-sage-700 to-sage-900 py-16">
+    <div class="mx-auto max-w-2xl px-4 text-center sm:px-6">
+      <h2 class="font-display text-2xl font-bold text-white sm:text-3xl">
+        Your week is waiting.
+      </h2>
+      <p class="mt-3 text-white/80">
+        {GUMROAD_URL
+          ? `Get your personalized 7-day program for ${PRICE} — or start the survey if you already have access.`
+          : 'Take the survey now and download your personalized PDF instantly.'}
+      </p>
+      <a
+        href="/personal-health-plan/survey"
+        class="mt-8 inline-block rounded-full bg-gold px-10 py-4 text-sm font-bold text-sage-900 shadow-lg transition hover:bg-gold-light"
+      >
+        Start my 7-day plan →
+      </a>
+    </div>
+  </div>
+</section>

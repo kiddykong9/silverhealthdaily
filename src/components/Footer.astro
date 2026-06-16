@@ -1,5 +1,5 @@
 ---
-import { SITE, CATEGORIES, NAV_LINKS } from '../lib/site';
+import { SITE, CATEGORIES, NAV_LINKS, PRODUCT_NAV } from '../lib/site';
 const year = new Date().getFullYear();
 ---
 
@@ -29,6 +29,11 @@ const year = new Date().getFullYear();
       <div>
         <p class="mb-4 text-xs font-bold uppercase tracking-widest text-gold">Explore</p>
         <ul class="space-y-2.5 text-sm">
+          <li>
+            <a href={PRODUCT_NAV.href} class="font-semibold text-gold-light transition hover:text-white">
+              {PRODUCT_NAV.label} →
+            </a>
+          </li>
           {
             NAV_LINKS.map((link) => (
               <li>
@@ -38,6 +43,11 @@ const year = new Date().getFullYear();
               </li>
             ))
           }
+          <li>
+            <a href="/personal-health-plan/survey" class="text-sage-200 transition hover:text-white">
+              Start survey
+            </a>
+          </li>
         </ul>
       </div>
 
