@@ -7,19 +7,19 @@ const PRICE = import.meta.env.PUBLIC_PLAN_PRICE ?? '$9';
 ---
 
 <BaseLayout
-  title="Personal Health Plan — Custom PDF Report"
-  description="Answer a guided survey about your goals, body metrics, sleep, and nutrition. Get a personalized multi-page health plan PDF powered by all Silver Health Daily calculators."
+  title="Personal Health Plan — 7-Day Program PDF"
+  description="Get a complete 7-day health program: daily workouts with rest days, full recipes for every meal, grocery list, sleep routines, and calorie targets tailored to your goals."
   ogImage={SITE.defaultOgImage}
 >
   <section class="bg-gradient-to-br from-sage-700 to-sage-900 py-16">
     <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
-      <p class="text-sm font-semibold uppercase tracking-wide text-gold-light">Digital product</p>
+      <p class="text-sm font-semibold uppercase tracking-wide text-gold-light">Premium digital product</p>
       <h1 class="font-display mt-3 text-3xl font-bold text-white sm:text-4xl">
-        Your Personal Health Plan
+        Your Complete 7-Day Health Program
       </h1>
       <p class="mt-4 text-lg text-white/85">
-        A full survey → a custom PDF with calorie targets, macros, hydration, walking plan, sleep
-        schedule, and tool recommendations — built from our entire calculator suite.
+        Not just numbers — a full week of workouts, rest days, recipes for every meal, grocery list,
+        and evening routines built around your body and goals.
       </p>
       <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
         <a
@@ -45,33 +45,39 @@ const PRICE = import.meta.env.PUBLIC_PLAN_PRICE ?? '$9';
   </section>
 
   <div class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
-    <h2 class="font-display text-center text-2xl font-bold text-sage-900">What's inside your PDF</h2>
+    <div class="rounded-2xl border border-gold/30 bg-gold/10 px-6 py-5 text-center">
+      <p class="text-sm font-semibold text-sage-900">
+        Free tools give you one number at a time. This gives you a full week you can follow without guessing.
+      </p>
+    </div>
+
+    <h2 class="font-display mt-12 text-center text-2xl font-bold text-sage-900">What's in your 7-day PDF</h2>
     <div class="mt-10 grid gap-6 sm:grid-cols-2">
       {
         [
           {
-            title: 'Body & energy',
-            desc: 'BMI, healthy weight range, BMR, TDEE, and a safe calorie target for your goal.',
+            title: '7-day workout cycle',
+            desc: 'Structured training days, active recovery, and full rest days — with warm-ups, exercises, and cool-downs.',
           },
           {
-            title: 'Nutrition',
-            desc: 'Daily protein, macro split, and meal-by-meal calorie breakdown.',
+            title: '28 meal recipes',
+            desc: 'Breakfast, lunch, dinner, and snack every day — ingredients, steps, prep time, scaled to your calories.',
           },
           {
-            title: 'Hydration',
-            desc: 'Oz-per-day target plus a 7-day hydration habit plan.',
+            title: 'Grocery list',
+            desc: 'One shopping list for the whole week so you can prep once and execute the plan.',
           },
           {
-            title: 'Movement',
-            desc: 'Step goal, walking calories, heart-rate zones, and a 7-day walking schedule.',
+            title: 'Rest & recovery',
+            desc: 'Built-in rest days with stretching guidance — not just “walk more” every single day.',
           },
           {
-            title: 'Sleep',
-            desc: 'Bedtime options from your wake time and a tailored 7-day sleep plan.',
+            title: 'Daily routines',
+            desc: 'Hydration targets, evening wind-down, and a daily focus note for each of the 7 days.',
           },
           {
-            title: 'Resources',
-            desc: 'Links to all 16+ free tools and articles matched to your primary goal.',
+            title: 'Your metrics',
+            desc: 'BMI, TDEE, macros, protein, steps, and heart-rate zones — woven into the program, not standalone.',
           },
         ].map((item) => (
           <div class="rounded-2xl border border-sage-100 bg-white p-6 shadow-sm">
@@ -83,23 +89,22 @@ const PRICE = import.meta.env.PUBLIC_PLAN_PRICE ?? '$9';
     </div>
 
     <div class="mt-14 rounded-2xl bg-sage-50 px-6 py-8 text-center">
-      <h2 class="font-display text-xl font-bold text-sage-900">How it works</h2>
-      <ol class="mx-auto mt-6 max-w-lg space-y-4 text-left text-sm text-ink-soft">
-        <li>
-          <span class="font-bold text-sage-800">1.</span> Complete the 6-step survey (about 5 minutes)
-        </li>
-        <li>
-          <span class="font-bold text-sage-800">2.</span> Review your personalized plan on screen
-        </li>
-        <li>
-          <span class="font-bold text-sage-800">3.</span> Download a polished PDF to save or print
-        </li>
-      </ol>
+      <h2 class="font-display text-xl font-bold text-sage-900">Sample week structure</h2>
+      <div class="mx-auto mt-6 max-w-lg space-y-2 text-left text-sm text-ink-soft">
+        <p><span class="font-bold text-sage-800">Mon</span> — Walk + strength intro</p>
+        <p><span class="font-bold text-amber-800">Tue</span> — Rest day (stretching + meal prep)</p>
+        <p><span class="font-bold text-sage-800">Wed</span> — Walk intervals</p>
+        <p><span class="font-bold text-sky-800">Thu</span> — Active recovery walk</p>
+        <p><span class="font-bold text-sage-800">Fri</span> — At-home strength circuit</p>
+        <p><span class="font-bold text-sage-800">Sat</span> — Long steady walk</p>
+        <p><span class="font-bold text-amber-800">Sun</span> — Yoga, mobility & week prep</p>
+      </div>
+      <p class="mx-auto mt-4 max-w-md text-xs text-muted">Exact schedule adapts to your fitness level and primary goal.</p>
       <a
         href="/personal-health-plan/survey"
         class="mt-8 inline-block rounded-full bg-sage-700 px-8 py-3 text-sm font-bold text-white transition hover:bg-sage-800"
       >
-        Begin survey →
+        Build my 7-day plan →
       </a>
     </div>
 

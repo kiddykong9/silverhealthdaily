@@ -34,7 +34,7 @@ const surveyConfig = {
     </div>
   </section>
 
-  <div class="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+  <div class="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-4xl">
     {
       REQUIRE_ACCESS && (
         <div id="access-gate" class="mb-8 rounded-2xl border border-sage-200 bg-sage-50 p-6">
@@ -307,6 +307,16 @@ const surveyConfig = {
 
     <div id="result-sections" class="space-y-8"></div>
 
+    <div id="week-plan-section" class="hidden">
+      <h3 class="font-display text-xl font-bold text-sage-900">Your 7-day program</h3>
+      <p id="week-overview" class="mt-2 text-sm text-muted"></p>
+      <div id="week-days" class="mt-6 space-y-4"></div>
+      <div class="mt-8 rounded-2xl border border-sage-100 bg-white p-6">
+        <h4 class="font-display font-bold text-sage-900">Grocery list</h4>
+        <ul id="grocery-list" class="mt-3 columns-1 gap-x-8 text-sm text-ink-soft sm:columns-2"></ul>
+      </div>
+    </div>
+
     <div>
       <h3 class="font-display text-xl font-bold text-sage-900">Recommended tools</h3>
       <div id="result-tools" class="mt-4 grid gap-4 sm:grid-cols-2"></div>
@@ -430,6 +440,77 @@ const surveyConfig = {
       return `<div class="rounded-2xl border border-sage-100 bg-white p-6"><h3 class="font-display font-bold text-sage-900">${title}</h3><div class="mt-3">${rowsHtml}</div></div>`;
     }
 
+    function renderMealHtml(label, meal) {
+      return `
+        <div class="border-t border-sage-100 py-3 first:border-t-0 first:pt-0">
+          <p class="font-semibold text-sage-900">${label}: ${meal.name}</p>
+          <p class="text-xs text-muted">${meal.calories} cal · ${meal.protein}g protein · ${meal.prepTime}</p>
+          <p class="mt-1 text-xs font-medium text-ink">Ingredients</p>
+          <ul class="mt-1 list-inside list-disc text-xs text-ink-soft">${meal.ingredients.map((i) => `<li>${i}</li>`).join('')}</ul>
+          <p class="mt-2 text-xs font-medium text-ink">Steps</p>
+          <ol class="mt-1 list-inside list-decimal text-xs text-ink-soft">${meal.steps.map((s) => `<li>${s}</li>`).join('')}</ol>
+          ${meal.tip ? `<p class="mt-2 text-xs text-sage-700"><em>Tip: ${meal.tip}</em></p>` : ''}
+        </div>`;
+    }
+
+    function renderDayCard(day) {
+      const typeBadge =
+        day.workout.type === 'rest'
+          ? 'Rest day'
+          : day.workout.type === 'active_recovery'
+            ? 'Active recovery'
+            : 'Workout';
+      const badgeClass =
+        day.workout.type === 'rest'
+          ? 'bg-amber-100 text-amber-900'
+          : day.workout.type === 'active_recovery'
+            ? 'bg-sky-100 text-sky-900'
+            : 'bg-sage-100 text-sage-800';
+
+      return `
+        <details class="group rounded-2xl border border-sage-200 bg-white shadow-sm open:shadow-md">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4">
+            <div>
+              <span class="rounded-full px-2.5 py-0.5 text-xs font-bold ${badgeClass}">${typeBadge}</span>
+              <h4 class="font-display mt-1 font-bold text-sage-900">${day.weekday} — ${day.workout.title}</h4>
+              <p class="text-sm text-muted">${day.theme}</p>
+            </div>
+            <span class="text-sage-500 transition group-open:rotate-180">▼</span>
+          </summary>
+          <div class="border-t border-sage-100 px-5 pb-5">
+            <p class="mt-3 text-sm text-ink-soft">${day.dailyFocus}</p>
+            <div class="mt-4 rounded-xl bg-sage-50 p-4">
+              <p class="text-sm font-bold text-sage-900">${day.workout.title} · ${day.workout.durationMin} min · ${day.workout.intensity}</p>
+              <p class="mt-1 text-xs text-muted">Step goal: ${day.workout.stepsGoal.toLocaleString()}</p>
+              ${day.workout.type !== 'rest' ? `
+                <p class="mt-3 text-xs font-semibold uppercase text-sage-700">Warm-up</p>
+                <ul class="mt-1 list-inside list-disc text-sm text-ink-soft">${day.workout.warmup.map((x) => `<li>${x}</li>`).join('')}</ul>
+                <p class="mt-3 text-xs font-semibold uppercase text-sage-700">Main</p>
+                <ul class="mt-1 list-inside list-disc text-sm text-ink-soft">${day.workout.main.map((x) => `<li>${x}</li>`).join('')}</ul>
+                <p class="mt-3 text-xs font-semibold uppercase text-sage-700">Cool-down</p>
+                <ul class="mt-1 list-inside list-disc text-sm text-ink-soft">${day.workout.cooldown.map((x) => `<li>${x}</li>`).join('')}</ul>
+              ` : `<ul class="mt-2 list-inside list-disc text-sm text-ink-soft">${day.workout.main.map((x) => `<li>${x}</li>`).join('')}</ul>`}
+              <p class="mt-2 text-xs text-muted">${day.workout.notes}</p>
+            </div>
+            <div class="mt-4 grid gap-4 lg:grid-cols-2">
+              <div class="rounded-xl border border-sage-100 p-4">
+                <p class="text-sm font-bold text-sage-900">Meals</p>
+                ${renderMealHtml('Breakfast', day.meals.breakfast)}
+                ${renderMealHtml('Lunch', day.meals.lunch)}
+                ${renderMealHtml('Dinner', day.meals.dinner)}
+                ${renderMealHtml('Snack', day.meals.snack)}
+              </div>
+              <div class="rounded-xl border border-sage-100 p-4 text-sm text-ink-soft">
+                <p class="font-bold text-sage-900">Hydration</p>
+                <p class="mt-1">${day.hydration}</p>
+                <p class="mt-4 font-bold text-sage-900">Evening routine</p>
+                <p class="mt-1">${day.eveningRoutine}</p>
+              </div>
+            </div>
+          </div>
+        </details>`;
+    }
+
     function renderPlan(plan) {
       document.getElementById('survey-form').classList.add('hidden');
       document.getElementById('nav-buttons').classList.add('hidden');
@@ -465,6 +546,13 @@ const surveyConfig = {
         ]),
       ];
       document.getElementById('result-sections').innerHTML = sections.join('');
+
+      document.getElementById('week-plan-section').classList.remove('hidden');
+      document.getElementById('week-overview').textContent = plan.week.overview;
+      document.getElementById('week-days').innerHTML = plan.week.days.map(renderDayCard).join('');
+      document.getElementById('grocery-list').innerHTML = plan.week.groceryList
+        .map((item) => `<li class="mb-1">${item}</li>`)
+        .join('');
 
       document.getElementById('result-tools').innerHTML = plan.recommendedTools
         .slice(0, 8)

@@ -17,6 +17,7 @@ import {
   type Sex,
 } from './health-calculations';
 import { TOOLS } from './tools';
+import { buildWeekPlan, type WeekPlan } from './plan-week';
 
 export type PrimaryGoal = 'weight_loss' | 'maintain' | 'energy' | 'heart' | 'sleep';
 export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
@@ -59,8 +60,8 @@ export type HealthPlan = {
     stepGoal: number;
     walking: ReturnType<typeof calcWalkingCalories>;
     heartRate: ReturnType<typeof calcHeartRate>;
-    walkingPlan: string[];
   };
+  week: WeekPlan;
   sleep: {
     bedtimes: ReturnType<typeof calcBedtimes>;
     sleepPlan: string[];
@@ -70,36 +71,6 @@ export type HealthPlan = {
   recommendedTools: typeof TOOLS[number][];
   recommendedArticles: string[];
   summary: string;
-};
-
-const WALKING_PLANS: Record<WalkingLevel, string[]> = {
-  beginner: [
-    'Day 1 — 15 min easy walk',
-    'Day 2 — Rest or stretching',
-    'Day 3 — 18 min brisk walk',
-    'Day 4 — Rest',
-    'Day 5 — 20 min walk',
-    'Day 6 — 15 min leisure walk',
-    'Day 7 — 22 min walk',
-  ],
-  intermediate: [
-    'Day 1 — 25 min brisk walk',
-    'Day 2 — 20 min recovery walk',
-    'Day 3 — 30 min with hills/stairs',
-    'Day 4 — Rest or yoga',
-    'Day 5 — 28 min brisk walk',
-    'Day 6 — 35 min longer walk',
-    'Day 7 — 25 min easy walk',
-  ],
-  active: [
-    'Day 1 — 35 min brisk walk',
-    'Day 2 — 30 min walk + light strength',
-    'Day 3 — 40 min interval walk',
-    'Day 4 — 25 min recovery walk',
-    'Day 5 — 45 min varied terrain',
-    'Day 6 — 35 min brisk walk',
-    'Day 7 — 50 min long walk',
-  ],
 };
 
 const SLEEP_PLANS: Record<SleepChallenge, string[]> = {
@@ -206,6 +177,30 @@ export function buildHealthPlan(survey: PlanSurvey): HealthPlan {
     `Day 7 — Hit ${glassesTarget} glasses goal`,
   ];
 
+  const bedtime = bedtimes[0]?.time ?? '10:00 PM';
+  const week = buildWeekPlan(
+    {
+      walkingLevel: survey.walkingLevel,
+      primaryGoal: survey.primaryGoal,
+      macroStyle: survey.macroStyle,
+    },
+    {
+      breakfast: meals.breakfast.cal,
+      lunch: meals.lunch.cal,
+      dinner: meals.dinner.cal,
+      snack: meals.snacks.cal,
+    },
+    {
+      breakfast: meals.breakfast.protein,
+      lunch: meals.lunch.protein,
+      dinner: meals.dinner.protein,
+      snack: meals.snacks.protein,
+    },
+    stepGoal,
+    hydration.glasses,
+    bedtime,
+  );
+
   const habits = [
     'Drink water within 30 minutes of waking',
     `Walk ${survey.walkingMinutes} minutes on most days`,
@@ -222,7 +217,7 @@ export function buildHealthPlan(survey: PlanSurvey): HealthPlan {
     sleep: 'better sleep',
   };
 
-  const summary = `${survey.name || 'Your'} personalized plan focuses on ${goalLabel[survey.primaryGoal]} with a daily target of ${deficit.targetCalories.toLocaleString()} calories, ${protein.grams}g protein, ${hydration.oz} oz water, and ${stepGoal.toLocaleString()} steps.`;
+  const summary = `${survey.name || 'Your'} 7-day program targets ${goalLabel[survey.primaryGoal]}: ${deficit.targetCalories.toLocaleString()} cal/day, ${protein.grams}g protein, ${week.workoutDays} workout days, ${week.restDayLabels.length} rest days, and full daily meal plans with recipes.`;
 
   return {
     generatedAt: new Date().toISOString(),
@@ -235,8 +230,8 @@ export function buildHealthPlan(survey: PlanSurvey): HealthPlan {
       stepGoal,
       walking,
       heartRate,
-      walkingPlan: WALKING_PLANS[survey.walkingLevel],
     },
+    week,
     sleep: {
       bedtimes,
       sleepPlan: SLEEP_PLANS[survey.sleepChallenge],
