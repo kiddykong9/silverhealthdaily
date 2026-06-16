@@ -48,10 +48,16 @@ export const TOOLS = [
     category: 'body',
   },
   {
-    href: '/tools/walking-calorie-calculator',
-    title: 'Walking Calories',
-    description: 'Calories burned on your daily walk.',
-    category: 'fitness',
+    href: '/tools/meal-planner',
+    title: 'Daily Meal Planner',
+    description: 'Split daily calories and macros across breakfast, lunch, dinner, and snacks.',
+    category: 'nutrition',
+  },
+  {
+    href: '/tools/body-fat-calculator',
+    title: 'Body Fat Calculator',
+    description: 'Estimate body fat % with tape measurements or a BMI-based formula.',
+    category: 'body',
   },
   {
     href: '/tools/bedtime-calculator',
@@ -107,9 +113,9 @@ export type RelatedTool = {
 /** Curated cross-links — tools that naturally follow each other in a wellness workflow. */
 export const TOOL_RELATED: Record<ToolSlug, RelatedTool[]> = {
   '/tools/bmi-calculator': [
+    { href: '/tools/body-fat-calculator', reason: 'Body fat tells more than BMI alone' },
     { href: '/tools/ideal-weight-calculator', reason: 'See your healthy weight range for your height' },
     { href: '/tools/daily-calorie-calculator', reason: 'Estimate calories you burn each day' },
-    { href: '/tools/food-calorie-calculator', reason: 'Track what you eat against your goals' },
   ],
   '/tools/water-intake-calculator': [
     { href: '/tools/7-day-hydration-plan', reason: 'Build a week of hydration habits' },
@@ -122,9 +128,9 @@ export const TOOL_RELATED: Record<ToolSlug, RelatedTool[]> = {
     { href: '/tools/daily-calorie-calculator', reason: 'Find your total daily calorie needs' },
   ],
   '/tools/food-calorie-calculator': [
-    { href: '/tools/daily-calorie-calculator', reason: 'Know your daily calorie target first' },
+    { href: '/tools/meal-planner', reason: 'Build a daily meal plan first' },
+    { href: '/tools/daily-calorie-calculator', reason: 'Know your daily calorie target' },
     { href: '/tools/macro-calculator', reason: 'Split calories into protein, carbs, and fat' },
-    { href: '/tools/protein-calculator', reason: 'Find your daily protein target' },
   ],
   '/tools/walking-calorie-calculator': [
     { href: '/tools/step-goal-calculator', reason: 'Set a personalized step target' },
@@ -167,14 +173,14 @@ export const TOOL_RELATED: Record<ToolSlug, RelatedTool[]> = {
     { href: '/tools/7-day-walking-plan', reason: 'Add a walking routine' },
   ],
   '/tools/daily-calorie-calculator': [
+    { href: '/tools/meal-planner', reason: 'Split your TDEE into daily meals' },
     { href: '/tools/macro-calculator', reason: 'Turn calories into protein, carbs, and fat' },
     { href: '/tools/food-calorie-calculator', reason: 'Log meals against your TDEE' },
-    { href: '/tools/calorie-deficit-calculator', reason: 'Plan gradual weight loss safely' },
   ],
   '/tools/macro-calculator': [
+    { href: '/tools/meal-planner', reason: 'Turn macros into a meal-by-meal plan' },
     { href: '/tools/daily-calorie-calculator', reason: 'Calculate your daily calorie needs' },
     { href: '/tools/food-calorie-calculator', reason: 'Track macros from real foods' },
-    { href: '/tools/protein-calculator', reason: 'Double-check your protein target' },
   ],
   '/tools/calorie-deficit-calculator': [
     { href: '/tools/daily-calorie-calculator', reason: 'Find your maintenance calories (TDEE)' },
@@ -182,9 +188,19 @@ export const TOOL_RELATED: Record<ToolSlug, RelatedTool[]> = {
     { href: '/tools/walking-calorie-calculator', reason: 'Burn extra calories with walking' },
   ],
   '/tools/ideal-weight-calculator': [
+    { href: '/tools/body-fat-calculator', reason: 'Estimate body composition beyond the scale' },
     { href: '/tools/bmi-calculator', reason: 'Check where you are on the BMI scale' },
-    { href: '/tools/daily-calorie-calculator', reason: 'Calories for your current weight' },
     { href: '/tools/calorie-deficit-calculator', reason: 'Plan a gradual path to your range' },
+  ],
+  '/tools/meal-planner': [
+    { href: '/tools/food-calorie-calculator', reason: 'Log meals against your plan' },
+    { href: '/tools/daily-calorie-calculator', reason: 'Find your daily calorie needs' },
+    { href: '/tools/macro-calculator', reason: 'Adjust your macro split' },
+  ],
+  '/tools/body-fat-calculator': [
+    { href: '/tools/bmi-calculator', reason: 'Compare with your BMI' },
+    { href: '/tools/ideal-weight-calculator', reason: 'Healthy weight range for your height' },
+    { href: '/tools/daily-calorie-calculator', reason: 'Calories based on your current weight' },
   ],
 };
 
@@ -211,6 +227,8 @@ export const TOOL_IMAGES_MAP: Record<string, string> = {
   '/tools/macro-calculator': 'macro',
   '/tools/calorie-deficit-calculator': 'deficit',
   '/tools/ideal-weight-calculator': 'idealWeight',
+  '/tools/meal-planner': 'mealPlan',
+  '/tools/body-fat-calculator': 'bodyFat',
   '/tools/walking-calorie-calculator': 'walking',
   '/tools/bedtime-calculator': 'bedtime',
   '/tools/target-heart-rate-calculator': 'heartRate',

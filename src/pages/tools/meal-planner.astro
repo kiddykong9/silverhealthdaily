@@ -1,0 +1,285 @@
+---
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
+---
+
+<ToolPageLayout
+  title="Daily Meal Planner"
+  description="Build a daily meal plan from your calorie and macro targets — split across breakfast, lunch, dinner, and snacks."
+  current="/tools/meal-planner"
+  heroClass="from-rose-600 to-orange-600"
+>
+  <p slot="subtitle">
+    Set your daily targets, divide them by meal, and track progress in the Food Nutrition Calculator — saved on your device.
+  </p>
+
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Step 1 — Daily targets</p>
+    </div>
+    <div class="p-6">
+      <form id="plan-form" class="space-y-5">
+        <div>
+          <label for="calories" class="form-label">Daily calories</label>
+          <input id="calories" type="number" min="1000" max="5000" class="form-input" placeholder="e.g. 1900" />
+          <p class="mt-1 text-xs text-muted">
+            Start with the <a href="/tools/daily-calorie-calculator" class="text-sage-700 underline">TDEE calculator</a>
+            or <a href="/tools/calorie-deficit-calculator" class="text-sage-700 underline">deficit calculator</a>.
+          </p>
+        </div>
+        <div>
+          <label for="split" class="form-label">Macro split</label>
+          <select id="split" class="form-input">
+            <option value="balanced">Balanced (30% protein / 40% carbs / 30% fat)</option>
+            <option value="high-protein">High protein (40% / 30% / 30%)</option>
+            <option value="low-carb">Lower carb (35% / 25% / 40%)</option>
+            <option value="mediterranean">Mediterranean-style (25% / 45% / 30%)</option>
+          </select>
+        </div>
+        <div>
+          <label for="meal-preset" class="form-label">Meal distribution</label>
+          <select id="meal-preset" class="form-input">
+            <option value="standard">Standard (25% / 30% / 35% / 10% snack)</option>
+            <option value="light-breakfast">Light breakfast (15% / 35% / 40% / 10%)</option>
+            <option value="big-breakfast">Big breakfast (30% / 25% / 35% / 10%)</option>
+            <option value="even">Even split (25% each meal + snack)</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit">Build my meal plan</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="plan-result" class="mt-6 hidden space-y-6">
+    <div class="tool-panel">
+      <div class="tool-panel-header flex flex-wrap items-center justify-between gap-3">
+        <p class="font-semibold text-white">Your daily plan</p>
+        <button type="button" id="save-plan" class="rounded-lg bg-white/20 px-4 py-1.5 text-sm font-semibold text-white hover:bg-white/30">
+          Save to device
+        </button>
+      </div>
+      <div class="p-6">
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="rounded-xl bg-sage-50 p-4 text-center">
+            <p class="text-xs font-semibold uppercase text-sage-600">Protein</p>
+            <p id="daily-p" class="font-display text-2xl font-bold text-sage-800"></p>
+          </div>
+          <div class="rounded-xl bg-sage-50 p-4 text-center">
+            <p class="text-xs font-semibold uppercase text-sage-600">Carbs</p>
+            <p id="daily-c" class="font-display text-2xl font-bold text-sage-800"></p>
+          </div>
+          <div class="rounded-xl bg-sage-50 p-4 text-center">
+            <p class="text-xs font-semibold uppercase text-sage-600">Fat</p>
+            <p id="daily-f" class="font-display text-2xl font-bold text-sage-800"></p>
+          </div>
+        </div>
+        <p id="daily-cal" class="mt-4 text-center text-sm text-muted"></p>
+      </div>
+    </div>
+
+    <div class="tool-panel">
+      <div class="tool-panel-header">
+        <p class="font-semibold text-white">Step 2 — Per-meal targets</p>
+      </div>
+      <div class="overflow-x-auto p-6">
+        <table class="w-full min-w-[480px] text-left text-sm">
+          <thead>
+            <tr class="border-b border-sage-200 text-xs font-semibold uppercase text-sage-600">
+              <th class="pb-3 pr-4">Meal</th>
+              <th class="pb-3 pr-4">Calories</th>
+              <th class="pb-3 pr-4">Protein</th>
+              <th class="pb-3 pr-4">Carbs</th>
+              <th class="pb-3">Fat</th>
+            </tr>
+          </thead>
+          <tbody id="meal-rows" class="divide-y divide-sage-100"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="save-status" class="hidden rounded-xl border border-sage-200 bg-sage-50 px-4 py-3 text-sm text-sage-800" role="status">
+      Plan saved. Open the <a href="/tools/food-calorie-calculator" class="font-semibold underline">Food Nutrition Calculator</a> to log meals against these targets.
+    </div>
+
+    <div id="progress-panel" class="tool-panel hidden">
+      <div class="tool-panel-header">
+        <p class="font-semibold text-white">Today's progress</p>
+      </div>
+      <div class="p-6">
+        <p class="text-sm text-muted">From your food log on this device:</p>
+        <div class="mt-4 space-y-3">
+          <div>
+            <div class="mb-1 flex justify-between text-sm">
+              <span>Calories</span>
+              <span id="prog-cal-label"></span>
+            </div>
+            <div class="h-2 overflow-hidden rounded-full bg-sage-100">
+              <div id="prog-cal-bar" class="h-full rounded-full bg-sage-600 transition-all"></div>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1 flex justify-between text-sm">
+              <span>Protein</span>
+              <span id="prog-p-label"></span>
+            </div>
+            <div class="h-2 overflow-hidden rounded-full bg-sage-100">
+              <div id="prog-p-bar" class="h-full rounded-full bg-emerald-600 transition-all"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PLAN_KEY = 'shd-nutrition-plan';
+    const LOG_KEY = 'shd-food-log';
+
+    const SPLITS: Record<string, [number, number, number]> = {
+      balanced: [0.3, 0.4, 0.3],
+      'high-protein': [0.4, 0.3, 0.3],
+      'low-carb': [0.35, 0.25, 0.4],
+      mediterranean: [0.25, 0.45, 0.3],
+    };
+
+    const PRESETS: Record<string, Record<string, number>> = {
+      standard: { breakfast: 25, lunch: 30, dinner: 35, snack: 10 },
+      'light-breakfast': { breakfast: 15, lunch: 35, dinner: 40, snack: 10 },
+      'big-breakfast': { breakfast: 30, lunch: 25, dinner: 35, snack: 10 },
+      even: { breakfast: 25, lunch: 25, dinner: 25, snack: 25 },
+    };
+
+    const MEALS = [
+      { id: 'breakfast', label: 'Breakfast' },
+      { id: 'lunch', label: 'Lunch' },
+      { id: 'dinner', label: 'Dinner' },
+      { id: 'snack', label: 'Snacks' },
+    ];
+
+    let currentPlan: {
+      calories: number;
+      proteinG: number;
+      carbsG: number;
+      fatG: number;
+      meals: Record<string, { calories: number; proteinG: number; carbsG: number; fatG: number }>;
+    } | null = null;
+
+    function dateKey() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function loadSavedPlan() {
+      try {
+        const raw = localStorage.getItem(PLAN_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch {
+        return null;
+      }
+    }
+
+    function getLogTotals() {
+      try {
+        const all = JSON.parse(localStorage.getItem(LOG_KEY) ?? '{}');
+        const log = all[dateKey()] ?? [];
+        let calories = 0;
+        let protein = 0;
+        for (const entry of log) {
+          const mult = entry.servings ?? 1;
+          const n = entry.food?.nutrition ?? {};
+          if (n.calories != null) calories += n.calories * mult;
+          if (n.protein != null) protein += n.protein * mult;
+        }
+        return { calories: Math.round(calories), protein: Math.round(protein * 10) / 10 };
+      } catch {
+        return { calories: 0, protein: 0 };
+      }
+    }
+
+    function renderProgress(plan: typeof currentPlan) {
+      if (!plan) return;
+      const totals = getLogTotals();
+      const panel = document.getElementById('progress-panel')!;
+      panel.classList.remove('hidden');
+
+      const calPct = Math.min(100, Math.round((totals.calories / plan.calories) * 100));
+      const pPct = Math.min(100, Math.round((totals.protein / plan.proteinG) * 100));
+
+      document.getElementById('prog-cal-label')!.textContent = `${totals.calories} / ${plan.calories} kcal`;
+      document.getElementById('prog-p-label')!.textContent = `${totals.protein}g / ${plan.proteinG}g`;
+      (document.getElementById('prog-cal-bar') as HTMLElement).style.width = `${calPct}%`;
+      (document.getElementById('prog-p-bar') as HTMLElement).style.width = `${pPct}%`;
+    }
+
+    function renderPlan(plan: NonNullable<typeof currentPlan>) {
+      currentPlan = plan;
+      document.getElementById('plan-result')!.classList.remove('hidden');
+      document.getElementById('daily-p')!.textContent = `${plan.proteinG}g`;
+      document.getElementById('daily-c')!.textContent = `${plan.carbsG}g`;
+      document.getElementById('daily-f')!.textContent = `${plan.fatG}g`;
+      document.getElementById('daily-cal')!.textContent = `${plan.calories.toLocaleString()} calories per day`;
+
+      const tbody = document.getElementById('meal-rows')!;
+      tbody.innerHTML = MEALS.map(({ id, label }) => {
+        const m = plan.meals[id];
+        return `<tr>
+          <td class="py-3 pr-4 font-medium text-ink">${label}</td>
+          <td class="py-3 pr-4">${m.calories} kcal</td>
+          <td class="py-3 pr-4">${m.proteinG}g</td>
+          <td class="py-3 pr-4">${m.carbsG}g</td>
+          <td class="py-3">${m.fatG}g</td>
+        </tr>`;
+      }).join('');
+
+      renderProgress(plan);
+    }
+
+    document.getElementById('plan-form')!.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const cal = Number((document.getElementById('calories') as HTMLInputElement).value);
+      const splitKey = (document.getElementById('split') as HTMLSelectElement).value;
+      const presetKey = (document.getElementById('meal-preset') as HTMLSelectElement).value;
+      if (!cal) return;
+
+      const [pPct, cPct, fPct] = SPLITS[splitKey];
+      const proteinG = Math.round((cal * pPct) / 4);
+      const carbsG = Math.round((cal * cPct) / 4);
+      const fatG = Math.round((cal * fPct) / 9);
+
+      const dist = PRESETS[presetKey];
+      const meals: Record<string, { calories: number; proteinG: number; carbsG: number; fatG: number }> = {};
+
+      for (const { id } of MEALS) {
+        const pct = dist[id] / 100;
+        meals[id] = {
+          calories: Math.round(cal * pct),
+          proteinG: Math.round(proteinG * pct),
+          carbsG: Math.round(carbsG * pct),
+          fatG: Math.round(fatG * pct),
+        };
+      }
+
+      renderPlan({ calories: cal, proteinG, carbsG, fatG, meals });
+    });
+
+    document.getElementById('save-plan')!.addEventListener('click', () => {
+      if (!currentPlan) return;
+      try {
+        localStorage.setItem(PLAN_KEY, JSON.stringify({
+          ...currentPlan,
+          split: (document.getElementById('split') as HTMLSelectElement).value,
+          preset: (document.getElementById('meal-preset') as HTMLSelectElement).value,
+          savedAt: new Date().toISOString(),
+        }));
+        document.getElementById('save-status')!.classList.remove('hidden');
+      } catch { /* private mode */ }
+    });
+
+    const saved = loadSavedPlan();
+    if (saved?.calories) {
+      (document.getElementById('calories') as HTMLInputElement).value = String(saved.calories);
+      if (saved.split) (document.getElementById('split') as HTMLSelectElement).value = saved.split;
+      if (saved.preset) (document.getElementById('meal-preset') as HTMLSelectElement).value = saved.preset;
+      if (saved.meals) renderPlan(saved);
+    }
+  </script>
+</ToolPageLayout>

@@ -1,0 +1,210 @@
+---
+import ToolPageLayout from '../../layouts/ToolPageLayout.astro';
+---
+
+<ToolPageLayout
+  title="Body Fat Calculator"
+  description="Estimate body fat percentage using the US Navy circumference method or a BMI-based formula."
+  current="/tools/body-fat-calculator"
+  heroClass="from-violet-600 to-purple-800"
+>
+  <p slot="subtitle">
+    Circumference measurements are more useful than BMI alone — but any estimate is approximate, not a medical test.
+  </p>
+
+  <div class="tool-panel">
+    <div class="tool-panel-header">
+      <p class="font-semibold text-white">Choose a method</p>
+    </div>
+    <div class="p-6">
+      <div class="mb-6 flex flex-wrap gap-2">
+        <button type="button" id="tab-navy" class="method-tab active rounded-full bg-sage-700 px-4 py-2 text-sm font-semibold text-white">
+          Navy method (tape measure)
+        </button>
+        <button type="button" id="tab-bmi" class="method-tab rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-semibold text-sage-800 hover:bg-sage-50">
+          BMI estimate (no tape)
+        </button>
+      </div>
+
+      <form id="navy-form" class="space-y-5">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="navy-sex" class="form-label">Sex</label>
+            <select id="navy-sex" class="form-input">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div>
+            <label for="navy-unit" class="form-label">Units</label>
+            <select id="navy-unit" class="form-input">
+              <option value="imperial">Inches</option>
+              <option value="metric">Centimeters</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="navy-height" class="form-label">Height</label>
+          <input id="navy-height" type="number" step="0.1" class="form-input" placeholder="e.g. 68 in or 173 cm" />
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="navy-neck" class="form-label">Neck (narrowest, below larynx)</label>
+            <input id="navy-neck" type="number" step="0.1" class="form-input" placeholder="e.g. 15" />
+          </div>
+          <div>
+            <label for="navy-waist" class="form-label">Waist (navel level, relaxed)</label>
+            <input id="navy-waist" type="number" step="0.1" class="form-input" placeholder="e.g. 34" />
+          </div>
+        </div>
+        <div id="hip-field">
+          <label for="navy-hip" class="form-label">Hip (widest point — women only)</label>
+          <input id="navy-hip" type="number" step="0.1" class="form-input" placeholder="e.g. 40" />
+        </div>
+        <button type="submit" class="form-submit">Calculate body fat</button>
+      </form>
+
+      <form id="bmi-form" class="hidden space-y-5">
+        <p class="text-sm text-ink-soft">
+          Uses the Deurenberg formula when you don't have a tape measure. Less accurate than circumference, but useful as a rough guide.
+        </p>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="bmi-sex" class="form-label">Sex</label>
+            <select id="bmi-sex" class="form-input">
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
+          <div>
+            <label for="bmi-age" class="form-label">Age (years)</label>
+            <input id="bmi-age" type="number" min="18" max="100" value="50" class="form-input" />
+          </div>
+        </div>
+        <div>
+          <label for="bmi-value" class="form-label">BMI</label>
+          <input id="bmi-value" type="number" step="0.1" min="10" max="60" class="form-input" placeholder="e.g. 27.5" />
+          <p class="mt-1 text-xs text-muted">
+            Don't know yours? Use our <a href="/tools/bmi-calculator" class="text-sage-700 underline">BMI Calculator</a>.
+          </p>
+        </div>
+        <button type="submit" class="form-submit">Estimate body fat</button>
+      </form>
+
+      <div id="bf-result" class="result-box mt-6 hidden">
+        <p class="text-sm font-medium text-muted">Estimated body fat</p>
+        <p id="bf-value" class="font-display text-5xl font-bold text-sage-800"></p>
+        <p id="bf-category" class="mt-2 font-medium text-ink-soft"></p>
+        <p id="bf-method" class="mt-3 text-sm text-muted"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 rounded-2xl border border-sage-100 bg-sage-50/80 p-6 text-sm text-ink-soft">
+    <p class="font-semibold text-ink">Reference ranges (general adults)</p>
+    <ul class="mt-2 list-inside list-disc space-y-1">
+      <li><strong>Essential fat:</strong> ~2–5% men · ~10–13% women</li>
+      <li><strong>Athletes:</strong> ~6–13% men · ~14–20% women</li>
+      <li><strong>Fitness:</strong> ~14–17% men · ~21–24% women</li>
+      <li><strong>Average:</strong> ~18–24% men · ~25–31% women</li>
+    </ul>
+  </div>
+
+  <script>
+    const tabNavy = document.getElementById('tab-navy')!;
+    const tabBmi = document.getElementById('tab-bmi')!;
+    const navyForm = document.getElementById('navy-form')!;
+    const bmiFormEl = document.getElementById('bmi-form')!;
+    const result = document.getElementById('bf-result')!;
+    const hipField = document.getElementById('hip-field')!;
+    const navySex = document.getElementById('navy-sex') as HTMLSelectElement;
+
+    function showTab(navy: boolean) {
+      navyForm.classList.toggle('hidden', !navy);
+      bmiFormEl.classList.toggle('hidden', navy);
+      tabNavy.classList.toggle('active', navy);
+      tabNavy.classList.toggle('bg-sage-700', navy);
+      tabNavy.classList.toggle('text-white', navy);
+      tabNavy.classList.toggle('border', !navy);
+      tabNavy.classList.toggle('bg-white', !navy);
+      tabBmi.classList.toggle('active', !navy);
+      tabBmi.classList.toggle('bg-sage-700', !navy);
+      tabBmi.classList.toggle('text-white', !navy);
+      tabBmi.classList.toggle('border', navy);
+      tabBmi.classList.toggle('bg-white', navy);
+    }
+
+    tabNavy.addEventListener('click', () => showTab(true));
+    tabBmi.addEventListener('click', () => showTab(false));
+
+    navySex.addEventListener('change', () => {
+      hipField.classList.toggle('hidden', navySex.value === 'male');
+    });
+
+    function categorize(sex: string, pct: number): string {
+      if (sex === 'male') {
+        if (pct < 6) return 'Very lean — typical of competitive athletes.';
+        if (pct < 14) return 'Athletic / fitness range for most men.';
+        if (pct < 18) return 'Fit range for many active adults.';
+        if (pct < 25) return 'Average range for men.';
+        return 'Above average — lifestyle changes or a clinician can help if desired.';
+      }
+      if (pct < 14) return 'Very lean — typical of competitive athletes.';
+      if (pct < 21) return 'Athletic / fitness range for most women.';
+      if (pct < 25) return 'Fit range for many active adults.';
+      if (pct < 32) return 'Average range for women.';
+      return 'Above average — lifestyle changes or a clinician can help if desired.';
+    }
+
+    function showResult(pct: number, sex: string, method: string) {
+      const clamped = Math.max(2, Math.min(60, pct));
+      document.getElementById('bf-value')!.textContent = `${clamped.toFixed(1)}%`;
+      document.getElementById('bf-category')!.textContent = categorize(sex, clamped);
+      document.getElementById('bf-method')!.textContent = method;
+      result.classList.remove('hidden');
+    }
+
+    function toInches(val: number, unit: string) {
+      return unit === 'metric' ? val / 2.54 : val;
+    }
+
+    navyForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const sex = (document.getElementById('navy-sex') as HTMLSelectElement).value;
+      const unit = (document.getElementById('navy-unit') as HTMLSelectElement).value;
+      const height = toInches(Number((document.getElementById('navy-height') as HTMLInputElement).value), unit);
+      const neck = toInches(Number((document.getElementById('navy-neck') as HTMLInputElement).value), unit);
+      const waist = toInches(Number((document.getElementById('navy-waist') as HTMLInputElement).value), unit);
+      const hip = toInches(Number((document.getElementById('navy-hip') as HTMLInputElement).value), unit);
+
+      if (!height || !neck || !waist) return;
+      if (waist <= neck) {
+        document.getElementById('bf-category')!.textContent = 'Waist must be larger than neck for this formula.';
+        result.classList.remove('hidden');
+        return;
+      }
+
+      let pct: number;
+      if (sex === 'male') {
+        pct = 86.01 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 36.76;
+      } else {
+        if (!hip) return;
+        pct = 163.205 * Math.log10(waist + hip - neck) - 97.684 * Math.log10(height) - 78.387;
+      }
+
+      showResult(pct, sex, 'US Navy circumference method (estimate).');
+    });
+
+    bmiFormEl.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const sex = (document.getElementById('bmi-sex') as HTMLSelectElement).value;
+      const age = Number((document.getElementById('bmi-age') as HTMLInputElement).value);
+      const bmi = Number((document.getElementById('bmi-value') as HTMLInputElement).value);
+      if (!bmi || !age) return;
+
+      const sexNum = sex === 'male' ? 1 : 0;
+      const pct = 1.2 * bmi + 0.23 * age - 10.8 * sexNum - 5.4;
+      showResult(pct, sex, 'Deurenberg BMI-based estimate (less precise than tape measurements).');
+    });
+  </script>
+</ToolPageLayout>

@@ -177,6 +177,8 @@ export const TOOL_IMAGES = {
   macro: { src: u(PHOTOS.healthySpread), alt: 'Macro-rich whole foods on a table' },
   deficit: CATEGORY_IMAGES.fitness,
   idealWeight: CATEGORY_IMAGES['heart-health'],
+  mealPlan: { src: u(PHOTOS.homeCooking), alt: 'Home-cooked balanced meal planning' },
+  bodyFat: CATEGORY_IMAGES.fitness,
 } as const;
 
 export const PAGE_HEROES = {

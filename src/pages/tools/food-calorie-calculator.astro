@@ -130,6 +130,11 @@ import { NUTRITION_LABEL_ROWS } from '../../lib/nutrition';
             <p class="mb-3 text-xs text-muted">
               Saved on this device only — no account needed. Clearing browser data will reset your log.
             </p>
+            <div id="plan-banner" class="mb-4 hidden rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+              <p class="font-semibold">Daily plan loaded</p>
+              <p id="plan-banner-text" class="mt-1 text-emerald-800"></p>
+              <a href="/tools/meal-planner" class="mt-2 inline-block text-xs font-semibold underline">Edit plan</a>
+            </div>
             <ul id="log-list" class="space-y-2 text-sm">
               <li id="log-empty" class="rounded-lg bg-sage-50 px-4 py-6 text-center text-muted">
                 Search or scan a food above, then add it here.
@@ -201,6 +206,7 @@ import { NUTRITION_LABEL_ROWS } from '../../lib/nutrition';
 
   <script define:vars={{ labelRows: NUTRITION_LABEL_ROWS }}>
     const STORAGE_KEY = 'shd-food-log';
+    const PLAN_KEY = 'shd-nutrition-plan';
     const MEAL_LABELS = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snack' };
 
     let selected = null;
@@ -425,6 +431,18 @@ import { NUTRITION_LABEL_ROWS } from '../../lib/nutrition';
       }
     }
 
+    function showPlanBanner() {
+      try {
+        const plan = JSON.parse(localStorage.getItem(PLAN_KEY) ?? 'null');
+        if (!plan?.calories) return;
+        const banner = document.getElementById('plan-banner');
+        const text = document.getElementById('plan-banner-text');
+        if (!banner || !text) return;
+        banner.classList.remove('hidden');
+        text.textContent = `Target: ${plan.calories.toLocaleString()} kcal · ${plan.proteinG}g protein · ${plan.carbsG}g carbs · ${plan.fatG}g fat`;
+      } catch { /* ignore */ }
+    }
+
     function renderLog() {
       els.logDate.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
@@ -547,6 +565,7 @@ import { NUTRITION_LABEL_ROWS } from '../../lib/nutrition';
 
     log = loadLog();
     els.mealType.value = guessMeal();
+    showPlanBanner();
     renderLog();
   </script>
 </BaseLayout>

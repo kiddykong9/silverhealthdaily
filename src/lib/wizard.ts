@@ -51,8 +51,8 @@ const BASE: Record<WizardFocus, Omit<WizardResult, 'articles'> & { articles: str
       'best-walking-routines-for-adults-over-50',
     ],
     tools: [
+      '/tools/meal-planner',
       '/tools/daily-calorie-calculator',
-      '/tools/calorie-deficit-calculator',
       '/tools/food-calorie-calculator',
     ],
   },
