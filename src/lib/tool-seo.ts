@@ -116,21 +116,21 @@ export const TOOL_SEO: Record<ToolSlug, ToolSeoContent> = {
   },
   '/tools/body-fat-calculator': {
     intro: [
-      'Body fat percentage estimates how much of your weight is fat versus lean tissue. It often tells a richer story than BMI alone, especially for active adults.',
-      'This tool offers Navy tape-measure method (waist, neck, hip) and a BMI-based estimate when measurements are unavailable.',
-      'Results are approximations — DEXA scans and professional assessments are more precise.',
+      'Use this body fat percentage calculator to estimate your composition at home — no DEXA scan required. Choose the US Navy tape method (waist, neck, hips) or a BMI-based formula when you do not have a tape measure.',
+      'Body fat percentage often tells a richer story than BMI alone, especially for active adults building muscle while losing fat.',
+      'Results are approximations — professional assessments are more precise. Measure at the same time of day for consistent trends.',
     ],
     faqs: [
-      { q: 'What is a healthy body fat percentage?', a: 'Rough guides: men 10–20%, women 18–28% for general health. Athletes run lower; essential fat minimums are higher for women.' },
+      { q: 'How do I calculate body fat percentage at home?', a: 'The Navy method uses neck, waist, and hip (women) measurements with height and weight. Enter them below, or switch to the BMI-based tab for a rough estimate without a tape measure.' },
       { q: 'Navy method vs BMI estimate?', a: 'Tape measurements usually beat BMI-based body fat estimates when done correctly. Measure at the same time of day for consistency.' },
       { q: 'How often should I measure body fat?', a: 'Monthly is enough for most people. Daily fluctuations reflect water, not true fat change.' },
     ],
   },
   '/tools/walking-calorie-calculator': {
     intro: [
-      'Walking burns calories based on body weight, pace, distance, and time. It is one of the safest, most sustainable exercises for weight management and heart health.',
+      'How many calories does walking burn? This free calories burned walking calculator uses your weight, walking pace, and duration to estimate expenditure — whether you track a 30-minute brisk walk or a full daily step goal.',
       'A 150-lb person burns roughly 100 calories per mile at moderate pace — heavier individuals burn more. Hills and faster pace increase expenditure.',
-      'Enter your stats below, then explore our step goal and 7-day walking plan tools.',
+      'Enter your stats below, then try our step goal calculator or read how walking fits into a daily calorie target.',
     ],
     faqs: [
       { q: 'How many calories does walking burn?', a: 'About 0.04–0.05 calories per pound per mile at moderate pace. This calculator refines estimates using weight, speed, and duration.' },

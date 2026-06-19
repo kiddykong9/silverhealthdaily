@@ -55,14 +55,14 @@ export const TOOLS = [
   },
   {
     href: '/tools/body-fat-calculator',
-    title: 'Body Fat Calculator',
-    description: 'Estimate body fat % with tape measurements or a BMI-based formula.',
+    title: 'Body Fat % Calculator',
+    description: 'Calculate body fat percentage at home — Navy method or BMI estimate.',
     category: 'body',
   },
   {
     href: '/tools/walking-calorie-calculator',
-    title: 'Walking Calories',
-    description: 'Calories burned on your daily walk.',
+    title: 'Calories Burned Walking',
+    description: 'How many calories does walking burn? Weight, pace, and minutes.',
     category: 'fitness',
   },
   {
