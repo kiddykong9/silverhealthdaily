@@ -26,7 +26,7 @@ const {
 } = Astro.props;
 
 const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
-const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE.url).href;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`, SITE.url).href;
 const shareImage = ogImage ?? SITE.defaultOgImage;
 ---
 

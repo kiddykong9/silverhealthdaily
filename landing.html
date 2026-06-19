@@ -1,0 +1,468 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Silver Health Daily - 7-Day Health Plan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cream: '#F7F6F1',
+            sage: {
+              50: '#eef4ef',
+              100: '#d9e8dc',
+              200: '#b8d4be',
+              500: '#4a7c59',
+              700: '#2f5439',
+              800: '#234030',
+              900: '#1a3024',
+              950: '#0f1f17',
+            },
+            gold: { DEFAULT: '#c4a035', light: '#e8d48a' },
+            ink: { DEFAULT: '#1c2420', soft: '#4a5650' },
+          },
+          fontFamily: {
+            display: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+            sans: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal, .float-glow { animation: none !important; transition: none !important; }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(1.25rem);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero-gradient {
+      background:
+        radial-gradient(ellipse 80% 60% at 85% 15%, rgba(196, 160, 53, 0.22), transparent 55%),
+        radial-gradient(ellipse 60% 50% at 10% 80%, rgba(74, 124, 89, 0.35), transparent 50%),
+        linear-gradient(145deg, #234030 0%, #1a3024 45%, #0f1f17 100%);
+    }
+    .float-glow {
+      animation: floatGlow 6s ease-in-out infinite;
+    }
+    @keyframes floatGlow {
+      0%, 100% { transform: translateY(0); opacity: 0.7; }
+      50% { transform: translateY(-8px); opacity: 1; }
+    }
+    .buy-pulse:focus-visible {
+      outline: 3px solid #e8d48a;
+      outline-offset: 3px;
+    }
+    details summary { list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] summary .faq-chevron { transform: rotate(180deg); }
+    .hero-lead { text-wrap: balance; }
+    .icon-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.625rem;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .icon-box svg { width: 1.125rem; height: 1.125rem; }
+    .feature-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      background: #d9e8dc;
+      color: #2f5439;
+    }
+    .compare-col { width: 7.5rem; text-align: center; }
+    .compare-yes {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 9999px;
+      background: rgba(196, 160, 53, 0.2);
+      color: #2f5439;
+    }
+    .compare-no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 9999px;
+      background: rgba(28, 36, 32, 0.08);
+      color: #9ca3af;
+    }
+    .compare-head-program {
+      background: linear-gradient(180deg, rgba(196, 160, 53, 0.14) 0%, rgba(196, 160, 53, 0.04) 100%);
+    }
+  </style>
+</head>
+<body class="bg-cream text-ink font-sans antialiased">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:text-sage-900 focus:font-bold">
+    Skip to content
+  </a>
+
+  <header class="sticky top-0 z-50 border-b border-sage-100/80 bg-cream/95 backdrop-blur-md">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-3.5">
+      <a href="https://www.silverhealthdaily.com/" class="group shrink-0" target="_blank" rel="noopener noreferrer">
+        <img src="data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCACzA28DASIAAhEBAxEB/8QAHAABAAMBAQEBAQAAAAAAAAAAAAEGBwUEAgMI/8QAThAAAQMDAQQFBgoHBQcFAQEAAQACAwQFEQYSITFBBxNRYXEUFSKBkbEjMkJUc5OhssHRMzU2UlNiciQlNEOSFkR0gsLh8GODhKLSJvH/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAQIDBAX/xAAlEQEAAgEEAwEBAQADAQAAAAAAAQIRAxIhMQQyUUEiExQzQmH/2gAMAwEAAhEDEQA/AP6pRQiAiIgIir9/1TR2omFuair4CKPfg9/YgsBIHHd4rhXXVNqtxLZakPlHyI/SP/ZVqSDU2ot8jTRUjuDXHYGPDiV66Po/pm4NbUySnmGDZCDn3DpElORQUjGjk6Y5+wfmuFU6zvk+f7UIx2RsA/7rRafSNlgxija8jm8krpRWqgiA6ujgGP5AqMXlvV0mPwlfWHP/AKzvzX5NuNcDkV1UD3TO/Nbl5FS/NoPqx+S/KW00EoxJRwOH9ATKMipNQ3WEjZuFSe57y8fblWGj1hc2NHWmKYfzNx7lbp9LWaXP9ijYe1m4rm1WiqYtPkk8kTuQdvH5pwpR6zp3YFbC6L+ZvpBWG33OjuDNqkqI5O4Hf7FnN10vc6RrnCHr4xv2ot59nFVgzTUs23G98UjTxBwQg3lFmWn9eSwObDd2mWLh1rR6Q8RzWjUNZT11M2eklZLE7eHNKg/fkiIgIiICBECAiIgIickEooRAUqEQEREBERAREQMIiICIiAp4IFCAgREBERATkp5KEEqERAREQFKhEBAiICIiAiIgIiICIpCCEREBOSZRAREQEREBEU8kEIiICIiCcqERARFKCEREBERAU8lCZQEREBETkgIiICIiApCgIgKQoRAUoiCFIUIgkKEUhBCIpQAoREBfL3tjY5z3BrQMklfS+JomSgCRu0Ac4PBBw6t9xu56ugeaOjPxqgj03j+QcvFeq02KgtYzTQgzc5X+k4nx5LqjcN25EAKeajgiCVClMIIREQFKhEArjXzTduvDSamENm5TR7nA/iu0iDGNSaRrbPtStBqKX+I0cPELwafvtXZKrrKUkxnHWRE+i7/ut0c0OBDgCDyKomrdFMna6rs7BHMN7oRuDvDsVRarBeKe80TZ6Z2D8th4tPYulyWF2O61dhuYkaHAA7MsJ3bQ7PFbVbK6C40UVVTPD4pBkHs7vUkq9SckG9FAREQE5IiAinioKAiIgIiICIiAiIgIiIHJERAREQEROSAiFEAInJEBFKhAREQEUqEBERATkiICIgQEKIgIpRBCInJAREQCiIgIiIClQiAiIgKVClBCImEBERAREQEREBERAREQEREElQpKhATKc0QEREBFKhARE5IJUKVCAhREBERAQIiCVCkr8nyxskYx7mtc8kNB5oP0BB4HKLyVVL1p24ZHwzcnt/Ec1x5b3VWqYR3qn+AJw2qhGWn+pvJBY0X40lVDVwNlppWSxng5pyv2QFOEUHxQOC881bTQO2ZqiJjuxzgCqrrzUE9A1tHQO2ZnjL5BxaO7vWY1BfK4vlc5zzxc45VG+xSxysDonte082nK+1hFmvVdZ6lstJKSzPpRuOWuHYVtdmr47nbYKuH4src4PEHgQfAqD2qERAUqOSIBRfnNNHCAZZGszuG0cZ8F9tILQRz7UFP1xpRl1idV0LQ2uYMkD/MH5qrdH16ktVzdb6wltPO7GHf5cnD7eHsWtFZ70jacyDdaBmJG752t5j971c1RoTeCKvaIu/nayxulcDURfByd5HA+tWHCgIiICckRAREPFARfjU1MFLGZKmaOFg+U9waPaVy3apsjXbJuMOe7JCDtKeS8VFc6GtP9kq4Jj2MeCfYvWXAHBI3oJwpKjghIA3oCcl+MFVT1BcKeeKUt4hjw7HsX7E4GeSAiq9z1xZqIubHM6okHyYhu9p3L8NJarnv10qoTTshgjjDmYOXccb0FvRAiAiIgKVCIJUZREBERBKhEQERCgKVClAUKVCAibu1N3agKVG7tRARMp4lARMjtTcgIgRATKlEEIiFAREQEREBEyBnJwFybjqC20G0Jqpjnj5EZ2nfZw9amcJM4dZFzrHdorvRmohjexu0WgO47l0VV7EREBEK51wvFvt4zVVUTXfug5cfUEJn66KLj2G/U96dOKVkjWxEDafuznuXYQzkUlRhSghERBKhECAiIgIgRA5oURA4ogTmgIiICIiAiIgIiICIiAiIgHgsx1Df5X6ojmifinpH7LRnj+8ferzqiv822WpnBw/Z2I/6juH5+pY2d5JJJJO8lYtOHO8/jc6SdlRTxzREOY8BwPivqeJk8TopWNfG4YIcMgqg6AvzYnC2VJw136FxPP91aCOC1E5brOWe3uy1+nKh1xsU0gpeMkXxtkd45j3Lsaa1jS3TZgqQKerO7BPouPcVanAOBBAIPI7wsx1vpo26V1fb27NM45e0f5ZPMdy0rT8ghMblnGkdYOgLKS6vLouDJjxb3O7lozXNc0FpBB3gjmoMt1g15v9VtjmMZ7MblXp4xjgtO1bYX3BoqaRoNSwYLeG2PzWd1tNPA4sqInxuHJ4wVRw5mhpJC1fov2/8AZr087PXv2c9m78cqjWnTNdeKhojidHTk+lM8YAHd2la9a6KG3UMNJTjEcTdkd/eg9SLy3CtgoITLUPDRyHM9wVPuN/qbhJ1NK0xxuOA1vxnKCy3S/UdACHv6yT9xm/2rmwTXq8HaZi3UZ+VjakcO7PBfdj06yEtqK4dZPxDTvDVZAMDACDw0FspqMl7Q+Sc/Gmldtvd6yvciICiVjZGOY9oc0jBB4EKVKDPLbE7TGtPJTkUNdujOeBzu/JaFxHYq7ri2mus7poP8VSnroyOO7iP/ADsXWs9WK610tUP82MOx2HG8e1B7EREBEUoIVb1nqSOxUjRHh9ZKPg2HgB+8e5WQ7uJWJa8qn1WqKzbORE7qmg8gN3vyVYgWDT+nqnU/95XqqndC74jc4Lh3dgVti0fY449kUDXd5e4n3ro2FrG2ahEWNjqWYx/SF71BQr9oWJrDU2UvimZvEZdx8DxBXC0hWV8+saBlfPNI6MSR4leXFvoO3LWjwVHu1pdSa7tlwp2HqZ3ESYG5rtkjPryFYF3bw4qrdJFRUQaaeabaAdI1khHJm/7MgBWkYwvieGKoidFNG18bxhzXDIKgxPSc1VFqCjNK5wc54BA5jvW3478rmW2wW22zGWjpWRyH5Q348F1FRnfSja6OKggrIadkc/WbJcxuztDHPtXP6Jv1tW5/gj3rvdK36hi+mHuXB6Jv1tW/Qj3ojVMb0U8lCiiIUQERTlBClFAQCin1KEElRwREBMJwRAREQEKlEHBv9giuW3M2eohqA3ALJCG+sLKTUVfXbBqJC7Oz8c8VuMv6N/gVhZ/WH/u/isW7ctRrNh0/FbjHO6aeWp2cEvkJbv7Au6MBfMX6NvgF9FbdIgOeS417sUdzcZPKKmCYNw10cmB6wu1lQ7gpJMMMqZqlkz43VUu01xafTK03S1hjpqemrJ56iapcwP8ASkOyMjPBZjcN1wn+kPvW02n9WUn0LPuhZq507etEUrbqhERARAnNBKhSoQEUqCg/OphZUQPhmaHRvGy4doKynW1np7RcIm0e02GVhcGE52SDvwtaWcdKH+Povo3e9ZvHDGp07vRzv0836R3vVqVV6OP2eb9I73q1ZAVjpa9Ie9rB6Tg0E43nG9fSoPSBcj51ttFE4+jI178HHFwx7lfBwRYnIQCDngVm+vrFR22miqqNjoy9+w5ocSDuznf4LSeCpnSdk2inx/HH3Slumb+rx9FgGK8jPFqv6oPRaMNrvFqvyleinQiItNpUIp5IPwq5vJ6aSXq3ybAzsMGSfBVKo6QLdTzOinpa2ORvFrmAEfarkRlZN0wtDLtQvaAHPhOT24du963SImcS4617UrmqyDpFtjhllLWuH8sYP4qR0h23iaSuA7TGnRXEx+l2uexjnGZ+8jfyVwdTwuGHRMI7C0JO2JxhKb7Vicq3Sa7sdQQ11Q6En+Kwge1WOlqYaqISU8rJYzwcw5C4d60habrG7rKZsUp4SRDZIKzathuuhro0QSO6p5yx3yJB2Ef+ckiInom96e3MNrRcLSeoafUFD1sY6udm6WMnge0dy7qzMY4dq2i0ZgREUUREQQ8hoLnHAAzlVym1nZqm6Chjnd1hdsNc5uGuPYCu5cYHVVFPC12yZGOYD2ZCx+3aHvPniKOem6uGOQEz7QxgHiMb8rVYjHLjq3vWYisNjne6OJ72MMhaCQ1vE9wWb6h1/cqWZ9NFbvI5QOM+93iBw960sDcso6YGjzpQuG4mI5P/ADFWnbPkTNa5iV80TW1Fw01SVVZIZJ5NoucQBn0iBw7l3VWejj9jbf4P++5WZZt266c5rGRCiKNiIgQUHpOrDtUlGDu3yuH2D8VQzvVg1xUdfqKp35EeGD1Df9uVX1ytzLz2nMpaS0gjcQtI0fqhta1lHcHAVIGGyO/zPHvWajevtpLHBzThwOQQpE4K2xLeAvzqIY6iF8UzQ6N4LXA8wVTNIarExZRXN4Eu5scrjud3HvV3BXWJy7xMSxjVFlfZbk6Pead/pRO7uxd3Q2pzTPZbq95MB3RPd8g9ngrfq20NvFqkiaAKhg24nfzdngeCxx0b2OIeCC0kEcCD2LQ30EEZzxQtacZAPqVP0DfTW03kNU/NRE30XH5bfzCuWVFQMcsBci/3uG0w8pKhw9GMe89yjUt8is9JtYD6h+6Nnae09yzGerlq6h087y+R5ySUHSqKyouNR1k7i+VxwGjl3BXbTdkbQRiacA1Lh/oXO0ZZy2NtdVM9I/omnkO1W8YQB3KVBIAzyRjg5oc05aeBQfhNVQwzRRSyNbJIcNBPFfuFWtQn+/7Tu+V+Kso4LnS+6Zj41NcREilfDHNdnZdnBwV9bl0ZQ8AjBAIK4WlWGlZX285ApKlwj+jdh7fvEepd49y57YTFe5JB8WeAA+LHH8H/AGIOgiIgnkoU8lCAVinSBRuotT1Rcw7E565h7c8ftytrXD1Vp+C/UQjeernZvilA3tP5JlFP0LrCOmp47dcyWxs3RTHeMdhWkQTRTxiSGRsjDwc05WE3yx3CzSltdEQzPoyNGWH1r8bXeK62SbdFUyMxxbnIPiFcD+gEO8rOLJ0iklsd2pt3AyxcvEfkr/Q1tPX07Z6SVksR+U0/+YUV6FVr/rShtEz4eqnlmacbIbsjPiVafWuBrakgqNOV5lja50cJka4jeCN4QVaz63r7tqGjpmQxQU0j9ktHpEjxWkN3jKw3RRB1Tb8bvhPwW5N4BWUUrpU3WGL6YLgdEx/vat5/ADd/zBd7pV/UMX0wXA6JgPO9Z9CPvBBcNR3u52qR74bSKmka3JmEuCO3IwVW3dJbwN9tZ9cf/wArRpWNkjLHgFrhgg81g2pbabXeaqlIOy1xLe9p4JHI2DT1yulxBkrrY2jhLcsJl2i71Y3Lt7xyXK0rcG3OxUlTkbZYGvHY4bj7srr+Kiqbf9UXSzOe+oswNNtlrZhPkEZ3E7t2VNg1Tcb1Kzye0BsG0A+Uzbmjmd43kdi/HpPqybfTW2EbU1VKMDuH/fCslgtrLVaaekYMdW30u881R0c7I3qnXzXMFJVeR2ynfXVROzhvxc/ivL0laiNDC23Uzy2aVu1I4He1vZ696++jSyxQ28XKVodUT/Ecd+y3uQfPnXWjmda22UzWcdgtOfZtZX3a9dN8p8mvdN5JKDslwzgHvB3hXfgs96VbQx1LDcY2hr2u6uTA4g8D7U7GgxyMkaHMcHNIBBHMLl32/UlmY01XWkvBLQxhdnH2BVfouurpqWa3TPLjCNuIk7w3O8e3HtV7njZIwtkY17TxBGUGZ3bpFqpMstlKyIH/ADJfSPsG4e0q13DU0Fps9LUVjusqZY2ubG3cXEj7Ask1FEymv1wggOI453taOwZK0rRdmNXRxXO7sbPPI0CJrhkMYNwwERXJ+ka59fmKGlbGD8QtJPrOfwWg6XvTb5ao6psZjcSWubnOCFxtV6KgvE0U9I5lLM0bLsM3OHq5rt6as8djtcdJG4vIJc5+MZJU4HVRERXzKfg3eBWFk5uB+l/FbpL+jf4FYVKerrHv5CQkj1rF3LUbrF+jb4BfSojOkCJrQPIJCQP4g/JfR6QoR/uD/rB+SuYb3QvKOVGHSDCf9wk+sH5KD0gxZ/wEn1g/JXMG+FFuP+PqPpD71tNp/VlJ9Cz7oWKVDhPUvlALdtxdjsyVtdp3W2k+hZ90LFO2NN68rm3m8Ulph6yrkwT8Vg3ud4L9rtXxW6gmqp/iRNzjtPIe3CzayUsmqdRGornOdEz4R4HADk0Lcy3a2OFgbqW93Abdqs4MPJ8u/PuXyNX1tBM2O920xA/KZkfYeKukUbYowxjQ1oGAByXM1Ja4rra5oZB6WyXMdzDhwUxKYmP167bcKa4UzZ6SQPjd2cR3FevO5ZLom5yWu8xwSP8A7PO7q3jscdwPtWsk7sqxK1nMOXe77Q2dgNXL8I4ZbG3e4+pcRuorzXM6212YmE/FfK7iPs96ol4mlq7/ADGoBkkM2zsHx3DC2mNrWtDWjZA4AKROUiZso3+2ldQ1AivFsMWebSQfUDxVvtVwp7nSNqKR+0x3LmD2FcfX1IyfT08paDJCWvaefHB96q3RtWSMu8tMXERyxk7PYQmZiUzMTiWnHgs46Tj/AG+iz/Dd71oyznpOx5dRZ/hu96W6W/TudHX7PjG/4Ry/XUWoam31Dqelt8szw0ESfJyfBfl0cgDT4x/EcrS7gUjoj1YdPUzT3Tyqry+cyBxHDJB4K/jWNVjdZp/af/yqM7Hn7JGT5T/1ra2jA4KVZpDk6fuk10gkkmo30xY7ZAceO7jwXE6TS4WenxgfDj7pVywqZ0ngeaKbaB/Tjh/SVZ6at6vB0YyNjiuD5XhrW7JJPABe+565gikdHbad1SRuLzkN9yrOjLfJdJpaQPdHR5D5scXdgWnUdupKSJsdPTxRtAwMNGfapXOErmYUOPX1YyTE1DEWcwCWn7VcrDe6W8QF9OdmRvx43cWrx6rsdNX22d7YmsqI2l7HsGDuGcLPtG1Ro9Q0zmvOzI/q3jO4g7kzMSkzNZw2JEBRbdRZR0xfrK3fQu+8tXKyfpiH96W76F33lvT9nn8n0lZuir9lW/TP/BXJU3op/ZVn0z/wVyKlu3TR9IFw9Y2hl5sc9OW/CtG3E7scB+O8etdxQ74pUicNWjdGGEaOupst+gkJIie7q5R3H8it3adpoPav581FEKW/18TBgMndjuychbnYag1VkopzxfC1x9i3qfXl8a3dXQc4NGSQAN5JK5VTqOz0ryye40zHjkXjKzrV96q7vqLzVDUOp6JswgIacFxzgk+vKvFHo6xwUzY3UMcpxgvk3k96k1iO3WNSbzMVjp1qC60Fwz5HVwzHsY4Fe3kse15Z26brqertb3xRSk4APxHDfu7loOibxJerBDUTDE49CTxHP1qTXjK01c22W7d8kAZJAC5098tsNXFSvrIuvlcGNYHZJJ4cF5tTWRl5pdl9RUQOY07JieQM945rHdMtezVtuYXbWzVsBPb6QVrWJhnU1ZpMRhvgKynphI85UOf4J+8VqzeCyfpjaDcqA5/yT94pT2PJ9Fy6OXAaNoCSAAH5J/rcu+a2l51MI/5wq/0dsY/RdCxzdppDwQf63Kk9JmnY7ZLT1lvj6umlOw9g4B3L8UxmTfNNOJhq7Kyme4NZUROceADwSV+4Wa9FFDb5qOaeSFj6+GXc47y1uN2PtWkYys2jE4dNO03rl+clVTseWvnia4cQXgEJHUQSv2Ypo3uxnDXAlUbpOtdAy2GsELWV8kjWteNxee/1BdnRmnae02+GZ0YNdIzL5DxGd+FcRjKRe2/bhnV/kMt6rXnnM73rz0EXXVccZ+Wdn1ngv2u42bnVjsld715ad5iqIpQd7Hh3sK8/65z2iQbD3NPEHBXyurqakFJd5NkfBygSs8Hb1ycqJh9ALR9D6i8rY2grX5nYMRvPyx2eKzfiv1ppX087JYnFr2EOBVicS1W2JbrxHeso6QLZ5DeTPEzEVT6YA5O5rRdP3Jl0tkNS0+kRh47Hc1y+kCiFVYJJGjMkBEg8Oa7Q75zDLaKqnoqyKopn7MsTtpp/PuWwRXuldYW3N7tmIsyW9h/d8crFy4nuXpFdOaIUhefJ9vb2OWVcDoXS4yXOukqZnZLuDeTRyAXQ0zbvOdxZFj4JvpSHsHYuBANwWraLtjaC0skc34acbbjzA5D2IO6xgYxrWABrRgAclX7lLVWi4GrdJJNQykB7HHPV+HYrC5waRkgZXzPCyeN0cjQ5jhgg81zvXdHEt1nE8vmmmjqYWywPDmOGQe1KeMxMLc5aCdnwXMghptP0szn1DhTl2Wtdvx3BVq5asqZnubSDqWcjxcuV9etI/vtuunNp/npablbXVdxo6gSBrYHZLccfBdPeWnHHCyuS61r3bRqZc/1L1UWobjTPBM5lZzbJvXCvl0z126ToWw0eCPqYmt4niT2lV+5XCe4XEW61vcwNOZp2nGz3Ar0227Q3mkkhY8wVBaQRneN3EL3Wq3Q22n6uL0nE5e88XFeiZ/0iNnTljbnd29kbS2NrSS4gYyeaOYC9jubcqQ9pcWhw2hyypXeHMRFKCEREBOKHcuZZLxFdDWNYx0b6WYwuBOeHP/zsQdCWJk0bmSxsexwwWvGQfUqledBWysy+j2qOXjhm9n+nl6lcFKDD7/pm4WTL5o+sgz+lj3t9fYvPpy+1Vkr2TU7iYSQJYs7nt/PsP/dbnURMnidHK0PjcMOaRuKw3VlCy0X2ppIv0YIcz+kjI96qS3CinZVUsU8RzHI0Oae4rnau/Zu5/wDDP9xXg6OpnTaWpdsk7Jc0Z7Mr36t/Zu5/8O/3FRWSaJ/ai3fSfgtybwCwzRP7U276T8CtzZ8UKyildKp/uGL6YKv9Ex/vat+gHvC7/Sr+oYvpguB0S7rvW/QD7wQaqs96VbXtQU9yjbvYeqkPceB9vvWhLx3iiZcbbUUkvxZWFvgeR9qkKoHRTciyapt0h3PHWRjvG4/YtKKwW3VU9lvsUhGzLTy7Mg8Dgj3rX9RXdlBpyaujcNp0YER7XOG78/UrIr1ARf8AXlRUHL6S3DYZ2FwOPflXs8Aq7oG1i22CIyD4eo+Ffnjv4D2YVjdwUGD6uqRW6kuMsmT8MY2k9jfRHuV7tOo7lSW2mp6fT1S+ONgDXAkZHbwWeXuF0d5r45OLaiQf/Yrb9NzNqLHRStxh0TfdhVHBGqbtjJ07U/6j/wDlcjUl3u96tclE2w1MW04HbyTjHqWjoorKtAWy40WpYpKqiniicxzXOczA4bvtWpkHAX1hDwVGD6ta3/aW6ZH+8P8AeVs+nt1logOHUt9yxfVn7T3TPzh/3ltOnv1NRfQs9wSUdBERRUqERB8zfo3+BWFn9Y7/AOL+K3SX9E/wWFuI84f+7+Kxdy1PxuUTG9W30RwHJfWwz91qRfo2+AX0tumHzsN/dHsUGNuPij2L7Q8FDDDLgSLhOSf8w+9bRajm20h/9Fn3QsYr99wn+kPvWz2n9WUn0LPuhZq507VTpPqdiio6XfiR5e4D+Ubvf9i4WjbrJbWVJp6CarLyMlnyfsXT6UWO623v+SQ9vr3Ffp0YTM6qth+UC13q3pPsTzZ0G6orCM+Y6r/z1KJNUVuMCx1W/wD87FbcBMLWG8SxR9tunlPWigqAdvbADDu357FtDd7RuwSAvtfLiGtJcQABk5UiMFa7XiNpoDWirNHB5TnIk2BtZ7fFeuSWOFuZXtYP5jhUS/awqZazyOyszl2x1nEuPDcF77dpR9Q1s18qpqiY7zHteiFc/EifidXX+2yWaqpYqpkk8jcNazfzCq3R44nU0W7/AC3+5XDU9qoKPTNaYKWKMhgw4N3/ABhzVO6PABqWLB/y3+5YnOWbZ3Q1lZx0n/46i+jd71o6zjpPGa6i+jd71q3TV+nd6Of2fH0jlaTwVW6Of2fH0jverSeCV6WvqxJ5/v7/AOT/ANS24cliDv1//wDK/wCtbe3gFKs6f6FUzpPJFopvp/8ApKuapnSd+qKb6f8A6StW6av08nRbwrvFqvyoPRZwrvFqvylekp0/GrGaaUHhsH3LGLLjz3RfTt962iq/w0v9B9yxazfryi+nb71Lds6ncNub8VEb8VSVt1Qso6Yv1nbvoXfeWrrJ+mL9Z276F33lvT9nn8n0lZuin9lWfSv/AAVyVO6Kv2VZ9M/8FcVLdumj6QKHfFUr8K6pZSUk1RKcRxsL3HuAWW54hg+sJGv1PcnDgZiB7ltGl2Oj09bmO4iBgPduWH0ML73fmx4JkqpiXdwJyfsX9BwsEULGNG5rQ0epdb/jyeNGZmyqy6GoJL95zMs2+TrTCMbO1x9mVbBho3nCpGpdcto600Fph8qrNrYJ+SHdg7Sv2o7Je7rGJb5c5IWu39RTnGPErMxP661tWJmKQ5vS9PA+20TGvY54mJIBBI3L09ELg6w1OznAqT91q4nSNp2htNspZKRsnWvlLXPe8uJ3Z5rtdEIxYqnJz/aT91q1Po5VzOtyvcvxHeCwXT/7Z0P/ABjfvrepP0bvBYLp/wDbOh/4xv3lNPqV8jure28FlPTB+s6H6E/eK1ZvBZR0wD+86H6E/eKlPZvyf+tcujf9jqD/AJ/vle3Vls872GrpWj4Ut2oz/ON4/L1rxdHAxo6g8H/fKsruHepPEt0jOnEMW6N6823UTYpiWx1A6pwPJ3L7VtO5Ynr+3vtWqXyUw2Y5iJ4yN2/O8e33rVbZdoZ9PR3KRwEYh6yQ9hA3/itXjOJctC23NJ/Fav8Am+a5oLa07VNRN6+fHAk78e72q+N3AAcFTOjmCSogrb1Ut+Gr5nEdzQfzyPUros2+OunGY3fWN6qh6nUFc3gDIXDwO9cknHBW3pHpepvLJx8WeMb+8bvyVTOF55jEuduJWm4w+dNHUdczfPRfAyduxy/D2qp8eCtugathqqm21JzBVsIDTw2uz1jPsXCvdufarjLTPyQDljj8pvIqys8xmHgypK+VKyyunRpXGOunonu9CVvWNHeOP2H7FoFdC2oopoXDIkYW+0LIdJTGHUlA4HjKGHwdu/FbJyXSk8O2nOYYFOzq5nsPFri32L4BXtv0YivVawcGyuH2rwLq27Om6Q3G701N8hzsv/pG8/YtpaAAABgDkFm3RdTB9dVVJH6NgYPE/wD+K9XaprKeJpoaXyhxOCM4wFi045WIy9z2te0teMgr844hEDh7tjkCeC4IuV8PG2AD+pdCWoqDZJ5qmHqZgxx2c5XKNStuYb2THakamubq+4P2XEwxnZYBw8Vxsr6fn1r5Xx73m9sy+hWIrGDJUJkZ470G87lnCv1paiSnqI5oXFsjDkFalbattwtsU7DsF7d+PknmFlOO/CvOgpD5vqWAkhkmQD3jgvX4d5i+1w8isTGVmghZEMNyXHi48Sv1VdfdLw2RzWWr0Qdx2s/ivRb626TVTGVNAIoTxdtcF9CNSM4iHlmk4y7SnK+QpXVgRSoQQVlNpvLbJry5MmJFLPO9kncdo4d6vxWrlZnc9FXK6Xu5VAdHTxOlLoy/f1mT3cFYSWlxuD2hzSC08CDlfSzKgfqrTQEMlM6tpG7gG+ngd2N49i6zNcShuJbJWh/Zg/kphV2dgDfwWH64q47hqupdTgvG02JuPlEDHvyrVcLzqW+NNNa7ZLSRP3OkeNk48T+C6ektGMtcjau4uZPWD4oAy1h7e8qo7+mKA2yx0dK4Yexg2/6jvP2lfGrN+m7ng/7s/wBxXW4cOKpurqy8VlLV26gtE+w/MZnLm4Le4ZUVn+imkaqt2f4v4Fbk3gsXtmntQ2+409XFbpS+F4cAS381q1nrqmsgkNXbpqN7PkvcDteGFZRXelQf3DF9MFX+ib9bVv0I9692sXXy+wRwQWeoihY7bO05pJOPFcrSlHqGw3I1HmeaaN7OrczaaN2RvG/uQa5xQ715bbUy1VIyaamkppHZzFIQSPYvWorJOk23CkvArGs+CqRk9zxx9ox9q/O1VE2pjZ7K8EwUzjJM7Pxmjh9m71q968tXnWwTMjaTPF8JHgZJI5LkdGNkkoaSorKqJ8c8zthrXtILWjuPaVcovDGgDcAAOQ5L6PgiKKyHpNtj6O9GsYz4CqGSRwDwN49x9q63RnqBjIja6xwYQdqEk7iDxar3d7bTXWifS1ce1G7s4g9o71ld80Pc7fK51Gw1UAOQ5nxh4jj7FUbCO5Q5waCXEADmVjFHd9VUAEUYryBuDZIHO/BdqloNU6iwy4Sy01K7422NnI/p/NMC4UeoG19+fRUEYmpoWEzVAO5ruQHau6eC59js9LZqFtNSNwBvc88XntK+L1XVdG1vkVvkrHuHyXBob45UVjerQTqa54+cP962jT/6lovoWe4LIrhp7UFZWz1L7bLtzSOkIy3cSc9ver/pSvvEFPS0NxtEzdkBnXhzcAdpCsotylQCiipCZUIe5B8y/o3eCwpw/vAnj8L+K1y/VtzhD4bdbX1Bcz9LttAB8Cs3dpe+F20KGTaznO2381i3blqNgi/Rt8AvtcOwVt0kEcNytr4CG75dtpHsXcW4dIEPBFx73W3GDLLfbnVDi3dJtgAHwJUknhklxH94VB5dYfetotOPNlHj+Cz7oWVyaYvcry51FJlxJPpN/NXzTc91hgp6SvtzmtY3Y64PbgAdoys17c6cSnXNsfcrI/qRmaA9a0doxvHs9yz7S1zFnurJpM9U/wBCTwWxEZ3YVG1Pox1TK+ptZa1zjl0TtwPgraP1b1/YXWmnjqIWywPD43DIcDkL9fFZFSjUNkcWQQ1cbf3Qwvb9m5dGOq1bdPgo2zxNPFxj6se0puXf/wDFzvV7bQyw01KwVFdK8NbEDwGd5PYvrVEkkVgrXw52xGcYXi0vpsWouqaqU1Fc8ek92/Hgu/UwsqIJIZBlj2lpHaCr2vMwyLRbgNT0JnA2do4J7dk4+1bC3gsnvOkrjbqpz6Nks8G1tMdHvcOzI47l07deNUljYW0kkjhuDpYS32krNeGKzt4lZ9cTRx6arGveGukAa0HmcjcqN0eDGpYvo3+5WqHTVTcWST3+cy1D2ObGwfFiyOPiqtbLHfLVd2SU9K90kZIB+QQe9J7yWzmJauCs46T8+X0WP4bverrSPr4qB8tbG2ao3kRRbsd2SqTqajvd7rGyi1SRMY3Za3baT71bdNXnMO90cbtPDP8AFd71ancCqRpBl6tUfktTbXuhc/IeHtBZnirsd6sdLXrDEahwivjnPOA2o2j6nZW3NcCNx5LOdX6VqvLpKy3wGaOU7TmDi0+C+rVdNTxwMpWUcjy0bLXSxkEDvJWY4Yr/ADPLRMgnHNU7pOIFops/xx90rr2G31lMJaq5Tulq5fjNB9Fo7Aq3qyO83yOKGO0SRxRu2sukaSTjHarPMNWn+TotIxXf8qv6znStJfbHNKTanyRSje0SNBGOGN60OFznwsc9hY4tBLSd4PYrXop1h81X+Gl/oPuWL2X9d0f07fetU1BVV8cL4bfQPqHvYRt7QAbndzWeQadvsFRHNHQODmODhl7ePtWbds35lrbeAX1lc2z1VZUxO8uonUsjd2C8ODvDC6K26wLJ+mIE3O34GfgXfeWoV00kFNJLDA+eRo3RtIBd6yss1da9SaguTZ/NMkMUbOrYzrGkgZzk71vTjl5/I5riFp6KgRpVmf4z/wAFclmOnGassdEaWG1iWLa2gHubkE+tdM3fWTtzbJCO8vH/AOktXM5NPU21iJiV6ccAnuWZdJep2zxus9ucX7RHXyN3juaPXxXqntWsb0NiuqoqKB3FsZ349XH2rsab0TQWd7ZpS6rqhvD5BuB7gkYqXm+pGK8Q5fRrpZ9vjNyr27NTI3EbCN7G9viVcL9UPpbLXTw/pIoHvb4hpK9/sXzNEyWJ0cjdpjhskHsUmczmXSuntrthinR0+OXVtN17c7nFpdv9LkttHesdvejLrZ6/r7PE+aBrtuJ8fxmd2OK69tu+tqlracUGDw66WPZx371u0buYefRtOnmtoejpilZ5toYtsbfWl2znfjB3r9uiA/3DUjG/yk/dC/O9aIqauzzTTVDqu8OIftuOAAPktC8Oh6PUtpbNSQ0LY4ZXbRkqDuYcYyMcU/8AOD+o1d0w06T4h8CsFsAxrOh/41v31sN9rrjS04ZQW19ZM9mC5rw1rT6ysro9MamprnDWstzzJHKJgC9uCQc44pTpdfm0Ybc3gso6YP1pQ/Qn7xWiW6srJ6B8tVbpKedvCIvadrwIWeawtuoNQXBk4s8kUcbNhjTI0njnfvWaRiW/IndTELl0c/sfQeD/AL5VlGFS9DG8W2igttfapGxNccTCRuGgnO8ZV0Ut26aXrEKZ0oWryyx+VRMzNSnb3c2niPx9SoFku9TUWOTT8e0ZKuoY2M9jSfSHtAK2yrhbUU8kMmCx7S0juWYdHFlH+0tbO4iSGhc5jHci87vctVtG2cuGrSd8Y/WmWyjioKCnpYBiOFgY3vwOK9KDgi5vVEYVrXltNdZnSRDM1MesG7iOY/H1LKu8reXgOBa4ZBGDlZLq+yOtNeXxsPkspJYRy/lWLx+uepX9cSCZ9PPHNCS2SNwc09hC0K+Ukep9Pw3CkbmqY3OB9rVnIPYrNoe9+bK7yeokxSzHG8/FdyKzWWazjiVYcCHEEEHOMKAr5rXTZdt3C2s2gd8sbfeFRcHjhSYwzaMOnpWIy6jt7W8pg72b/wAFs2dyzno2trpK2WvkbhkbSyM9rjxPs960VxAaSeA3rpSMQ66cYhiOpnD/AGguGP4zlyjvXsuz+uuVVJ+9I4/avGdwXRtp3RXDs2epkPF83HuACu6p3Rc8O0/IBymP4K4hZlRfjWRCelliI+O0hfsufdrxQWqLbr6mOLdkNJ9I+A4lJjPBu28yqNDpOsmeevc2BgOMk7RPqXfo9K26ADrWOnd/O7d7Aqpd+kloLo7VTZ7JJd32Kn3HVV5rtrrq2RjT8mM7I+xc9PwqV5wxqed8ltAp7XSD9HSRY7mhfQrrafR8opcdm0F/Pj5JJXbUj3vJ5ucSpzjiu8aFXm/5lp/G/vorVWcYaWTPNuM/Yv3t1uprex7KRhY17tojJO9YDAyqB2oOuHezIXaotUXy24AqJSwfJmbkfap/jWJzDceXMxiYbgizyy9I0UuGXSnMZ/iRbx6xxV4t1xpLjD1tFURzM/lO8eI5KTWYdq6lbdPWgRFGxERAREQEwOwIiAEREBERBKhFKCERTzQQpUc0QEREBMoiAiIgY7kCkIgIoTkglQpUIBTClQgKUUc0BFKhA4phE5IJUFEQEU4UICnwUIgEJj1IhQEREBAFIUIJyoTCICIhQOalQiAiIgIpwoQFKhEEqERARFPJBCIhQEREBERBKhEQSoTKICIiCVCIgIiIHNfm+eJj2tdI1rncATvK/Q71k3SHarudRGspqeonhIb1b4gXbBHLA3harGZc9S80jMQv2rbsy1WSonz8KWlkYHEuO4L8tEWvzXYYWvHw8vwshPEuKqun7Te7/W09TqMSMpKY7TI3jBe7lu/NaS0YGOSTxGGaTN53SlFIULLskry3Cjgr6Z9PVRh8Txgg+8d69KcCgyy+6QraCRz6Nrqmm4gj4zR3hVx8ZY7EoII5EYW4Q1Mcr5GMd6cZw5p4j1L8qm3UdV/iKeJ/i1YmjnNPip6J1IyWNlurXFsjd0UjjucOzxX6ai0Y2uqRUW57ad73fCMI9HvI7CrBFYrXDIJI6KFr2nIOOBXSG4KxHCxXjEvLa6CK20MdNA3DGDGeZPaV83h72WyqMDHSS9WQ1rRkk9y9viUPetN9Mah0nfJ3bqNzcnjIQ33ruW7o9meQblVMY392IbR9p3BaNLKyJhdI9rGjm44Crl21pZbdtA1PlEg+TD6X28FYiZ6Ztate3VsdnpLLSGnomvDSdpxc7aLj2qbtdqK1QGWuqGRtHI8XeA5rM710i1lWHR22MUrD8s+k7/sqoyK5XepJjFRWTu4kZd9vJbjT+vNbyY6ouF/6RqifbhtERp4+HXPwXnwHAKiVFRLVTOknlfLK45LnOLifarrZejqvqS19ze2ljPyR6T/yV7s2kLPa8OipmyzD5cvpFa3RXpzjT1NXmzJbTpi7XPBpaR/Vn5b/AEW+0q3W7oye7DrlXBvayBuT7T+S0wYa0YwGj2LgXfV9otm02SqbLKPkQ+kfyWd9p6dY0KU5s/Kg0PYaMD+yde8fKncXZ9XD7F26e20VMMU9JTxAfuRhvuWc3HpNmcSLfRNaOTpXZPsCr9Zre+VJ3VhiHZG0BNlp7SdbSr1Dbw1o4ADwCGNh4tB9SwB+obu/e641B/51MOpLzE70LlUDuLsq/wCckeVX43SotlBUgiooqeUfzxtK5R0ja45+voWTUM44SU0pb9hyPsXl0DPd6y3GquspdHJ+iaWgHHarWsTxw7123jOH40scsUQbNN1zh8rZDSfEBfsiBZdIEwicUBERAREQERfM0scLC+V7WMHFzjgBB9IF4zdKD55T/WD80850Hzyn+sH5rO+v1dsvYi8fnSg+eU/1g/NPOlByrKf6wfmm+v02z8e1QV4/OdD87p/rB+aedaD57TfWD8031+m2fj2lQvH50oOVZT/WD80850Pzyn+sH5pvr9NsvYi8nnSh+eU/1gXohmjnYHwyNkYeDmnIVi0T1JiX2oc4MaXOIaBxJOF9Kva+ONJ3Aj91v3wqiwA8wi/KlOaeMj90e5focoDXseMtcCO0HKCRhcWhwLhxGd6rXR8z/wDmoskn4WTf/wAxUXMttmqqKq4Q1rfJpOzb4t/JBZnOa0Zc4Adp3Kd3HKrGpJHV1zttpjyWyP6+bG/4Nv5ld+r2jRz43fBn3IPvymn/AI0f+sL9Gua9ocwhwPMHKzvT40s6y0pub6TyvZPWbbiDnJ4q92uOljoYm2/ZFNjLNnhhB6lDnNaPScB4lSuNq6ndUWCrEWRLG3rWHsLd/wCCDsOc1jSXkADiSgc1wy0gjjuVSvdc65abt8UW6S5mOMEfJB3u9y+aa4+S6Mqg93w9IH03ftZw33qi3te1zctIcDzByvh08LHbLpWNPYXALw6eo3UFlo6YnLmRjaP8x3n7VVaplmfqi6C+uhAwzYEhI5clBemSRyZ6t7X447Jypc5rcbTgM7t5XG05DZmsnfYzCWkhshjJIyOGfavFrWV0cVtxnfWxg+1BZ0LgASTgDiVA4Ln6gGbLXD/0H+5B0Gua4BzSCCMgg8VK5OlP2ctu/f5Oz3LrICKV4rxWMt9uqKmThGwux2nkPag9Ye12Q1wJBwcHgpJxx3Kl6bhls1zp21chd50jMhydzZRvI9h+xXF7Gyxlj25Y4YIQR5RD/Gj/ANQX0yRkmdh7XY7DlUnUNit8N2sccVO1jJqgtkAJ9IY8VarZa6O2se2igbC15BcGk70Hv4qDgDJKBea5Z8hqfone5B+nlMH8aP8A1Bfo17XAFrgR2grPLDHpZ9ppjXvpvKy34QOcc5V6t0VNFQwsoQ0U2zmPZ4YO/wDFB6GvY8kNcCQcHB4KS4NIDnAEnAyeKrdG8W7VlXSkbMNawVEfZtDc4KJiblq6OBj8wW+PrHgcOsdwHsQWVzmsaXPcA0cSTuX5eV0/8eL/AFhcnWWRpe5HOT1RXAtzNIPo6ZsxpOuMbNoEnO1gZ+1BewQW5B3L83TxNJa6VgcOILgoiZGyJjYcNYAA0DkFSKSitlTqO/ed3QZbMzY61+zgbO/Az4Ki9hwIy0gjuKgvbthu0No7wM7yqtpBzGXG5w0Urpbawt6ol200O+UAeYXu1NSTPhirqFuayjO2wfvN5t9ig7jnNa0ucQ0DmSpBzw4Knurm6orKalpg8UUQE1Se13JntVvaCG4HAIPrCglFzNR1ot9nqJxvk2dhg7XHcPtQdFr2vGWOB343HK+lUdLwvslzfbJ5HO8ojE7HOPy/lD2q0zyiON7zwaC5B9SSxxNzJI1g7ScKY5GSNzG9rh2g5VQsFFHqGnddbsDM2ZzjFE8+gxgO7d2rpWq32mluJktlSxrnMLTBHNlvjjPHcg7xIAySABvyV+ZqIf40f+oLxagH9yV2/eYXe5VK0t0n5rpfLH0nlBib1mXHO1jegv7SHNBBBB4EKV+FEyCOliZTACENGxjhhfsgIvmWWOFhfK9rGjiXHAXmNzoRxrKf6wKTMR2uJesovJ50ofnlP9YPzUedKD55T/WD81N9fptn49ileLzpQfPKf6wfmp86UHzyn+sCb6/TbPx60Xj86UHzyn+sCnznQ/PKf6wJvr9Ns/HrReM3Sh51lP8AWBBdaA/75T/WBN9fptl7VC+IpY5ow+F7XsPBzTkFfa0giIgBEKICHeiIOLf7bNOG1lsk6i5Qj0H8pB+48cwfsK5Vh1pT1U5orrEbfXsOy5km5rj3FW88VVdZaTgvsBlhxFXNHovA3O7itRMdS5Xi0f1VaGua9oLXAg8COBXjq7dHOS6OWop5P3oZS37OHtCxmmu990vVupnyysLT+il9Jp8Fabb0nNwG3ChI7XxO/ArU0mOnOPIrPFuFirLLqDf5DqOQDkJoGE+0D8Fyaiw6xkBDr5G4drXlnuaF16TXViqANqrMRPKRhHuXRj1JZ5B6NypfW8D3qZtDWNO36oc3R/e6x21V3GJ57XyPeftC9FL0Ybwaq5nHMRxYPtJ/BXh19tIGTcqPH0zV4qnWFigHp3GI/wBAJ9wV3WZ/z0o5mXkt+g7FSEGSmdUvHOd20PYN32Ky09NDSxhlPFHFGNwaxoaB7FTK7pItUIPksU9Q7w2R7Sqzcuka5VGW0kcVMztA2nfapttK/wCulTprNTUw0sZkqJWRMHFzyAAqbfOkS30e1Hb2OrJeG18Vg9fP1LK7hcqyveX1lTLMePpuyPYvGVuNPHbhfypniru33VV0vBcKipcyE/5MXot9fb61ws96KOK6RER081rTbuX1lMqFBPaURJOVcNBaUfeakVdY0i3xnn/mHsHd2r70Xoua7OZVXBr4aIHIB3Ok/wCy2Clp4qWBkMDBHEwYa0DAAXO98cQ9WhoTad1un3E1sbGsY0NaBgAcgvpAi4veIiICIiAiIgIiIC/OeGOeMxzMbJGeLXDIK/RFOx4RaLd8xpvqmp5pt3zGm+qC9yKbK/F3T9eHzRbvmNN9UE80275jTfVBe5E2V+G6frw+abf8xpvqgnmi3fMKb6oL3YRNlfhul4fNFu+Y031QTzTb/mNN9UF7kTZX4bpeE2q3/Mqb6oL008EVPHsQRsjZnOy0ABfqiRWI6gzKVX9eNLtKXANaXEtbuA4+kF31BHaMhaRXqTVVqLI2ddJt4DcdS/j7FYCcgEEYIyp2W/uhEFa6PmubpuIOyD1sm4jHyyvbquhdXWSoZG3M8Y66IjiHt3j8l2GgAbhhSgqejZZbrU1l6qonRul2YImuG9rWj0j63Eqy1ozST792w73L9gABgBSgoWmLrZqSxUlPWNIqGNIfmnJ+UeeFdLdUQVVIyWl/Qu+L6Oz9i/fYb+6PYvoYAxhAXy8ZaQRkHcQea+1CCg6SgqHX40dRE7qLR1zYnEfGL37v/rlTdaRztUi3tjd5NWTR1TiBu9HiPsCvmADnCYGeHtQQ0YaADuVLdWUVBqm6uuQy14ZsExF+cDuCuyjZB4gexByrJcrdXulbbjvZgu+DLOPiFzddStho6GV7XFjKuN7i1pOADvVnDGg7mgepCAdxAI7wg4lHqe11c7IIJZDJIdluYnAZPiF67/tOstdsj0upfuHgV7wxucho3dynCCn6d1LbaSx0NPUSyNkiha1w6p5wQPBW6nmZPAyWM5Y8BzSRjIKnYb+6D6l9AYCCVV9UskudfRWmGV0YcTNK8NzgN4farOowM5wMoKbf7FXNofKhdqmqloyKiKN8bR6Td+7AzwVpttU2toYKiPIbKwOweXcvUeH4IAAMDcgrWp2OdetPEAkNqXEnHD0VZG8FJ3lEEry3MZt9Tz+Cd7l6UQUTTd5slHZaWCrZs1DG4eDTuJz44Vzt9TDV0cc1KcwuHobiN3gv22G/ujHgvprQ0YAACCuazZJDS01zgYXzUEwkwBvcw7nBfej6cm3yV87Cypr5DUPB4gE+i31DCsDt4xxCAY5IOJrNpdpe5NaTtGLdhcu232xx0FMyQAvbG1rv7O478b+XareRniNy+dhvJo9iD4ikbLCx8fxXAEbsKpW23U1xveo21tLG8GVga97ASPR4glXLko2R7UFf0rI6nZLaqhuJ6Q4DsY22cj3rvneNxKkNHIKUFa0TG6Onr9pmM1cmN2MjPuVlCAY4YCetAJ9aqOoYZb1qGltkEkkEdKzymWZrQcP4NAzu3bz61bioxgk80FJvtouNAyC6ecp611G8P6uSNo9AnDsEDPBXEbFRSg7iyRvZxBX7EZ3YygACCnWe4R6chdarnHIyGNzupm2C5j2HeBuG4+K/Oklo6vVluks1MBTRRy9dJHCWNyW7t+N6ujmB25zQR3hA0NGGgAd25BzdQjasdd2mF24eCrdkvdjp7RRxVAzNHC1r807icgb+Sux38VGw0cGhB+dFPFVU0c0GereMtyMbvBfvhQNwwiD854Y52FkzGyMPEOGQvL5qt/zKm+rH5L3JhSaxPcLEzDxearf8xpvqwo80275jTfVBe5FNlfhul4fNNv8AmNN9UE802/5lTfVhe5E2V+G6frw+abf8xpvqgp81W/5lTfVhe1E2V+G6Xh8028/7jTfVBPNFu+Y031QXuRNlfhmX5wRRwRiOFjWMHBrRgBfoiLSJUIiAiIgFFJUICIiDk6gsFDfaUw1sWXfJkbuew9xWSak0ZcbK90jGmppM7pYxvA7xyW4qHAOBBGR2FareauOpo1u/mnODvU5W233RFqupdIyI00537cW4E94VCu/R9d6MudSCOrj5bBw72FdovEvHfx71U7enivTWUNXROLaynlhP87MLy7u3K04zEx2ZRQpREKcovuCGSd+xBG+V/wC6xpcfYhh+fqU4VlteiL3XlpNL5PGd+1McfZxV1s3RvRU5D7nO6qf+430W/mszeIdaaN7dMytdrrbpOIaGnfM49g3DvJWnaV6P6egcyou5bU1A3iMfo2n/AKldaKipqKERUkDIoxyYML0LlbUmens0/HrXmUNaGgAAADkFKIsPQIEQoCIiApKhEBERARFIQQhREBTyUIgIpUIBTkiICIiAiIgIilBCIiCeShEQSoREBERAREQSoUqEBAiICIpQQiBEBERATkiICKVCAiIgIiICIiAngiICIiAiIgIiIHJERAREQEREBFKhAREQFPJE5IICIiAiIgIgRAREQEREBERAREQEUlQgIiICFEQEREBSiIPzkhjlaRLGx4PJwyuNWaXslQcy2ymyTvLGbB9owiLUS53iFbvekrJTkmGi2Tj+K8/9S5VBpy1TTASUpIz/ABXj8URdMvNMQuNDpCwxNa5tthcePwhc8exxK7tPSU9M3Zp4IomjkxoCIucy9GnWMP3REWXVIUIiApKIgclCIgIiIJCgoiCQhREEIURAU8kRBCIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAhREElQiICIiCQoREBAiICIiAEREBERAREQEREBERAQIiAiIgkIURAKhEQSEREDkoREBERATkiICIiApCIghERATmiIBUlEQRyREQEREBERBKhEQEREH//2Q==" alt="Silver Health Daily" width="879" height="179" class="h-9 w-auto object-contain object-left transition group-hover:opacity-90 sm:h-12" decoding="async" />
+      </a>
+      <div class="flex shrink-0 items-center">
+        <a
+          data-gumroad-action="buy"
+          href="#"
+          class="buy-pulse hidden rounded-full bg-gold px-4 py-2 text-xs font-bold text-sage-900 shadow-sm transition hover:bg-gold-light sm:inline-flex sm:px-5 sm:py-2.5 sm:text-sm"
+        >
+          Get the plan<span class="ml-1" data-gumroad-field="price">$12</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero-gradient relative overflow-hidden py-16 sm:py-20 lg:py-24">
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div class="float-glow absolute -right-16 top-12 h-56 w-56 rounded-full bg-gold/20 blur-3xl"></div>
+        <div class="float-glow absolute -left-8 bottom-8 h-40 w-40 rounded-full bg-emerald-400/15 blur-3xl" style="animation-delay: -2s;"></div>
+      </div>
+      <div class="relative mx-auto grid max-w-5xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
+        <div class="reveal text-center lg:text-left">
+          <p class="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-gold-light">
+            <span class="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" aria-hidden="true"></span>
+            Instant download / Personalized PDF
+          </p>
+          <h1 class="font-display mt-6 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15]" data-gumroad-field="name">
+            Personalized 7-Day Health Plan
+          </h1>
+          <p class="hero-lead mt-5 max-w-xl text-lg leading-relaxed text-white/90">
+            A complete week of workouts, rest days, 28 meal recipes, and a grocery list built from your 5-minute survey.
+          </p>
+          <ul class="mt-5 max-w-xl space-y-2.5 text-left text-sm text-white/80 mx-auto lg:mx-0">
+            <li class="flex items-start gap-2.5">
+              <svg class="mt-0.5 h-4 w-4 shrink-0 text-gold-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              <span>7-day workout cycle with rest and recovery days</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg class="mt-0.5 h-4 w-4 shrink-0 text-gold-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              <span>28 meal recipes plus a full grocery list</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg class="mt-0.5 h-4 w-4 shrink-0 text-gold-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              <span>Calorie, protein, and macro targets scaled to you</span>
+            </li>
+          </ul>
+          <div class="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
+            <a
+              data-gumroad-action="buy"
+              href="#"
+              class="buy-pulse w-full rounded-full bg-gold px-8 py-4 text-center text-sm font-bold text-sage-900 shadow-lg shadow-gold/25 transition hover:bg-gold-light hover:shadow-gold/40 sm:w-auto sm:text-base"
+            >
+              I want this<span class="ml-1" data-gumroad-field="price">$12</span>
+            </a>
+            <a href="#how-it-works" class="w-full rounded-full border-2 border-white/30 px-8 py-4 text-center text-sm font-bold text-white transition hover:bg-white/10 sm:w-auto">
+              See how it works
+            </a>
+          </div>
+          <p class="mt-4 text-xs text-white/50">Educational use only. Not medical advice</p>
+        </div>
+        <div class="reveal mx-auto w-full max-w-md lg:max-w-none" style="transition-delay: 120ms;">
+          <div class="relative rounded-3xl border border-sage-700/50 bg-white/5 p-6 shadow-2xl backdrop-blur-sm">
+            <div class="absolute -top-3 left-6 rounded-full bg-gold px-3 py-1 text-xs font-bold text-sage-900">12+ page PDF</div>
+            <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br from-sage-700 via-sage-800 to-sage-950 p-6 text-white shadow-inner">
+              <p class="text-xs font-semibold uppercase tracking-widest text-gold-light">Your week at a glance</p>
+              <ul class="mt-5 space-y-2.5 text-sm">
+                <li class="flex items-center gap-3 rounded-xl bg-white/10 px-3 py-2.5">
+                  <span class="w-11 shrink-0 text-xs font-bold uppercase tracking-wide text-gold-light">Mon</span>
+                  <span class="text-white/90">Walk + intro strength</span>
+                </li>
+                <li class="flex items-center gap-3 rounded-xl bg-amber-500/20 px-3 py-2.5">
+                  <span class="w-11 shrink-0 text-xs font-bold uppercase tracking-wide text-amber-200">Tue</span>
+                  <span class="text-white/90">Rest + meal prep</span>
+                </li>
+                <li class="flex items-center gap-3 rounded-xl bg-white/10 px-3 py-2.5">
+                  <span class="w-11 shrink-0 text-xs font-bold uppercase tracking-wide text-gold-light">Wed</span>
+                  <span class="text-white/90">Walk intervals</span>
+                </li>
+                <li class="flex items-center gap-3 rounded-xl bg-sky-500/20 px-3 py-2.5">
+                  <span class="w-11 shrink-0 text-xs font-bold uppercase tracking-wide text-sky-200">Thu</span>
+                  <span class="text-white/90">Active recovery</span>
+                </li>
+                <li class="flex items-center gap-3 rounded-xl bg-white/10 px-3 py-2.5">
+                  <span class="w-11 shrink-0 text-xs font-bold uppercase tracking-wide text-gold-light">Daily</span>
+                  <span class="text-white/90">4 meals with full recipes</span>
+                </li>
+              </ul>
+              <p class="mt-6 text-center text-xs text-white/60">Calories, protein, and macros scaled to you</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="bg-cream py-14 sm:py-16">
+      <div class="mx-auto max-w-3xl px-4 sm:px-6">
+        <h2 class="reveal font-display text-center text-2xl font-bold text-sage-900 sm:text-3xl">Sound familiar?</h2>
+        <div class="mt-8 space-y-4">
+          <div class="reveal flex gap-4 rounded-2xl border border-sage-100 bg-white p-5 shadow-sm">
+            <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-500/10" aria-hidden="true">
+              <svg class="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </span>
+            <p class="text-ink-soft leading-relaxed">You used a calorie calculator, then stared at the fridge with no idea what to cook.</p>
+          </div>
+          <div class="reveal flex gap-4 rounded-2xl border border-sage-100 bg-white p-5 shadow-sm" style="transition-delay: 80ms;">
+            <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-500/10" aria-hidden="true">
+              <svg class="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </span>
+            <p class="text-ink-soft leading-relaxed">You walked a few days, skipped a few, and never had a real plan to follow.</p>
+          </div>
+          <div class="reveal flex gap-4 rounded-2xl border border-sage-100 bg-white p-5 shadow-sm" style="transition-delay: 160ms;">
+            <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-500/10" aria-hidden="true">
+              <svg class="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </span>
+            <p class="text-ink-soft leading-relaxed">You started Monday strong and lost momentum by Thursday again.</p>
+          </div>
+        </div>
+        <p class="reveal mt-8 text-center text-lg font-medium text-sage-800">
+          This plan is the bridge between "I know my numbers" and "I know exactly what to do today."
+        </p>
+      </div>
+    </section>
+
+    <!-- Includes -->
+    <section class="border-y border-sage-100 bg-white py-14 sm:py-16">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <h2 class="reveal font-display text-center text-2xl font-bold text-sage-900 sm:text-3xl">Everything in your plan</h2>
+        <p class="reveal mx-auto mt-3 max-w-xl text-center text-ink-soft">One survey -> one PDF -> seven days you can actually follow.</p>
+        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="reveal rounded-2xl border border-sage-100 bg-cream p-6 shadow-sm transition hover:border-sage-200 hover:shadow-md">
+            <div class="feature-icon" aria-hidden="true">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3 class="font-display mt-3 font-bold text-sage-900">7-day workout cycle</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">Training days, active recovery, and real rest days with warm-ups included.</p>
+          </article>
+          <article class="reveal rounded-2xl border border-sage-100 bg-cream p-6 shadow-sm transition hover:border-sage-200 hover:shadow-md" style="transition-delay: 60ms;">
+            <div class="feature-icon" aria-hidden="true">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <h3 class="font-display mt-3 font-bold text-sage-900">28 meal recipes</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">Breakfast, lunch, dinner, and snack every day with portions scaled to you.</p>
+          </article>
+          <article class="reveal rounded-2xl border border-sage-100 bg-cream p-6 shadow-sm transition hover:border-sage-200 hover:shadow-md" style="transition-delay: 120ms;">
+            <div class="feature-icon" aria-hidden="true">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+            <h3 class="font-display mt-3 font-bold text-sage-900">Grocery list</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">Shop once for the whole week. No wondering what to buy mid-week.</p>
+          </article>
+          <article class="reveal rounded-2xl border border-sage-100 bg-cream p-6 shadow-sm transition hover:border-sage-200 hover:shadow-md" style="transition-delay: 180ms;">
+            <div class="feature-icon" aria-hidden="true">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            </div>
+            <h3 class="font-display mt-3 font-bold text-sage-900">Sleep routines</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">Bedtime targets and evening habits matched to your schedule.</p>
+          </article>
+          <article class="reveal rounded-2xl border border-sage-100 bg-cream p-6 shadow-sm transition hover:border-sage-200 hover:shadow-md" style="transition-delay: 240ms;">
+            <div class="feature-icon" aria-hidden="true">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            </div>
+            <h3 class="font-display mt-3 font-bold text-sage-900">Your numbers built in</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">Calories, protein, macros, steps, and heart-rate zones without a separate spreadsheet.</p>
+          </article>
+          <article class="reveal rounded-2xl border border-sage-100 bg-cream p-6 shadow-sm transition hover:border-sage-200 hover:shadow-md" style="transition-delay: 300ms;">
+            <div class="feature-icon" aria-hidden="true">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="font-display mt-3 font-bold text-sage-900">Print-ready PDF</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">Save, print, or pull up on your phone at the grocery store.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <section class="border-y border-sage-100 bg-cream py-14 sm:py-16">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6">
+        <h2 class="reveal font-display text-center text-2xl font-bold text-sage-900">Free tools vs. 7-Day Program</h2>
+        <div class="reveal mt-8 overflow-x-auto rounded-2xl border border-sage-200 bg-white">
+          <table class="w-full min-w-[320px] text-left text-sm">
+            <thead>
+              <tr class="bg-sage-50">
+                <th class="px-5 py-4 font-semibold text-ink-soft" scope="col">Feature</th>
+                <th class="compare-col px-3 py-4 font-semibold text-ink-soft" scope="col">Free</th>
+                <th class="compare-col compare-head-program px-3 py-4 font-semibold text-sage-900" scope="col">7-Day Program</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-sage-100 bg-white">
+              <tr>
+                <td class="px-5 py-3.5 font-medium text-sage-900">Daily calorie target</td>
+                <td class="compare-col px-3 py-3.5"><span class="compare-yes" aria-label="Included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span></td>
+                <td class="compare-col compare-head-program px-3 py-3.5"><span class="compare-yes" aria-label="Included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3.5 font-medium text-sage-900">Full week of workouts</td>
+                <td class="compare-col px-3 py-3.5"><span class="compare-no" aria-label="Not included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></span></td>
+                <td class="compare-col compare-head-program px-3 py-3.5"><span class="compare-yes" aria-label="Included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3.5 font-medium text-sage-900">Rest and recovery days</td>
+                <td class="compare-col px-3 py-3.5"><span class="compare-no" aria-label="Not included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></span></td>
+                <td class="compare-col compare-head-program px-3 py-3.5"><span class="compare-yes" aria-label="Included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3.5 font-medium text-sage-900">Meal recipes with ingredients</td>
+                <td class="compare-col px-3 py-3.5"><span class="compare-no" aria-label="Not included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></span></td>
+                <td class="compare-col compare-head-program px-3 py-3.5"><span class="compare-yes" aria-label="Included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3.5 font-medium text-sage-900">Grocery shopping list</td>
+                <td class="compare-col px-3 py-3.5"><span class="compare-no" aria-label="Not included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></span></td>
+                <td class="compare-col compare-head-program px-3 py-3.5"><span class="compare-yes" aria-label="Included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span></td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3.5 font-medium text-sage-900">Print-ready PDF</td>
+                <td class="compare-col px-3 py-3.5"><span class="compare-no" aria-label="Not included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></span></td>
+                <td class="compare-col compare-head-program px-3 py-3.5"><span class="compare-yes" aria-label="Included"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="bg-sage-900 py-14 text-white sm:py-16">
+      <div class="mx-auto max-w-3xl px-4 sm:px-6">
+        <h2 class="reveal font-display text-center text-2xl font-bold sm:text-3xl">Ready in 3 steps</h2>
+        <ol class="mt-8 space-y-6">
+          <li class="reveal flex gap-5 rounded-2xl border border-sage-700 bg-sage-800/50 p-6">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold text-sm font-bold text-sage-900" aria-hidden="true">1</span>
+            <div>
+              <p class="font-display font-bold">Purchase &amp; get your license key</p>
+              <p class="mt-1 text-sm text-sage-200">Instant email with your unique key and survey link.</p>
+            </div>
+          </li>
+          <li class="reveal flex gap-5 rounded-2xl border border-sage-700 bg-sage-800/50 p-6" style="transition-delay: 80ms;">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold text-sm font-bold text-sage-900" aria-hidden="true">2</span>
+            <div>
+              <p class="font-display font-bold">Complete the 5-minute survey</p>
+              <p class="mt-1 text-sm text-sage-200">Body stats, goals, activity, sleep, and eating preferences.</p>
+            </div>
+          </li>
+          <li class="reveal flex gap-5 rounded-2xl border border-sage-700 bg-sage-800/50 p-6" style="transition-delay: 160ms;">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold text-sm font-bold text-sage-900" aria-hidden="true">3</span>
+            <div>
+              <p class="font-display font-bold">Download your personalized PDF</p>
+              <p class="mt-1 text-sm text-sage-200">Full on-screen preview plus a print-ready PDF - start Monday.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="border-t border-sage-100 bg-sage-50 py-14 sm:py-16">
+      <div class="mx-auto max-w-3xl px-4 sm:px-6">
+        <h2 class="reveal font-display text-center text-2xl font-bold text-sage-900">Questions</h2>
+        <div class="mt-8 space-y-4">
+          <details class="reveal group rounded-2xl border border-sage-100 bg-white px-5 py-4 shadow-sm">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-sage-900">
+              How is this different from free calculators?
+              <svg class="faq-chevron h-5 w-5 shrink-0 text-sage-500 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="mt-3 text-sm text-ink-soft">Free tools answer one question at a time. The 7-Day Program connects everything into a full week: what to eat, when to move, when to rest, and what to buy.</p>
+          </details>
+          <details class="reveal group rounded-2xl border border-sage-100 bg-white px-5 py-4 shadow-sm">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-sage-900">
+              Is the plan personalized?
+              <svg class="faq-chevron h-5 w-5 shrink-0 text-sage-500 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="mt-3 text-sm text-ink-soft">Yes. Your survey answers shape calorie targets, workout difficulty, recipe portions, and your weekly schedule.</p>
+          </details>
+          <details class="reveal group rounded-2xl border border-sage-100 bg-white px-5 py-4 shadow-sm">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-sage-900">
+              Do I need a gym?
+              <svg class="faq-chevron h-5 w-5 shrink-0 text-sage-500 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="mt-3 text-sm text-ink-soft">No. Workouts use walking, bodyweight strength, and at-home circuits - built for everyday fitness.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="bg-gradient-to-br from-sage-700 to-sage-900 py-16">
+      <div class="reveal mx-auto max-w-2xl px-4 text-center sm:px-6">
+        <h2 class="font-display text-2xl font-bold text-white sm:text-3xl">Your week is waiting.</h2>
+        <p class="mt-3 text-white/80">
+          Get your personalized 7-day program for <span data-gumroad-field="price">$12</span> - instant access after purchase.
+        </p>
+        <a
+          data-gumroad-action="buy"
+          href="#"
+          class="buy-pulse mt-8 inline-block w-full rounded-full bg-gold px-10 py-4 text-sm font-bold text-sage-900 shadow-lg transition hover:bg-gold-light sm:w-auto sm:text-base"
+        >
+          I want this!
+        </a>
+        <p class="mt-4 text-xs text-white/50">Secure checkout via Gumroad. Educational use only</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-sage-100 bg-cream py-8 text-center text-xs text-ink-soft">
+    <p>(c) Silver Health Daily | silverhealthdaily.com</p>
+  </footer>
+
+  <!-- Sticky mobile buy bar -->
+  <div class="fixed inset-x-0 bottom-0 z-50 border-t border-sage-200 bg-cream/95 p-3 backdrop-blur-md sm:hidden" role="region" aria-label="Purchase">
+    <a
+      data-gumroad-action="buy"
+      href="#"
+      class="buy-pulse flex w-full items-center justify-center rounded-full bg-gold py-3.5 text-sm font-bold text-sage-900 shadow-lg"
+    >
+      Get my plan<span class="ml-1" data-gumroad-field="price">$12</span>
+    </a>
+  </div>
+
+  <script>
+    (function () {
+      var reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window && reveals.length) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(function (el) { observer.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+    })();
+  </script>
+</body>
+</html>

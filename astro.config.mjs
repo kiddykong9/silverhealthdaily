@@ -6,6 +6,7 @@ import mdx from '@astrojs/mdx';
 
 export default defineConfig({
   site: 'https://silverhealthdaily.com',
+  trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()],
   },

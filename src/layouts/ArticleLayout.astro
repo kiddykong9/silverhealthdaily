@@ -3,9 +3,11 @@ import BaseLayout from './BaseLayout.astro';
 import AdSlot from '../components/AdSlot.astro';
 import RelatedArticles from '../components/RelatedArticles.astro';
 import ToolSidebar from '../components/ToolSidebar.astro';
+import ToolPromo from '../components/ToolPromo.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import { SITE, getCategory } from '../lib/site';
+import { getArticleTool } from '../lib/article-tools';
 import { getArticleImage, heroSrc } from '../lib/media';
 import type { CollectionEntry } from 'astro:content';
 
@@ -18,8 +20,9 @@ const { article, relatedArticles = [] } = Astro.props;
 const { title, description, category, publishDate, updatedDate, readTime } = article.data;
 const categoryMeta = getCategory(category);
 const heroImage = getArticleImage(category, article.id);
-const url = new URL(`/articles/${article.id}`, SITE.url).href;
+const url = new URL(`/articles/${article.id}/`, SITE.url).href;
 const ogImage = heroSrc(heroImage, 1200);
+const toolPromo = getArticleTool(article.id);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -100,6 +103,25 @@ const jsonLd = {
         </time>
         <span aria-hidden="true">·</span>
         <span>{readTime} min read</span>
+        {
+          updatedDate && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>
+                Updated{' '}
+                <time datetime={updatedDate.toISOString()}>
+                  {
+                    updatedDate.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })
+                  }
+                </time>
+              </span>
+            </>
+          )
+        }
       </p>
     </div>
   </header>
@@ -108,6 +130,8 @@ const jsonLd = {
     <div class="grid gap-10 lg:grid-cols-[1fr_300px]">
       <div>
         <AdSlot slot="1111111111" format="horizontal" class="mb-8" />
+
+        {toolPromo && <ToolPromo href={toolPromo.href} title={toolPromo.title} blurb={toolPromo.blurb} />}
 
         <div class="prose max-w-3xl animate-fade-in">
           <slot />

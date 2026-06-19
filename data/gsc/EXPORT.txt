@@ -9,14 +9,16 @@ Do this once every 1–2 weeks (5 minutes).
 4. Set date range: Last 28 days (or Last 3 months for more data)
 
 Export QUERIES:
-  - Click the "Queries" tab
-  - Export (download icon) → Download CSV
-  - Save as:  YYYY-MM-DD-queries.csv   (example: 2026-06-16-queries.csv)
+  - Click the "Queries" tab (may be labeled SEARCHES in English UI)
+  - Export (download icon) -> Download CSV or ZIP
+  - If ZIP: extract and use Suchanfragen.csv (German) or Queries.csv (English)
+  - Save as:  YYYY-MM-DD-queries.csv
   - Put file in this folder: data/gsc/
 
 Export PAGES (optional but recommended):
   - Click the "Pages" tab
-  - Export → Download CSV
+  - Export -> Download CSV or ZIP
+  - If ZIP: extract and use Seiten.csv (German) or Pages.csv (English)
   - Save as:  YYYY-MM-DD-pages.csv
   - Put file in this folder: data/gsc/
 

@@ -22,7 +22,7 @@ interface Props {
 
 const { title, description, current, heroClass = 'from-sage-700 to-sage-900' } = Astro.props;
 
-const canonicalUrl = new URL(current, SITE.url).href;
+const canonicalUrl = new URL(current.endsWith('/') ? current : `${current}/`, SITE.url).href;
 const ogImage = getToolOgImage(current);
 const seo = getToolSeo(current);
 const articleSlugs = getToolArticleSlugs(current);

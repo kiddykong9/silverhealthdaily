@@ -116,26 +116,29 @@ export const TOOL_SEO: Record<ToolSlug, ToolSeoContent> = {
   },
   '/tools/body-fat-calculator': {
     intro: [
-      'Use this body fat percentage calculator to estimate your composition at home — no DEXA scan required. Choose the US Navy tape method (waist, neck, hips) or a BMI-based formula when you do not have a tape measure.',
+      'How to calculate body fat percentage at home — use this free body fat percentage calculator with the US Navy tape method (waist, neck, hips) or a BMI-based formula when you do not have a tape measure.',
       'Body fat percentage often tells a richer story than BMI alone, especially for active adults building muscle while losing fat.',
       'Results are approximations — professional assessments are more precise. Measure at the same time of day for consistent trends.',
     ],
     faqs: [
       { q: 'How do I calculate body fat percentage at home?', a: 'The Navy method uses neck, waist, and hip (women) measurements with height and weight. Enter them below, or switch to the BMI-based tab for a rough estimate without a tape measure.' },
-      { q: 'Navy method vs BMI estimate?', a: 'Tape measurements usually beat BMI-based body fat estimates when done correctly. Measure at the same time of day for consistency.' },
+      { q: 'How do I count body fat percentage without special equipment?', a: 'A flexible tape measure and our Navy-method tab are enough for most people. The BMI estimate tab works if you only know height and weight.' },
+      { q: 'How do I find out body fat percentage accurately?', a: 'Home tape methods are within about 3–4% for most adults. DEXA scans and hydrostatic weighing are more precise if you need clinical-level accuracy.' },
       { q: 'How often should I measure body fat?', a: 'Monthly is enough for most people. Daily fluctuations reflect water, not true fat change.' },
     ],
   },
   '/tools/walking-calorie-calculator': {
     intro: [
-      'How many calories does walking burn? This free calories burned walking calculator uses your weight, walking pace, and duration to estimate expenditure — whether you track a 30-minute brisk walk or a full daily step goal.',
+      'How many calories does walking burn? This free calories burned walking calculator uses your weight, walking pace, and duration — whether you track a 30-minute brisk walk, calories burned walking per km, or a full daily step goal.',
       'A 150-lb person burns roughly 100 calories per mile at moderate pace — heavier individuals burn more. Hills and faster pace increase expenditure.',
       'Enter your stats below, then try our step goal calculator or read how walking fits into a daily calorie target.',
     ],
     faqs: [
       { q: 'How many calories does walking burn?', a: 'About 0.04–0.05 calories per pound per mile at moderate pace. This calculator refines estimates using weight, speed, and duration.' },
+      { q: 'How many calories burned walking per km?', a: 'Roughly 55–110 calories per km depending on weight and pace. A 160 lb adult at moderate pace burns about 80 calories per km.' },
+      { q: 'How many calories will I burn walking 30 minutes?', a: 'Most adults burn 80–170 calories in 30 minutes depending on weight and speed. Brisk walking (3.5–4 mph) sits at the higher end.' },
+      { q: 'How many calories does walking 4 miles burn?', a: 'Often 350–500 calories for most adults at moderate pace — use this calculator with your weight and pace for a tighter estimate.' },
       { q: 'Is walking enough for weight loss?', a: 'Walking plus a modest calorie deficit often works well. Diet drives most fat loss; walking improves adherence and cardiovascular health.' },
-      { q: 'How fast should I walk?', a: 'Brisk walking (3–4 mph) raises heart rate into a moderate zone for most adults. Use our target heart rate calculator to check your zone.' },
     ],
   },
   '/tools/bedtime-calculator': {
