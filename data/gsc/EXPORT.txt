@@ -1,0 +1,32 @@
+Google Search Console CSV drop — Silver Health Daily
+====================================================
+
+Do this once every 1–2 weeks (5 minutes).
+
+1. Open https://search.google.com/search-console
+2. Select property: silverhealthdaily.com (or www)
+3. Go to Performance → Search results
+4. Set date range: Last 28 days (or Last 3 months for more data)
+
+Export QUERIES:
+  - Click the "Queries" tab
+  - Export (download icon) → Download CSV
+  - Save as:  YYYY-MM-DD-queries.csv   (example: 2026-06-16-queries.csv)
+  - Put file in this folder: data/gsc/
+
+Export PAGES (optional but recommended):
+  - Click the "Pages" tab
+  - Export → Download CSV
+  - Save as:  YYYY-MM-DD-pages.csv
+  - Put file in this folder: data/gsc/
+
+Run analysis:
+  npm run gsc:analyze
+
+Output:
+  data/gsc/latest-report.md  — summary + prioritized actions for the agent
+
+Tips:
+  - Use today's date in the filename so week-over-week comparisons work
+  - Keep old exports; the script compares the two newest query files automatically
+  - Do not edit CSV files by hand — export fresh from GSC
