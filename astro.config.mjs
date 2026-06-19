@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
 export default defineConfig({
-  site: 'https://silverhealthdaily.com',
+  site: 'https://www.silverhealthdaily.com',
   trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()],
