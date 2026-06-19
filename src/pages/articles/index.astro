@@ -9,26 +9,54 @@ import { PAGE_HEROES } from '../../lib/media';
 const articles = (await getCollection('articles')).sort(
   (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
 );
+
+const featuredIds = [
+  'how-many-calories-does-walking-burn',
+  'how-to-estimate-body-fat-percentage',
+  'how-many-steps-per-day-for-health',
+  'how-many-calories-do-you-need-daily',
+  'how-to-track-calories-and-nutrition-free',
+];
+const featured = featuredIds
+  .map((id) => articles.find((a) => a.id === id))
+  .filter((a): a is (typeof articles)[number] => Boolean(a));
+const featuredSet = new Set(featuredIds);
+const rest = articles.filter((a) => !featuredSet.has(a.id));
 ---
 
 <BaseLayout
-  title="Health Articles & Guides"
-  description="Browse nutrition, fitness, sleep, and heart health guides — clear advice for everyday wellness."
+  title="Health Articles & Guides — Walking, Body Fat, Nutrition"
+  description="Free health guides: calories burned walking, body fat percentage, daily steps, TDEE, and nutrition. Evidence-informed articles with calculators."
 >
   <PageHero
     image={PAGE_HEROES.articles}
     label="Library"
     title="All health guides"
-    description="Evidence-informed articles updated regularly. Always discuss changes with your healthcare provider."
+    description="Evidence-informed articles updated regularly. Start with our most-searched guides below."
   />
 
   <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {articles.map((article, i) => (
-        <ScrollReveal delay={i * 50}>
-          <ArticleCard article={article} />
-        </ScrollReveal>
-      ))}
-    </div>
+    <section class="mb-14">
+      <h2 class="font-display mb-2 text-2xl font-bold text-ink">Most searched guides</h2>
+      <p class="mb-6 text-muted">Walking calories, body fat, steps, and daily calorie needs — with free calculators on every page.</p>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {featured.map((article, i) => (
+          <ScrollReveal delay={i * 50}>
+            <ArticleCard article={article} />
+          </ScrollReveal>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-display mb-6 text-2xl font-bold text-ink">All articles</h2>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {rest.map((article, i) => (
+          <ScrollReveal delay={i * 50}>
+            <ArticleCard article={article} />
+          </ScrollReveal>
+        ))}
+      </div>
+    </section>
   </div>
 </BaseLayout>

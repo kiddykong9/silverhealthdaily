@@ -10,5 +10,10 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [sitemap(), mdx()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/personal-health-plan/survey'),
+    }),
+    mdx(),
+  ],
 });

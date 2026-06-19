@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://silverhealthdaily.com/sitemap-index.xml
+Sitemap: https://www.silverhealthdaily.com/sitemap-index.xml

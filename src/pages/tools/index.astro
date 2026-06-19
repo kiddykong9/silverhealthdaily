@@ -19,18 +19,30 @@ const categoryOrder = ['nutrition', 'body', 'fitness', 'sleep', 'heart-health', 
 ---
 
 <BaseLayout
-  title="Free Health Calculators & Planners"
-  description="18 free health calculators: BMI, TDEE, macros, protein, water intake, walking calories, sleep, and 7-day wellness plans."
+  title="Free Health Calculators — Walking Calories, Body Fat, BMI & TDEE"
+  description="Free walking calorie calculator, body fat percentage calculator, BMI, TDEE, macros, and 18 health tools — instant results, no signup."
   ogImage={PAGE_HEROES.tools.src.replace('w=1400', 'w=1200')}
 >
   <PageHero
     image={PAGE_HEROES.tools}
     label="Calculators & planners"
     title="Free health calculators"
-    description="BMI, calories, macros, hydration, walking, sleep, and weekly plans — instant results, no signup."
+    description="Calories burned walking, body fat percentage, BMI, daily calories, and more — instant results, no signup."
   />
 
   <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <section class="mb-12 rounded-2xl border border-sage-200 bg-gradient-to-br from-sage-50 to-cream p-6 sm:p-8">
+      <h2 class="font-display text-xl font-bold text-sage-900">Popular calculators</h2>
+      <p class="mt-1 text-sm text-muted">Most searched on Google — start here.</p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href="/tools/walking-calorie-calculator/" class="btn-primary">Calories burned walking</a>
+        <a href="/tools/body-fat-calculator/" class="btn-primary !bg-sage-800 hover:!bg-sage-900">Body fat calculator</a>
+        <a href="/tools/daily-calorie-calculator/" class="rounded-full border border-sage-300 px-5 py-2.5 text-sm font-semibold text-sage-800 hover:bg-sage-50">Daily calories (TDEE)</a>
+        <a href="/tools/step-goal-calculator/" class="rounded-full border border-sage-300 px-5 py-2.5 text-sm font-semibold text-sage-800 hover:bg-sage-50">Step goal</a>
+        <a href="/tools/bmi-calculator/" class="rounded-full border border-sage-300 px-5 py-2.5 text-sm font-semibold text-sage-800 hover:bg-sage-50">BMI</a>
+      </div>
+    </section>
+
     <div class="mb-10 flex flex-wrap items-center justify-center gap-4">
       <a
         href="/#program"

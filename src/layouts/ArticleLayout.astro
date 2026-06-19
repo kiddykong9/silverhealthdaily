@@ -8,6 +8,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import { SITE, getCategory } from '../lib/site';
 import { getArticleTool } from '../lib/article-tools';
+import { getArticleFaqs } from '../lib/article-seo';
 import { getArticleImage, heroSrc } from '../lib/media';
 import type { CollectionEntry } from 'astro:content';
 
@@ -23,6 +24,7 @@ const heroImage = getArticleImage(category, article.id);
 const url = new URL(`/articles/${article.id}/`, SITE.url).href;
 const ogImage = heroSrc(heroImage, 1200);
 const toolPromo = getArticleTool(article.id);
+const articleFaqs = getArticleFaqs(article.id);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -52,6 +54,22 @@ const jsonLd = {
 
 <BaseLayout title={title} description={description} canonical={url} ogType="article" ogImage={ogImage}>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  {
+    articleFaqs && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: articleFaqs.map((f) => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a },
+          })),
+        })}
+      />
+    )
+  }
 
   <header class="relative overflow-hidden">
     <div class="absolute inset-0">
